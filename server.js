@@ -9,12 +9,15 @@ var DIST_DIR = path.join(__dirname, "bin");
 app.use(express.static(DIST_DIR));
 
 //importing things file 
-var things = require('./routes/things.js'); 
+var things = require('./routes/things.js');
+
+var login = require('./routes/login.js'); 
 
 
 
 //Redirecting user to serve routes, which are present in "things.js" file (like /things/car, .
-app.use('/things', things); 
+app.use('/things', things);
+app.use('/login', login); 
 
 //Now we are using the routes present in external js file (things.js)
 

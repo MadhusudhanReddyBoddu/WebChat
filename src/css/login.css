@@ -1,0 +1,87 @@
+body{
+padding: 0px;
+margin: 0px;
+background:url(../images/background.jpg);
+background-size: 1500px 1000px;
+background-repeat: no-repeat;
+ }
+
+.header
+{
+ width: 1350px;
+ height: 40px;
+ background-color: #e8b445;
+ margin-left:10px;
+ margin-right:10px;
+ padding-top: 0px;
+ padding-bottom: 20px;
+}
+
+div.headerText
+{
+  width: 500px;
+ height: 40px;
+ // background-color: green;
+ margin-left:350px;
+ padding-top: 15px;
+ float : left;
+ text-align: center;
+}
+
+
+div.largeBox
+{
+ width: 800px;
+ height: 300px;
+ padding-top: 40px;
+ padding-left: 20px;
+ padding-right: 20px;
+ padding-bottom: 20px;
+ margin-bottom: 20px;
+ background: white;
+ margin: auto;
+ text-align: center;
+ margin-top: 100px;
+ background:#DAF7A6;
+}
+div.smallBox_left
+{
+  width: 300px;
+ height: 250px;
+ background-color: white;
+ padding-top: 20px;
+ padding-left: 20px;
+ padding-right: 20px;
+ padding-bottom: 20px;
+ float : left;
+}
+div.smallBox_center
+{
+  width: 300px;
+ height: 100px;
+ background-color: #f2ea7b;
+ margin-left:40px;
+ margin-top:90px;
+ padding-top: 10px;
+ padding-left: 20px;
+ padding-right: 20px;
+ padding-bottom: 20px;
+ float : left;
+}
+
+div.footer
+{
+ width: 1000px;
+ height: 30px;
+ padding-top: 20px;
+ padding-left: 20px;
+ padding-right: 20px;
+ padding-bottom: 20px;
+ margin: auto;
+ text-align: center;
+ border: 0px solid green;
+ position:static;
+ margin-top: 50px;
+ margin-bottom: 20px;
+ background: yellow;
+}

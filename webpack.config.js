@@ -7,6 +7,7 @@ module.exports = {
     context: CLIENT_DIR,
 	entry: {
     index: './index.js',
+	login: './login.js',
 	},
 
     output: {
@@ -19,7 +20,9 @@ module.exports = {
         extensions: ['.js']
     },
 	module: {
-         loaders: [{
+		 /*rules:[{*/
+         loaders: [
+		 {
              test: /\.jsx?$/,
              //exclude: /node_modules/,
              loader: 'babel-loader',
@@ -27,9 +30,14 @@ module.exports = {
 			 query: {
                presets: ['es2015', 'react']
 			   
-            }
+               }
 			
-         }]
+         },
+		 {
+			 test:/\.(jpe?g|png|gif|svg)$/,
+			 use: 'file-loader'
+		 }
+		 ]
 		}
 	
 };
