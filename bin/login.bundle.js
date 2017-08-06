@@ -32943,25 +32943,44 @@ var _jquery = __webpack_require__(186);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _chat = __webpack_require__(195);
+
+var _chat2 = _interopRequireDefault(_chat);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//var $ = require("jquery");
+__webpack_require__(196); //var $ = require("jquery");
 
-__webpack_require__(195);
-__webpack_require__(198);
+__webpack_require__(199);
 
-function focus() {
-    document.getElementById("username").focus();
+window.focus = function () {
+	window.alert("hi");
+	document.getElementById("username").focus();
 }
+
+//document.write("It works.");
+
+(function ($) {
+	$(document).ready(function () {
+
+		window.alert("hii");
+	});
+})(jquery);
 
 /***/ }),
 /* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__.p + "images/chat.jpeg";
+
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(196);
+var content = __webpack_require__(197);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -32986,7 +33005,7 @@ if(false) {
 }
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(188)(undefined);
@@ -32994,19 +33013,19 @@ exports = module.exports = __webpack_require__(188)(undefined);
 
 
 // module
-exports.push([module.i, "body{\r\npadding: 0px;\r\nmargin: 0px;\r\nbackground:url(" + __webpack_require__(197) + ");\r\nbackground-size: 1500px 1000px;\r\nbackground-repeat: no-repeat;\r\n }\r\n\r\n.header\r\n{\r\n width: 1350px;\r\n height: 40px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n padding-bottom: 20px;\r\n}\r\n\r\ndiv.headerText\r\n{\r\n  width: 500px;\r\n height: 40px;\r\n // background-color: green;\r\n margin-left:350px;\r\n padding-top: 15px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\n\r\ndiv.largeBox\r\n{\r\n width: 800px;\r\n height: 300px;\r\n padding-top: 40px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n margin-bottom: 20px;\r\n background: white;\r\n margin: auto;\r\n text-align: center;\r\n margin-top: 100px;\r\n background:#DAF7A6;\r\n}\r\ndiv.smallBox_left\r\n{\r\n  width: 300px;\r\n height: 250px;\r\n background-color: white;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\ndiv.smallBox_center\r\n{\r\n  width: 300px;\r\n height: 100px;\r\n background-color: #f2ea7b;\r\n margin-left:40px;\r\n margin-top:90px;\r\n padding-top: 10px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\ndiv.footer\r\n{\r\n width: 1000px;\r\n height: 30px;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n margin: auto;\r\n text-align: center;\r\n border: 0px solid green;\r\n position:static;\r\n margin-top: 50px;\r\n margin-bottom: 20px;\r\n background: yellow;\r\n}\r\n", ""]);
+exports.push([module.i, "body{\r\npadding: 0px;\r\nmargin: 0px;\r\nbackground:url(" + __webpack_require__(198) + ");\r\nbackground-size: 1500px 1000px;\r\nbackground-repeat: no-repeat;\r\n }\r\n\r\n.header\r\n{\r\n width: 1350px;\r\n height: 40px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n padding-bottom: 20px;\r\n}\r\n\r\ndiv.headerText\r\n{\r\n  width: 500px;\r\n height: 40px;\r\n // background-color: green;\r\n margin-left:350px;\r\n padding-top: 15px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\n\r\ndiv.largeBox\r\n{\r\n width: 800px;\r\n height: 300px;\r\n padding-top: 40px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n margin-bottom: 20px;\r\n background: white;\r\n margin: auto;\r\n text-align: center;\r\n margin-top: 100px;\r\n background:#DAF7A6;\r\n}\r\ndiv.smallBox_left\r\n{\r\n  width: 300px;\r\n height: 250px;\r\n background-color: white;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\ndiv.smallBox_center\r\n{\r\n  width: 300px;\r\n height: 100px;\r\n background-color: #f2ea7b;\r\n margin-left:40px;\r\n margin-top:90px;\r\n padding-top: 10px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\ndiv.footer\r\n{\r\n width: 1000px;\r\n height: 30px;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n margin: auto;\r\n text-align: center;\r\n border: 0px solid green;\r\n position:static;\r\n margin-top: 50px;\r\n margin-bottom: 20px;\r\n background: yellow;\r\n}\r\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "90cbd00e2f01d338b5d5dad5f7481717.jpg";
+module.exports = __webpack_require__.p + "images/background.jpg";
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "login.html";

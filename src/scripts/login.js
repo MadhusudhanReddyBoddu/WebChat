@@ -2,10 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Index from './Index.jsx';
 import $ from "jquery"; //var $ = require("jquery");
+import chatimage from '../images/chat.jpeg';
 
 require('!style-loader!css-loader!./../css/login.css');
 require("file-loader?name=login.html!./../views/login.html");
 
-function focus() {
+window.focus = function() {
+	window.alert("hi");	
     document.getElementById("username").focus();
 }
+
+
+//document.write("It works.");
+
+(function($) {
+$(document).ready(function(){
+	
+	window.alert("hii");
+	
+});
+})(jquery);
