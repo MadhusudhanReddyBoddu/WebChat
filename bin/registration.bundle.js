@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 191);
+/******/ 	return __webpack_require__(__webpack_require__.s = 199);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -32854,71 +32854,16 @@ module.exports = function (css) {
 };
 
 /***/ }),
-/* 190 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-   value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(82);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Index = function (_React$Component) {
-   _inherits(Index, _React$Component);
-
-   function Index() {
-      _classCallCheck(this, Index);
-
-      return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-   }
-
-   _createClass(Index, [{
-      key: 'render',
-      value: function render() {
-         return _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-               'h2',
-               null,
-               'Hi'
-            ),
-            _react2.default.createElement(
-               'h1',
-               null,
-               'Students Welcome back.'
-            ),
-            _react2.default.createElement(
-               'h2',
-               null,
-               'how are you'
-            )
-         );
-      }
-   }]);
-
-   return Index;
-}(_react2.default.Component);
-
-exports.default = Index;
-
-/***/ }),
-/* 191 */
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32932,10 +32877,6 @@ var _reactDom = __webpack_require__(99);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Index = __webpack_require__(190);
-
-var _Index2 = _interopRequireDefault(_Index);
-
 var _jquery = __webpack_require__(185);
 
 var _jquery2 = _interopRequireDefault(_jquery);
@@ -32944,21 +32885,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //var $ = require("jquery");
 
-__webpack_require__(192);
+__webpack_require__(200);
+// // require('/../css/registration.css');
 
-//require("file-loader?name=index.html!./../views/index.html");
-
-
-_reactDom2.default.render(_react2.default.createElement(_Index2.default, null), document.getElementById('app'));
+// require("file-loader?name=index.html!./../views/index.html");
 
 /***/ }),
-/* 192 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(193);
+var content = __webpack_require__(201);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -32972,8 +32911,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js!./index.css", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js!./index.css");
+		module.hot.accept("!!../../node_modules/css-loader/index.js!./registration.css", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!./registration.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -32983,7 +32922,7 @@ if(false) {
 }
 
 /***/ }),
-/* 193 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(187)(undefined);
@@ -32991,10 +32930,16 @@ exports = module.exports = __webpack_require__(187)(undefined);
 
 
 // module
-exports.push([module.i, "body\r\n{\r\n\tbackground:green;\r\n}", ""]);
+exports.push([module.i, "\r\nbody{\r\n\tbackground-image: url(" + __webpack_require__(202) + ");\r\n\tbackground-size: cover;\r\n\tbackground-position: center;\r\n\tfont-family: lato;\r\n}\r\n.navbar-text{\r\n\tfont-size: 20px;\r\n}\r\n.container{\r\n\tpadding: 10px;\r\n\tmargin-top: 10px;\r\n\tbackground-color:white;\r\n\twidth: 500px;\r\n\r\n}\r\n.navbar-text{\r\n\ttext-align: center;\r\n}\r\n.form{\r\n\ttext-align: left;\r\n\tfont-size: 10px;\r\n}", ""]);
 
 // exports
 
+
+/***/ }),
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/network.jpg";
 
 /***/ })
 /******/ ]);
