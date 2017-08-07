@@ -32953,34 +32953,22 @@ __webpack_require__(196);
 //require("file-loader?name=login.html!./../views/login.html");
 
 
-/*
-window.focus = function() {
-	window.alert("hi");	
-   // document.getElementById("username").focus();
-   $('username').focus();
-}
-
-
-//document.write("It works.");
-
-(function($) {
-$(document).ready(function(){
-	
-	window.alert("hii");
-	
-});
-});
-
-*/
-
+//MAking Javascript function global
 //var $ = require("jquery");
-function helloWorld() {
-  alert('Hello, world!');
-}
+window.loginFocusing = function () {
 
-module.exports = {
-  helloWorld: helloWorld
+   window.alert("hi from javascript");
+   document.getElementById("loginusername").focus();
 };
+
+//document.write("It works always.");
+
+
+(0, _jquery2.default)(function () {
+
+   window.alert("hi from Jquery");
+   //$("#loginpassword").focus();
+});
 
 /***/ }),
 /* 195 */

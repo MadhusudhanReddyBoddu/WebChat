@@ -8,30 +8,21 @@ require('!style-loader!css-loader!./../css/login.css');
 //require("file-loader?name=login.html!./../views/login.html");
 
 
-/*
-window.focus = function() {
-	window.alert("hi");	
-   // document.getElementById("username").focus();
-   $('username').focus();
+//MAking Javascript function global
+window.loginFocusing = function(){
+	
+   window.alert("hi from javascript");	
+   document.getElementById("loginusername").focus();
+   
 }
 
 
-//document.write("It works.");
+//document.write("It works always.");
 
-(function($) {
-$(document).ready(function(){
-	
-	window.alert("hii");
-	
+
+$(function(){
+
+   window.alert("hi from Jquery");	   
+   //$("#loginpassword").focus();
+
 });
-});
-
-*/
-
-function helloWorld() {
-    alert( 'Hello, world!' );
-}
-
-module.exports = {
-  helloWorld: helloWorld,
-};
