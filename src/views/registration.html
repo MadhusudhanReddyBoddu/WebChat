@@ -10,64 +10,68 @@
 </head>
 
 <body>
+ <div class="header">
+    <div class="headerMessage">
+	You are successfully registered. Please <a href="/">click here</a></td> to go to login page.
+	</div>
+    <div class="headerText">
+      <font size="5">Web Chat</font>
+    </div>
+</div>
 
-
-  <nav class="navbar navbar-light bg-faded">
-    <span class="navbar-text">
-    Web Chat Registration Page
-    </span>
-  </nav>
+<div class="lineText">
+<p><h3 style="color:green"><p>Register here.</p></h3></p>
+</div>
 
   <div class="container">
-  <form>
+  <form action="http://127.0.0.1:8080/registration" method="POST">
     <div class="form-group row">
       <label for="FirstnameInput" class="col-sm-2 col-form-label ">Firstname</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="FirstnameInput" placeholder="">
+        <input type="text" name="firstname" class="form-control" id="FirstnameInput" placeholder="">
       </div>
     </div>
     <div class="form-group row">
       <label for="LastnameInput" class="col-sm-2 col-form-label ">Lastname</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control " id="LastnameInput" placeholder="">
+        <input type="text" name="lastname" class="form-control " id="LastnameInput" placeholder="">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="EmailInput" class="col-sm-2 col-form-label ">Email</label>
       <div class="col-sm-10">
-        <input type="email" class="form-control " id="EmailInput" placeholder="">
+        <input type="email" name="email" class="form-control " id="EmailInput" placeholder="">
       </div>
     </div>
     
     <div class="form-group row">
       <label for="PhoneInput" class="col-sm-2 col-form-label ">Phone </label>
       <div class="col-sm-10">
-        <input type="number" class="form-control " id="PhoneInput" placeholder="">
+        <input type="number" name="phone" class="form-control " id="PhoneInput" placeholder="">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="PasswordInput" class="col-sm-2 col-form-label ">Password</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control " id="PasswordInput" placeholder="">
+        <input type="password" name="password" class="form-control " id="PasswordInput" placeholder="">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="ReenterPasswordInput" class="col-sm-2 col-form-label ">Re-Enter Passsword</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control " id="ReenterPasswordInput" placeholder="">
+        <input type="password" name="reenterpassword" class="form-control " id="ReenterPasswordInput" placeholder="">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="" class="col-sm-2 col-form-label "></label>
       <div class="col-sm-10">
-        <input type="submit" class="form-control form-control-lg btn btn-primary" id="submit" placeholder="">
+        <input type="submit" class="form-control form-control-lg btn btn-primary" id="registersubmit" placeholder="">
       </div>
     </div>
-
 
 
 

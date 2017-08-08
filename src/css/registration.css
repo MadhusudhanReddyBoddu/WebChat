@@ -1,10 +1,59 @@
 
 body{
 	background-image: url("../images/network.jpg");
-	background-size: cover;
+	background-size: 1500px 1000px;
 	background-position: center;
-	font-family: lato;
 }
+
+.header
+{
+ width: 1350px;
+ height: 60px;
+ background-color: #e8b445;
+ margin-left:10px;
+ margin-right:10px;
+ padding-top: 0px;
+ padding-bottom: 20px;
+ overflow: hidden;
+}
+
+div.headerMessage
+{
+  width: 1350px;
+  height:40px;
+ background-color: #71f28b;
+ margin-left:0;
+ float : left;
+ text-align: center;
+}
+
+div.headerText
+{
+  width: 500px;
+ // background-color: green;
+ margin-left:350px;
+ padding-top: 10px;
+ float : left;
+ text-align: center;
+}
+
+
+div.lineText
+{
+ width: 300px;
+ height: 20px;
+ padding-top: 5px;
+ padding-left: 20px;
+ padding-right: 20px;
+ padding-bottom: 30px;
+ margin: auto;
+ text-align: center;
+ border: 0px solid green;
+ position:static;
+ margin-top: 50px;
+ margin-bottom: 30px;
+}
+
 .navbar-text{
 	font-size: 20px;
 }

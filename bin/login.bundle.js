@@ -32957,8 +32957,8 @@ __webpack_require__(196);
 //var $ = require("jquery");
 window.loginFocusing = function () {
 
-   window.alert("hi from javascript");
-   document.getElementById("loginusername").focus();
+  //window.alert("hi from javascript");	
+  document.getElementById("loginusername").focus();
 };
 
 //document.write("It works always.");
@@ -32966,8 +32966,9 @@ window.loginFocusing = function () {
 
 (0, _jquery2.default)(function () {
 
-   window.alert("hi from Jquery");
-   //$("#loginpassword").focus();
+  // window.alert("hi from Jquery");	   
+  //$("#loginpassword").focus();
+
 });
 
 /***/ }),

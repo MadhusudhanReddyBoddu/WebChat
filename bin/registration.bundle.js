@@ -32890,6 +32890,27 @@ __webpack_require__(200);
 
 // require("file-loader?name=index.html!./../views/index.html");
 
+
+(0, _jquery2.default)(function () {
+
+  (0, _jquery2.default)(".headerMessage").hide();
+  var allcookies = document.cookie;
+  var cookiearray = allcookies.split(';');
+
+  for (var i = 0; i < cookiearray.length; i++) {
+    var name = cookiearray[i].split('=')[0];
+    var value = cookiearray[i].split('=')[1];
+    console.log("Key is : " + name + " and Value is : " + value);
+  }
+
+  if (value == "pleaselogin") {
+    // console.log ("All Cookies : " + allcookies );
+    (0, _jquery2.default)(".header").css("height", 85);
+    console.log("Displaying your are successfully registered please click here to login ");
+    (0, _jquery2.default)(".headerMessage").show();
+  }
+});
+
 /***/ }),
 /* 200 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -32930,7 +32951,7 @@ exports = module.exports = __webpack_require__(187)(undefined);
 
 
 // module
-exports.push([module.i, "\r\nbody{\r\n\tbackground-image: url(" + __webpack_require__(202) + ");\r\n\tbackground-size: cover;\r\n\tbackground-position: center;\r\n\tfont-family: lato;\r\n}\r\n.navbar-text{\r\n\tfont-size: 20px;\r\n}\r\n.container{\r\n\tpadding: 10px;\r\n\tmargin-top: 10px;\r\n\tbackground-color:white;\r\n\twidth: 500px;\r\n\r\n}\r\n.navbar-text{\r\n\ttext-align: center;\r\n}\r\n.form{\r\n\ttext-align: left;\r\n\tfont-size: 10px;\r\n}", ""]);
+exports.push([module.i, "\r\nbody{\r\n\tbackground-image: url(" + __webpack_require__(202) + ");\r\n\tbackground-size: 1500px 1000px;\r\n\tbackground-position: center;\r\n}\r\n\r\n.header\r\n{\r\n width: 1350px;\r\n height: 60px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n padding-bottom: 20px;\r\n overflow: hidden;\r\n}\r\n\r\ndiv.headerMessage\r\n{\r\n  width: 1350px;\r\n  height:40px;\r\n background-color: #71f28b;\r\n margin-left:0;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\ndiv.headerText\r\n{\r\n  width: 500px;\r\n // background-color: green;\r\n margin-left:350px;\r\n padding-top: 10px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\n\r\ndiv.lineText\r\n{\r\n width: 300px;\r\n height: 20px;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 30px;\r\n margin: auto;\r\n text-align: center;\r\n border: 0px solid green;\r\n position:static;\r\n margin-top: 50px;\r\n margin-bottom: 30px;\r\n}\r\n\r\n.navbar-text{\r\n\tfont-size: 20px;\r\n}\r\n.container{\r\n\tpadding: 10px;\r\n\tmargin-top: 10px;\r\n\tbackground-color:white;\r\n\twidth: 500px;\r\n\r\n}\r\n.navbar-text{\r\n\ttext-align: center;\r\n}\r\n.form{\r\n\ttext-align: left;\r\n\tfont-size: 10px;\r\n}", ""]);
 
 // exports
 

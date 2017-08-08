@@ -11,7 +11,7 @@ require('!style-loader!css-loader!./../css/login.css');
 //MAking Javascript function global
 window.loginFocusing = function(){
 	
-   window.alert("hi from javascript");	
+   //window.alert("hi from javascript");	
    document.getElementById("loginusername").focus();
    
 }
@@ -22,7 +22,7 @@ window.loginFocusing = function(){
 
 $(function(){
 
-   window.alert("hi from Jquery");	   
+  // window.alert("hi from Jquery");	   
    //$("#loginpassword").focus();
 
 });
