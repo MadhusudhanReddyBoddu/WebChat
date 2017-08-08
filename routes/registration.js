@@ -10,17 +10,23 @@ var register_success = 0;
 router.use(cookieParser());
 
 router.get('/', function(req, res){
-	  console.log("register called");
+	 
 	  
 	  //Clearing cookie
 	    res.clearCookie("register_message");
 		
 	  //Set cookie to display message at client
 	  //If registration is success
+	  
 	  if (register_success == 1)
 	  {
 	     res.cookie('register_message', 'pleaselogin');
+		 console.log("Cookie set");
 		 register_success = 0;
+	  }
+	  else
+	  {
+		  console.log("Cookie not set" + register_success);
 	  }
 	   
 	  res.sendFile(path.join(SRC_DIR,"registration.html"));
@@ -29,7 +35,7 @@ router.get('/', function(req, res){
 
 router.post('/', urlencodedParser, function (req, res){
 	
-	console.log("database called");
+	
 	
 	//Fetching form data
        var firstname = req.body.firstname;  
@@ -49,16 +55,23 @@ router.post('/', urlencodedParser, function (req, res){
            var myobj = { firstname: firstname, lastname: lastname, email: email, phone: phone, password: password };
            db.collection("Profile").insertOne(myobj, function(err, res) {
              if (err) throw err;
-			 console.log("database entered");
+			 
              db.close();
+			 
+			 //Here we have check whether user already exist also.
+			 register_success = 1;
+			 console.log("Registered Successfully");
+			 
             });
         });
 		
-		//Set this variable to 1 only when registration is success.
-	    register_success = 1;
+		
+	    
 	
-       // res.end("User registered successfully");
+       // *****Always user stays in registration page but with different messages based on "rigister_success" value.
+	    setTimeout(function(){
 	 	res.redirect('http://localhost:8080/registration');
+		}, 2000);
 		
 		
 		//res.render("/register");

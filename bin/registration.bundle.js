@@ -32894,6 +32894,7 @@ __webpack_require__(200);
 (0, _jquery2.default)(function () {
 
   (0, _jquery2.default)(".headerMessage").hide();
+
   var allcookies = document.cookie;
   var cookiearray = allcookies.split(';');
 

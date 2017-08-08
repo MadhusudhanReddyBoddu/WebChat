@@ -10,7 +10,8 @@ require("!style-loader!css-loader!./../css/registration.css");
 
 $(function(){
 	
-   $(".headerMessage").hide();
+   $(".headerMessage").hide();	
+   
    var allcookies = document.cookie;
    var cookiearray = allcookies.split(';');
    
@@ -27,8 +28,9 @@ $(function(){
 	  $(".header").css("height", 85);
 	  console.log ("Displaying your are successfully registered please click here to login ");
 	  $(".headerMessage").show();
+	  
    }
-
+   
 });
 
 

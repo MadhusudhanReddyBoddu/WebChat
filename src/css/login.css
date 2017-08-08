@@ -17,6 +17,16 @@ background-repeat: no-repeat;
  padding-bottom: 20px;
 }
 
+div.headerMessage
+{
+  width: 1350px;
+  height:40px;
+ background-color: #F45959;
+ margin-left:0;
+ float : left;
+ text-align: center;
+}
+
 div.headerText
 {
   width: 500px;

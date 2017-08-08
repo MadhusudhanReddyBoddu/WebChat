@@ -32966,9 +32966,22 @@ window.loginFocusing = function () {
 
 (0, _jquery2.default)(function () {
 
-  // window.alert("hi from Jquery");	   
-  //$("#loginpassword").focus();
+  (0, _jquery2.default)(".headerMessage").hide();
+  var allcookies = document.cookie;
+  var cookiearray = allcookies.split(';');
 
+  for (var i = 0; i < cookiearray.length; i++) {
+    var name = cookiearray[i].split('=')[0];
+    var value = cookiearray[i].split('=')[1];
+    console.log("Key is : " + name + " and Value is : " + value);
+  }
+
+  if (value == "incorrectCredentials") {
+    // console.log ("All Cookies : " + allcookies );
+    (0, _jquery2.default)(".header").css("height", 85);
+    console.log("Login failed ");
+    (0, _jquery2.default)(".headerMessage").show();
+  }
 });
 
 /***/ }),
@@ -33017,7 +33030,7 @@ exports = module.exports = __webpack_require__(187)(undefined);
 
 
 // module
-exports.push([module.i, "body{\r\npadding: 0px;\r\nmargin: 0px;\r\nbackground:url(" + __webpack_require__(198) + ");\r\nbackground-size: 1500px 1000px;\r\nbackground-repeat: no-repeat;\r\n }\r\n\r\n.header\r\n{\r\n width: 1350px;\r\n height: 40px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n padding-bottom: 20px;\r\n}\r\n\r\ndiv.headerText\r\n{\r\n  width: 500px;\r\n height: 40px;\r\n // background-color: green;\r\n margin-left:350px;\r\n padding-top: 15px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\n\r\ndiv.largeBox\r\n{\r\n width: 800px;\r\n height: 300px;\r\n padding-top: 40px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n margin-bottom: 20px;\r\n background: white;\r\n margin: auto;\r\n text-align: center;\r\n margin-top: 100px;\r\n background:#DAF7A6;\r\n}\r\ndiv.smallBox_left\r\n{\r\n  width: 300px;\r\n height: 250px;\r\n background-color: white;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\ndiv.smallBox_center\r\n{\r\n  width: 300px;\r\n height: 100px;\r\n background-color: #f2ea7b;\r\n margin-left:40px;\r\n margin-top:90px;\r\n padding-top: 10px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\ndiv.footer\r\n{\r\n width: 1000px;\r\n height: 30px;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n margin: auto;\r\n text-align: center;\r\n border: 0px solid green;\r\n position:static;\r\n margin-top: 50px;\r\n margin-bottom: 20px;\r\n background: yellow;\r\n}\r\n", ""]);
+exports.push([module.i, "body{\r\npadding: 0px;\r\nmargin: 0px;\r\nbackground:url(" + __webpack_require__(198) + ");\r\nbackground-size: 1500px 1000px;\r\nbackground-repeat: no-repeat;\r\n }\r\n\r\n.header\r\n{\r\n width: 1350px;\r\n height: 40px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n padding-bottom: 20px;\r\n}\r\n\r\ndiv.headerMessage\r\n{\r\n  width: 1350px;\r\n  height:40px;\r\n background-color: #F45959;\r\n margin-left:0;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\ndiv.headerText\r\n{\r\n  width: 500px;\r\n height: 40px;\r\n // background-color: green;\r\n margin-left:350px;\r\n padding-top: 15px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\n\r\ndiv.largeBox\r\n{\r\n width: 800px;\r\n height: 300px;\r\n padding-top: 40px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n margin-bottom: 20px;\r\n background: white;\r\n margin: auto;\r\n text-align: center;\r\n margin-top: 100px;\r\n background:#DAF7A6;\r\n}\r\ndiv.smallBox_left\r\n{\r\n  width: 300px;\r\n height: 250px;\r\n background-color: white;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\ndiv.smallBox_center\r\n{\r\n  width: 300px;\r\n height: 100px;\r\n background-color: #f2ea7b;\r\n margin-left:40px;\r\n margin-top:90px;\r\n padding-top: 10px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\ndiv.footer\r\n{\r\n width: 1000px;\r\n height: 30px;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n margin: auto;\r\n text-align: center;\r\n border: 0px solid green;\r\n position:static;\r\n margin-top: 50px;\r\n margin-bottom: 20px;\r\n background: yellow;\r\n}\r\n", ""]);
 
 // exports
 

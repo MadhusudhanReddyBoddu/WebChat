@@ -7,10 +7,15 @@
 </head>
 <body class="body" onload="loginFocusing()">
 
+
+
 <div class="header">
-<div class="headerText">
-<font size="6">Web Chat</font>
-</div>
+    <div class="headerMessage">
+	Login failed !!. Please enter Correct Credentials.
+	</div>
+    <div class="headerText">
+    <font size="6">Web Chat</font>
+    </div>
 </div>
 
 <div class="largeBox">
@@ -18,7 +23,7 @@
     <img src="./images/chat.jpeg" width="250" height="250" />
   </div>
   <div class="smallBox_center">
-     <form>
+     <form action="http://127.0.0.1:8080" method="POST">
      <table>
        <tr>
         <td>Username</td><td><center><input type="text" value="" name="loginusername" id="loginusername"></center><td>
