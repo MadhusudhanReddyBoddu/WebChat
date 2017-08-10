@@ -12,7 +12,8 @@ app.use(express.static(DIST_DIR));
 var things = require('./routes/things.js');
 
 var login = require('./routes/login.js'); 
-var registration = require('./routes/registration.js'); 
+var registration = require('./routes/registration.js');
+var home = require('./routes/home.js'); 
 
 
 
@@ -20,6 +21,8 @@ var registration = require('./routes/registration.js');
 app.use('/things', things);
 app.use('/', login);
 app.use('/registration', registration); 
+app.use('/home', home); 
+
 
 //Now we are using the routes present in external js file (things.js)
 

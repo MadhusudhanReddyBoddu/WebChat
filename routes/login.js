@@ -52,7 +52,7 @@ router.post('/', urlencodedParser, function(req, res){
 			  {
 				  console.log("login success");
 				  login_success = 1;
-				  res.end('Home Page');
+				  res.redirect('http://localhost:8080/home');
 				  
 			  }
 			  else
