@@ -1,6 +1,6 @@
 div.header_header
 {
- width: 1325px;
+ width: 1310px;
  height: 40px;
  background-color: #e8b445;
  margin-left:10px;
@@ -16,21 +16,21 @@ div.header_headerText
   width: 500px;
  height: 40px;
  //background-color: green;
- margin-left:350px;
+ margin-left:390px;
  padding-top: 15px;
  float : left;
  text-align: center;
 }
 
-ul {
+div.header_list ul {
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding-left: 45px;
     overflow: hidden;
     background-color:#e0dcc7;
 }
 
-li {
+div.header_list li {
     float: left;
 }
 

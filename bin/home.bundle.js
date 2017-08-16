@@ -26948,51 +26948,55 @@ var Header = function (_React$Component) {
           )
         ),
         _react2.default.createElement(
-          'ul',
-          null,
+          'div',
+          { className: 'header_list' },
           _react2.default.createElement(
-            'li',
+            'ul',
             null,
             _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/home', activeStyle: { color: 'red' }, className: 'navLink' },
-              'Home'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                { to: '/home', activeStyle: { color: 'red' }, className: 'navLink' },
+                'Home'
+              )
+            ),
             _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/profile', activeStyle: { color: 'red' }, className: 'navLink' },
-              'Profile'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                { to: '/profile', activeStyle: { color: 'red' }, className: 'navLink' },
+                'Profile'
+              )
+            ),
             _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/friends', activeStyle: { color: 'red' }, className: 'navLink' },
-              'Friends'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                { to: '/friends', activeStyle: { color: 'red' }, className: 'navLink' },
+                'Friends'
+              )
+            ),
             _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/settings', activeStyle: { color: 'red' }, className: 'navLink' },
-              'Settings'
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                { to: '/settings', activeStyle: { color: 'red' }, className: 'navLink' },
+                'Settings'
+              )
+            ),
             _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/help', activeStyle: { color: 'red' }, className: 'navLink' },
-              'Help'
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                { to: '/help', activeStyle: { color: 'red' }, className: 'navLink' },
+                'Help'
+              )
             )
           )
         ),
@@ -27133,10 +27137,18 @@ var Home = function (_React$Component) {
 
       this.state.socket.on('new message', function (msg) {
         var li = document.createElement("li");
-        var br = document.createElement("br");
+        //var br=document.createElement("br");
         li.appendChild(document.createTextNode(msg));
         document.getElementById("messages").appendChild(li);
-        document.getElementById("messages").appendChild(br);
+        // document.getElementById("messages").appendChild(br);
+        var elem = document.getElementsByClassName('messages')[0];
+        elem.scrollTop = elem.scrollHeight;
+      });
+
+      $(document).ready(function () {
+        $('#message').keypress(function (e) {
+          if (e.keyCode == 13) $('#send').click();
+        });
       });
     }
   }, {
@@ -27178,15 +27190,31 @@ var Home = function (_React$Component) {
           null,
           'Welcome to WebChat HomePage!'
         ),
-        _react2.default.createElement('ul', { id: 'messages' }),
         _react2.default.createElement(
           'div',
-          { className: 'messages' },
-          _react2.default.createElement('input', { id: 'message', autoComplete: 'off' }),
+          { className: 'chatbox' },
           _react2.default.createElement(
-            'button',
-            { onClick: this.send },
-            'SEND'
+            'div',
+            { className: 'messages' },
+            _react2.default.createElement('ul', { id: 'messages' })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'messagesfixed' },
+            _react2.default.createElement(
+              'span',
+              null,
+              _react2.default.createElement('input', { id: 'message', placeholder: 'Enter text here...', autoComplete: 'off' })
+            ),
+            _react2.default.createElement(
+              'span',
+              null,
+              _react2.default.createElement(
+                'button',
+                { id: 'send', onClick: this.send },
+                'SEND'
+              )
+            )
           )
         )
       );
@@ -27458,7 +27486,7 @@ exports = module.exports = __webpack_require__(86)(undefined);
 
 
 // module
-exports.push([module.i, "div.header_header\r\n{\r\n width: 1325px;\r\n height: 40px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n margin-top:0px;\r\n padding-bottom: 20px;\r\n}\r\n\r\n\r\ndiv.header_headerText\r\n{\r\n  width: 500px;\r\n height: 40px;\r\n //background-color: green;\r\n margin-left:350px;\r\n padding-top: 15px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\nul {\r\n    list-style-type: none;\r\n    margin: 0;\r\n    padding: 0;\r\n    overflow: hidden;\r\n    background-color:#e0dcc7;\r\n}\r\n\r\nli {\r\n    float: left;\r\n}\r\n\r\nli .navLink {\r\n    display: block;\r\n    padding-left: 100px;\r\n\tpadding-right:100px;\r\n\tpadding-bottom:10px;\r\n\tpadding-top:15px;\r\n\tdisplay: block;\r\n    color: black;\r\n    text-align: center;\r\n    text-decoration: none;\r\n\r\n}\r\nli .navLink:hover {\r\n    background-color: green;\r\n}", ""]);
+exports.push([module.i, "div.header_header\r\n{\r\n width: 1310px;\r\n height: 40px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n margin-top:0px;\r\n padding-bottom: 20px;\r\n}\r\n\r\n\r\ndiv.header_headerText\r\n{\r\n  width: 500px;\r\n height: 40px;\r\n //background-color: green;\r\n margin-left:390px;\r\n padding-top: 15px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\ndiv.header_list ul {\r\n    list-style-type: none;\r\n    margin: 0;\r\n    padding-left: 45px;\r\n    overflow: hidden;\r\n    background-color:#e0dcc7;\r\n}\r\n\r\ndiv.header_list li {\r\n    float: left;\r\n}\r\n\r\nli .navLink {\r\n    display: block;\r\n    padding-left: 100px;\r\n\tpadding-right:100px;\r\n\tpadding-bottom:10px;\r\n\tpadding-top:15px;\r\n\tdisplay: block;\r\n    color: black;\r\n    text-align: center;\r\n    text-decoration: none;\r\n\r\n}\r\nli .navLink:hover {\r\n    background-color: green;\r\n}", ""]);
 
 // exports
 
@@ -27503,7 +27531,7 @@ exports = module.exports = __webpack_require__(86)(undefined);
 
 
 // module
-exports.push([module.i, "/*\r\ndiv \r\n{ background: #000;\r\n padding: 3px;\r\n position: fixed; \r\n bottom: 0;\r\n width: 100%;\r\n }\r\ndiv input\r\n { border: 0; \r\n padding: 10px;\r\n width: 90%;\r\n margin-right: .5%; \r\n }\r\ndiv button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }\r\n#messages { list-style-type: none; margin: 0; padding: 0; }\r\n#messages li { padding: 5px 10px; }\r\n#messages li:nth-child(odd) { background: #eee; }\r\n*/\r\n\r\ndiv .messages \r\n{ background: #000;\r\n padding: 3px;\r\n position: fixed; \r\n bottom: 0;\r\n width: 100%;\r\n }\r\ndiv input\r\n { border: 0; \r\n padding: 10px;\r\n width: 90%;\r\n margin-right: .5%; \r\n }\r\ndiv button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }\r\n#messages { \r\nlist-style-type: \r\nnone; margin: 0; \r\npadding: 0; \r\n}\r\n\r\n#messages li { \r\ndisplay: block;\r\n }\r\n \r\n#messages li:nth-child(odd) {\r\n\tbackground: #eee; \r\n\t}", ""]);
+exports.push([module.i, " div .chatbox\r\n {\r\n\t \r\n width: 450px;\r\n height: 450px;\r\n background-color: red;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \t\r\n }\r\n \r\n div.messages\r\n {\r\n width: 350px;\r\n height: 380px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n }\r\n \r\n \r\n div .messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 380px;\r\n height:40px;\r\n }\r\n \r\n div .messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 300px; \r\n height: 25px;\r\n }\r\n \r\n div .messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }", ""]);
 
 // exports
 

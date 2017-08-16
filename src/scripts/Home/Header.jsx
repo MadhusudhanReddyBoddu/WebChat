@@ -17,7 +17,7 @@ class Header extends React.Component {
    </div>
    
    
-    
+    <div className="header_list">
       <ul>
         <li><NavLink to='/home' activeStyle={{ color: 'red' }} className="navLink">Home</NavLink></li>
         <li><NavLink to='/profile' activeStyle={{ color: 'red' }} className="navLink">Profile</NavLink></li>
@@ -25,7 +25,7 @@ class Header extends React.Component {
 		<li><NavLink to='/settings' activeStyle={{ color: 'red' }} className="navLink">Settings</NavLink></li>
         <li><NavLink to='/help' activeStyle={{ color: 'red' }} className="navLink">Help</NavLink></li>
       </ul>
-   
+    </div>
 	
 	<hr />
 	

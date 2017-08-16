@@ -7,18 +7,28 @@ constructor(props) {
     this.state = {messages: [],socket: io.connect('http://localhost:8080')};
 	this.send = this.send.bind(this)
   }
-  
+
 
 componentDidMount() {
      console.log('Component DID MOUNT!')
 	 
 	 this.state.socket.on('new message', function(msg){
      var li=document.createElement("li");
-	 var br=document.createElement("br");
+	 //var br=document.createElement("br");
      li.appendChild(document.createTextNode(msg));
      document.getElementById("messages").appendChild(li);
-	 document.getElementById("messages").appendChild(br);
+	// document.getElementById("messages").appendChild(br);
+	 var elem = document.getElementsByClassName('messages')[0];
+     elem.scrollTop = elem.scrollHeight;
      });
+	 
+	 $(document).ready(function(){
+       $('#message').keypress(function(e){
+          if(e.keyCode==13)
+            $('#send').click();
+         });
+     });
+	
 	 
    }
    
@@ -49,7 +59,6 @@ send() {
      
    }
   
-  
   //This calls socket.on('new message') function of server side. Here it's user defined function.
   this.state.socket.emit('new message', username +": "+ message);
   
@@ -57,22 +66,29 @@ send() {
   
    }
 	
+		
 	
  render() {
    return (
    
    
   <div>
-    <h2>Welcome to WebChat HomePage!</h2>
-	<ul id="messages"></ul>
-    <div className="messages">
-      <input id="message" autoComplete="off" />
-      <button onClick = {this.send}>SEND</button>
+      <h2>Welcome to WebChat HomePage!</h2>
+	 <div className="chatbox">
+	  <div className="messages">
+	    <ul id="messages"></ul>
+	  </div>
+      <div className="messagesfixed">
+        <span><input id="message" placeholder="Enter text here..." autoComplete="off" /></span><span><button id="send" onClick = {this.send}>SEND</button></span>
+      </div>
     </div>
   </div>
   
   
-)}
+   )
+  }
+
+
 }
 
 export default Home
