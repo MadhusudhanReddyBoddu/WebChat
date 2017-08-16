@@ -5,10 +5,19 @@ var SRC_DIR=path.join(__dirname, "../src/views");
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var cookieParser = require('cookie-parser'); 
+var session = require('express-session');
 var login_success = 0;
 
-
 router.use(cookieParser());
+
+router.use(session({ cookie: {
+    maxAge  : 24*60*60*1000
+  },
+  saveUninitialized: true,
+  resave: true,
+  secret: '1234567890QWERT'
+  }));
+
 
 router.get('/', function(req, res){
 	
@@ -52,7 +61,17 @@ router.post('/', urlencodedParser, function(req, res){
 			  {
 				  console.log("login success");
 				  login_success = 1;
-				  res.redirect('http://localhost:8080/home');
+				  
+				  //Setting session variables
+				  req.session.userid = username;
+				  req.session.username= result[0].firstname;
+				  console.log("Session userid at server set to :"+ req.session.userid);
+				  console.log("Session name at server set to :"+ req.session.username);
+					
+				  //res.sendFile(path.join(SRC_DIR,"home.html"));
+				  //  res.status(200).send(req.session);
+				  
+                   res.redirect('/home');	  
 				  
 			  }
 			  else

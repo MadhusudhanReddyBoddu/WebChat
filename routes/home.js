@@ -2,10 +2,40 @@ var express = require('express');
 var router = express.Router();
 var path = require("path");
 var SRC_DIR=path.join(__dirname, "../src/views");
+var cookieParser = require('cookie-parser'); 
+var session = require('express-session');
 
-router.get('/*', function(req, res){
+
+
+router.use(cookieParser());
+/*
+router.use(session({ cookie: {
+    maxAge  : 24*60*60*1000
+  },
+  saveUninitialized: true,
+  resave: true,
+  secret: '1234567890QWERT'
+  }));
+  
+ */ 
+router.get('/', function(req, res){
 	
-	res.sendFile(path.join(SRC_DIR,"home.html"));
+	
+	 //setting cookie at client side
+      res.clearCookie("user_id");
+	  res.clearCookie("user_name");
+	  
+	  res.cookie('user_id', req.session.userid);
+	  res.cookie('user_name', req.session.username);
+	  
+	  
+     // res.status(200).send(req.session);
+	  
+	  res.sendFile(path.join(SRC_DIR,"home.html"));
+	
+      console.log("Cookie userid at client set to :"+ req.session.userid);
+	  console.log("Cookie username at client set to :"+ req.session.username);
+	
 	
 });
 
