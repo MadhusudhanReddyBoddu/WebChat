@@ -18,7 +18,7 @@ componentDidMount() {
      li.appendChild(document.createTextNode(msg));
      document.getElementById("messages").appendChild(li);
 	// document.getElementById("messages").appendChild(br);
-	 var elem = document.getElementsByClassName('messages')[0];
+	 var elem = document.getElementsByClassName('home_messages')[0];
      elem.scrollTop = elem.scrollHeight;
      });
 	 
@@ -55,7 +55,7 @@ send() {
 		 console.log ("username for message set to: " + username);
 		 break;
 	 }
-	 console.log ("In jsx Key is :"+name+"and Value is : "+value);
+	// console.log ("In jsx Key is :"+name+"and Value is : "+value);
      
    }
   
@@ -73,15 +73,52 @@ send() {
    
    
   <div>
-      <h2>Welcome to WebChat HomePage!</h2>
-	 <div className="chatbox">
-	  <div className="messages">
-	    <ul id="messages"></ul>
-	  </div>
-      <div className="messagesfixed">
-        <span><input id="message" placeholder="Enter text here..." autoComplete="off" /></span><span><button id="send" onClick = {this.send}>SEND</button></span>
-      </div>
-    </div>
+	  
+    <div className="largeBox">
+	
+       <div className="smallbox_left">
+	   
+	    <div className="home_profile">
+	     <div className="home_profileimage">
+	       <input type="image" id="profile_image" src = " ../../images/background.jpg" className="profile_image" /><br/>
+		 </div>
+		 <div className="home_username">
+		   <p id="username" className="username">Welcome Anusha!!</p>
+		 </div>
+		</div>
+		
+		<div className="home_searchfriend">
+		  <input type="search" id="searchfriend" placeholder="Search friends here..." autoComplete="off" />
+		</div>
+		<hr />
+		
+		<div className="home_recentfriends">
+		 
+		</div>
+		
+		 
+       </div>
+	   
+	   
+       <div className="smallbox_center">Center box
+	    
+	     <div className="home_chatbox">
+	
+	        <div className="home_messages">
+	            <ul id="messages"></ul>
+            </div>
+			
+            <div className="home_messagesfixed">
+                <span><input id="message" placeholder="Enter text here..." autoComplete="off" /></span><span><button id="send" onClick = {this.send}>SEND</button></span>
+            </div>
+	  
+         </div>
+		 
+	   </div>
+	
+	</div>
+	
+	
   </div>
   
   
