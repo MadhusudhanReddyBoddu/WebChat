@@ -6,23 +6,55 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var cookieParser = require('cookie-parser'); 
 var session = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(session);
 var login_success = 0;
 
-router.use(cookieParser());
+router.use(cookieParser('This is a secret'));
 
-router.use(session({ cookie: {
-    maxAge  : 24*60*60*1000
-  },
-  saveUninitialized: true,
-  resave: true,
-  secret: '1234567890QWERT'
-  }));
-
+var store = new MongoDBStore(
+      {
+        uri: 'mongodb://localhost:27017/WebChat',
+        collection: 'mySessions'
+      });
+	  
+	  // Catch errors
+    store.on('error', function(error) {
+      assert.ifError(error);
+      assert.ok(false);
+    });
+	
+router.use(require('express-session')({
+      secret: 'This is a secret',
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+      },
+      store: store,
+      // Boilerplate options, see:
+      // * https://www.npmjs.com/package/express-session#resave
+      // * https://www.npmjs.com/package/express-session#saveuninitialized
+      resave: true,
+      saveUninitialized: true,
+	  unset: 'destroy' 
+    }));
+	
 
 router.get('/', function(req, res){
+	  
+	  
+	  
 	
-	//Clearing cookie
+	  console.log("Actual session id before login: "+ req.sessionID);   
+	
+	//Clearing cookies at client side.
 	    res.clearCookie("login_message");
+	    res.clearCookie("connect.sid");
+	    res.clearCookie("io");
+		res.clearCookie("user_name");
+		res.clearCookie("user_id");
+	    req.session = null;
+	  console.log("Actual session id before login destroyed:"); 
+		
+		
 	
 	if (login_success == 2)
 	  {
@@ -34,6 +66,10 @@ router.get('/', function(req, res){
      // res.sendFile(path.join(__dirname, '../bin', 'login.html'));
 	  
 });
+
+
+
+
 
 router.post('/', urlencodedParser, function(req, res){
 	
@@ -65,13 +101,19 @@ router.post('/', urlencodedParser, function(req, res){
 				  //Setting session variables
 				  req.session.userid = username;
 				  req.session.username= result[0].firstname;
+				  
+				  console.log("***********************Login*********************");
+	              console.log("");
+				   
+				  console.log("Actual session id at login: "+ req.sessionID);
 				  console.log("Session userid at server set to :"+ req.session.userid);
 				  console.log("Session name at server set to :"+ req.session.username);
 					
 				  //res.sendFile(path.join(SRC_DIR,"home.html"));
 				  //  res.status(200).send(req.session);
 				  
-                   res.redirect('/home');	  
+					   
+				       res.redirect('/home');
 				  
 			  }
 			  else

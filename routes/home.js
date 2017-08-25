@@ -2,22 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require("path");
 var SRC_DIR=path.join(__dirname, "../src/views");
-var cookieParser = require('cookie-parser'); 
-var session = require('express-session');
 
-
-
-router.use(cookieParser());
-/*
-router.use(session({ cookie: {
-    maxAge  : 24*60*60*1000
-  },
-  saveUninitialized: true,
-  resave: true,
-  secret: '1234567890QWERT'
-  }));
-  
- */ 
 router.get('/', function(req, res){
 	
 	
@@ -32,7 +17,11 @@ router.get('/', function(req, res){
      // res.status(200).send(req.session);
 	  
 	  res.sendFile(path.join(SRC_DIR,"home.html"));
-	
+	  
+	  
+	  console.log("***********************Home*********************");
+	  console.log("");
+	  console.log("Actual session id at home: "+ req.sessionID);
       console.log("Cookie userid at client set to :"+ req.session.userid);
 	  console.log("Cookie username at client set to :"+ req.session.username);
 	

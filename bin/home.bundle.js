@@ -27123,10 +27123,13 @@ var Home = function (_React$Component) {
 	function Home(props) {
 		_classCallCheck(this, Home);
 
+		//window.alert("Constructor called");
 		var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
+		_this.state = { username: "" };
 		_this.state = { messages: [], socket: io.connect('http://localhost:8080') };
 		_this.send = _this.send.bind(_this);
+
 		return _this;
 	}
 
@@ -27146,10 +27149,30 @@ var Home = function (_React$Component) {
 			});
 
 			$(document).ready(function () {
+
+				//Fetching username cookie.
+				var allcookies = document.cookie;
+				var cookiearray = allcookies.split(';');
+				console.log(allcookies);
+				for (var i = 0; i < cookiearray.length; i++) {
+					var name = cookiearray[i].split('=')[0];
+					var value = cookiearray[i].split('=')[1];
+					console.log(name);
+
+					if (name == " user_name") {
+						this.setState({ username: decodeURIComponent(value) });
+						console.log("*************username for message set to: " + this.state.username);
+						break;
+					}
+					// console.log ("In jsx Key is :"+name+"and Value is : "+value);
+				}
+				$("#username").text("Welcome " + this.state.username + "!!");
+
+				//When user press enter-button while typing message	
 				$('#message').keypress(function (e) {
 					if (e.keyCode == 13) $('#send').click();
 				});
-			});
+			}.bind(this));
 		}
 	}, {
 		key: 'send',
@@ -27157,25 +27180,8 @@ var Home = function (_React$Component) {
 			console.log("Send called " + $('#message').val());
 			var message = $('#message').val();
 
-			//Fetching username cookie and attach it to chat message before sending
-			var allcookies = document.cookie;
-			var cookiearray = allcookies.split(';');
-			console.log(allcookies);
-			for (var i = 0; i < cookiearray.length; i++) {
-				var name = cookiearray[i].split('=')[0];
-				var value = cookiearray[i].split('=')[1];
-				console.log(name);
-
-				if (name == " user_name") {
-					var username = decodeURIComponent(value);
-					console.log("username for message set to: " + username);
-					break;
-				}
-				// console.log ("In jsx Key is :"+name+"and Value is : "+value);
-			}
-
 			//This calls socket.on('new message') function of server side. Here it's user defined function.
-			this.state.socket.emit('new message', username + ": " + message);
+			this.state.socket.emit('new message', this.state.username + ": " + message);
 
 			document.getElementById("message").value = "";
 		}
@@ -27203,11 +27209,7 @@ var Home = function (_React$Component) {
 							_react2.default.createElement(
 								'div',
 								{ className: 'home_username' },
-								_react2.default.createElement(
-									'p',
-									{ id: 'username', className: 'username' },
-									'Welcome Anusha!!'
-								)
+								_react2.default.createElement('p', { id: 'username', className: 'username' })
 							)
 						),
 						_react2.default.createElement(
@@ -27565,7 +27567,7 @@ exports = module.exports = __webpack_require__(86)(undefined);
 
 
 // module
-exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 100px;\r\n height: 40px;\r\n// background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 495px;\r\n background-color: blue;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 450px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \t\r\n }\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 380px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }", ""]);
+exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 495px;\r\n background-color: blue;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 450px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \t\r\n }\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 380px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }", ""]);
 
 // exports
 

@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/js/app.js"></script>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <div>
+      <input id="message" autocomplete="off" />
+      <button onclick="send()">Send</button>
+    </div>
+	<script>
+	
+ var socket = io.connect();
+ 
+ //This method is called  when user enters send button. It sends message to server.
+ function send()
+ {
+  console.log("Send called "+ $('#message').val());
+  message = $('#message').val();
+  
+  //This calls socket.on('new message') function of server side. Here it's user defined function.
+  socket.emit('new message', "Abhilash: "+message);
+  
+  document.getElementById("message").value="";
+  console.log("Send called "+ $('#message').val());
+ }
+ 
+ ////This method is automatically called by server if anyone sends message to server.
+ socket.on('new message', function(msg){
+  var li=document.createElement("li");
+  li.appendChild(document.createTextNode(msg));
+  document.getElementById("messages").appendChild(li);
+ });
+ </script>
+  </body>
+</html>

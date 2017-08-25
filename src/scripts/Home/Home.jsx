@@ -4,8 +4,11 @@ class Home extends React.Component {
 	
 constructor(props) {
     super(props);
+	//window.alert("Constructor called");
+	this.state = {username: ""};
     this.state = {messages: [],socket: io.connect('http://localhost:8080')};
 	this.send = this.send.bind(this)
+	
   }
 
 
@@ -22,24 +25,9 @@ componentDidMount() {
      elem.scrollTop = elem.scrollHeight;
      });
 	 
-	 $(document).ready(function(){
-       $('#message').keypress(function(e){
-          if(e.keyCode==13)
-            $('#send').click();
-         });
-     });
-	
-	 
-   }
-   
-  
-send() {
-  console.log("Send called "+ $('#message').val());
-  var message = $('#message').val();
-  
-  
-  
-  //Fetching username cookie and attach it to chat message before sending
+ $(document).ready(function(){
+		 
+	//Fetching username cookie.
    var allcookies = document.cookie;
    var cookiearray = allcookies.split(';');
    console.log(allcookies);
@@ -51,20 +39,37 @@ send() {
 	 
 	 if (name == " user_name")
 	 {
-		 var username = decodeURIComponent(value); 
-		 console.log ("username for message set to: " + username);
+		 this.setState({ username: decodeURIComponent(value)});
+		 console.log ("*************username for message set to: " + this.state.username);
 		 break;
 	 }
 	// console.log ("In jsx Key is :"+name+"and Value is : "+value);
      
    }
+   $("#username").text("Welcome " + this.state.username+"!!");
+    
+		
+	//When user press enter-button while typing message	
+    $('#message').keypress(function(e){
+          if(e.keyCode==13)
+            $('#send').click();
+         });
+ }.bind(this));
+	
+	 
+ }
+   
+  
+send() {
+  console.log("Send called "+ $('#message').val());
+  var message = $('#message').val();
   
   //This calls socket.on('new message') function of server side. Here it's user defined function.
-  this.state.socket.emit('new message', username +": "+ message);
+  this.state.socket.emit('new message', this.state.username +": "+ message);
   
   document.getElementById("message").value="";
   
-   }
+ }
 	
 		
 	
@@ -83,7 +88,7 @@ send() {
 	       <input type="image" id="profile_image" src = " ../../images/background.jpg" className="profile_image" /><br/>
 		 </div>
 		 <div className="home_username">
-		   <p id="username" className="username">Welcome Anusha!!</p>
+		   <p id="username" className="username"></p>
 		 </div>
 		</div>
 		
