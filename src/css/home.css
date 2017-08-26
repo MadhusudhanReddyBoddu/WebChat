@@ -166,3 +166,13 @@ list-style-type: none; margin: 0; padding: 0;
 	word-wrap: break-word;
 	}
 #messages li:nth-child(odd) { background: #eee; }
+
+
+#friends { 
+list-style-type: none; margin: 0; padding: 0;
+ }
+#friends li {
+	padding: 5px 10px;
+	word-wrap: break-word;
+	}
+#friends li:nth-child(odd) { background: #eee; }

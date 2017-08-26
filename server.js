@@ -38,7 +38,8 @@ var things = require('./routes/things.js');
 
 var login = require('./routes/login.js'); 
 var registration = require('./routes/registration.js');
-var home = require('./routes/home.js'); 
+var home = require('./routes/home.js');
+var friends = require('./routes/friends.js'); 
 
 
 
@@ -92,7 +93,9 @@ io.on('connection', function(socket){
 app.use('/things', things);
 app.use('/', login);
 app.use('/registration', registration); 
-app.use('/home', home); 
+app.use('/home', home);
+app.use('/friends', friends); 
+
 //Now we are using the routes present in external js files
 
 

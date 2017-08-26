@@ -21,34 +21,75 @@ componentDidMount() {
      li.appendChild(document.createTextNode(msg));
      document.getElementById("messages").appendChild(li);
 	// document.getElementById("messages").appendChild(br);
+	 
+	 //Moving scrollbar down to new message
 	 var elem = document.getElementsByClassName('home_messages')[0];
      elem.scrollTop = elem.scrollHeight;
      });
 	 
  $(document).ready(function(){
 		 
-	//Fetching username cookie.
+	//Fetching username.
    var allcookies = document.cookie;
    var cookiearray = allcookies.split(';');
-   console.log(allcookies);
    for(var i=0; i<cookiearray.length; i++)
    {
      var name = cookiearray[i].split('=')[0];
      var value = cookiearray[i].split('=')[1];
-	 console.log(name);
 	 
 	 if (name == " user_name")
 	 {
 		 this.setState({ username: decodeURIComponent(value)});
-		 console.log ("*************username for message set to: " + this.state.username);
+		 console.log ("username set to: " + this.state.username);
 		 break;
 	 }
-	// console.log ("In jsx Key is :"+name+"and Value is : "+value);
      
    }
    $("#username").text("Welcome " + this.state.username+"!!");
-    
-		
+   
+   
+   //Loading all friends when user gets his home page
+     
+	 $.ajax({
+		type: "GET",
+		url: "/friends/myFriends",
+		success: function(data){
+			
+			if (data == "No friends")
+			{
+				console.log("No friends exist");
+				document.getElementById('friends').innerHTML = "Please add friends";
+			}
+			else
+			{
+			console.log("Friends: "+data);
+			//Displaying friends in div
+			for (var i = 0; i < data.length; i++) 
+			  {
+			     console.log("Friend: "+ data[i]);
+			     var li=document.createElement("li");
+	             //var br=document.createElement("br");
+                 li.appendChild(document.createTextNode(data[i]));
+			     li.setAttribute("id",data[i]);
+                 document.getElementById("friends").appendChild(li);
+			  }
+			}
+			
+			
+		}
+	 });
+	 
+	 
+	 
+   
+    //when user types in search friends textbox
+	$('#searchfriend').keypress(function(e){ 
+	
+		  console.log("Search friend clicked");
+		  
+         });
+		 
+	
 	//When user press enter-button while typing message	
     $('#message').keypress(function(e){
           if(e.keyCode==13)
@@ -98,7 +139,7 @@ send() {
 		<hr />
 		
 		<div className="home_recentfriends">
-		 
+		   <ul id="friends"></ul>
 		</div>
 		
 		 
