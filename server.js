@@ -26,6 +26,7 @@ var store = new MongoDBStore(
       assert.ifError(error);
       assert.ok(false);
     });
+var activeUsers={};
 
   
   
@@ -77,12 +78,32 @@ io.use(function(socket, next) {
 io.on('connection', function(socket){
 	
   console.log('user connected');
-  socket.on('new message', function(msg){
-	console.log('Server recieved new message: '+msg);
-    io.emit('new message', msg);
+  
+  socket.on('new user', function(newuser){
+	console.log('New user connected: '+ newuser.userid);
+	socket.activeUserID = newuser.userid;
+	socket.activeUserName = newuser.username;
+	
+	//Key value store of use id and socked id
+	activeUsers[socket.activeUserID] = socket;
+	console.log("All Active users now are: ",activeUsers);
+  });
+  
+  socket.on('new message', function(data){
+	console.log('Server recieved new message: '+data.message);
+	
+	//Sending message to a particular receiver
+	activeUsers[data.receiver].emit('new message',{msg: data.message, sender:socket.activeUserName});
+	console.log("message receiver is: "+ data.receiver);
+	
+	//Sending message to to own sender
+    socket.emit('new message',{msg: data.message, sender:"Me"});
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
+	if(!socket.activeUser) return;
+	delete activeUsers[socket.userID];
+	console.log("All Active users now are: ",activeUsers);
   });
 });
 

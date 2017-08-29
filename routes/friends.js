@@ -88,7 +88,7 @@ router.get('/myFriends',urlencodedParser, function(req, res){
            if (err) throw err;
 		   var userid = req.session.userid;
            var query = { email: userid};
-		   console.log("user id in myfriends: "+userid);
+		   //console.log("user id in myfriends: "+userid);
            db.collection("Friends").find(query).toArray(function(err, result) {
               if (err) throw err;
               console.log("**************"+ result);

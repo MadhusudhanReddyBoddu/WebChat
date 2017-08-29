@@ -27123,27 +27123,48 @@ var Home = function (_React$Component) {
 	function Home(props) {
 		_classCallCheck(this, Home);
 
-		//window.alert("Constructor called");
+		//window.alert("Home Constructor called");
 		var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
 		_this.state = { username: "" };
+		_this.state = { receiver: "okkk" };
+		_this.state = { userid: "" };
 		_this.state = { messages: [], socket: io.connect('http://localhost:8080') };
+		_this.friendChat = _this.friendChat.bind(_this);
 		_this.send = _this.send.bind(_this);
+		//this.friendChat=this.friendChat.bind(this);
 
 		return _this;
 	}
 
 	_createClass(Home, [{
-		key: 'componentDidMount',
+		key: "friendChat",
+		value: function friendChat(friendId) {
+			console.log("Clicked friend id: " + friendId);
+
+			//Setting receiver name
+			$("#receivername").text("To: " + friendId);
+
+			this.setState({ receiver: friendId });
+			console.log(this.state.receiver);
+
+			//Setting Previous messages for the chat	
+		}
+	}, {
+		key: "componentDidMount",
 		value: function componentDidMount() {
 			console.log('Component DID MOUNT!');
 
-			this.state.socket.on('new message', function (msg) {
+			this.state.socket.on('new message', function (data) {
 				var li = document.createElement("li");
 				//var br=document.createElement("br");
-				li.appendChild(document.createTextNode(msg));
+				var elem = document.createTextNode("");
+				//li.appendChild(document.createTextNode('<b>' + data.sender + ": </b>" + data.msg));
+				li.appendChild(elem);
+				li.innerHTML = '<b>' + data.sender + ': </b>' + data.msg;
 				document.getElementById("messages").appendChild(li);
 				// document.getElementById("messages").appendChild(br);
+
 
 				//Moving scrollbar down to new message
 				var elem = document.getElementsByClassName('home_messages')[0];
@@ -27152,6 +27173,7 @@ var Home = function (_React$Component) {
 
 			$(document).ready(function () {
 
+				var self = this;
 				//Fetching username.
 				var allcookies = document.cookie;
 				var cookiearray = allcookies.split(';');
@@ -27159,20 +27181,31 @@ var Home = function (_React$Component) {
 					var name = cookiearray[i].split('=')[0];
 					var value = cookiearray[i].split('=')[1];
 
+					if (name == "user_id") {
+						var userid = decodeURIComponent(value);
+						this.setState({ userid: decodeURIComponent(value) });
+						console.log("userid set to: " + this.state.userid);
+					}
+
 					if (name == " user_name") {
+						var username = decodeURIComponent(value);
 						this.setState({ username: decodeURIComponent(value) });
 						console.log("username set to: " + this.state.username);
-						break;
 					}
 				}
-				$("#username").text("Welcome " + this.state.username + "!!");
 
+				//This is undefined  when moving between routes
+				//$("#username").text("Welcome " + this.state.username+"!!");
+
+				$("#username").text("Welcome " + username + "!!");
+
+				this.state.socket.emit('new user', { username: this.state.username, userid: this.state.userid });
 				//Loading all friends when user gets his home page
 
 				$.ajax({
 					type: "GET",
 					url: "/friends/myFriends",
-					success: function success(data) {
+					success: function (data) {
 
 						if (data == "No friends") {
 							console.log("No friends exist");
@@ -27186,11 +27219,24 @@ var Home = function (_React$Component) {
 								//var br=document.createElement("br");
 								li.appendChild(document.createTextNode(data[i]));
 								li.setAttribute("id", data[i]);
+
+								//Adding on click event for each friend
+								// li.setAttribute("onclick","friendChat()");
+								// li.addEventListener("click", function() { friendChat(this.id); }, false);
+								console.log(this.state.receiver);
+								li.addEventListener("click", function () {
+									self.friendChat(this.id);
+								}, false);
 								document.getElementById("friends").appendChild(li);
 							}
 						}
-					}
+					}.bind(this)
 				});
+
+				this.setState({ receiver: "abhilash" });
+				console.log(this.state.receiver);
+				//When user selects one of the friends for chatting
+				/*Tried to put it like send()...but errors.*/
 
 				//when user types in search friends textbox
 				$('#searchfriend').keypress(function (e) {
@@ -27205,82 +27251,93 @@ var Home = function (_React$Component) {
 			}.bind(this));
 		}
 	}, {
-		key: 'send',
+		key: "send",
 		value: function send() {
 			console.log("Send called " + $('#message').val());
-			var message = $('#message').val();
+			var newMessage = $('#message').val();
+			console.log("Receiver set to: " + this.state.receiver);
 
 			//This calls socket.on('new message') function of server side. Here it's user defined function.
-			this.state.socket.emit('new message', this.state.username + ": " + message);
+			// this.state.socket.emit('new message', this.state.username +": "+ message);
+			this.state.socket.emit('new message', { message: newMessage, receiver: this.state.receiver });
 
 			document.getElementById("message").value = "";
 		}
 	}, {
-		key: 'render',
+		key: "render",
 		value: function render() {
 			return _react2.default.createElement(
-				'div',
+				"div",
 				null,
 				_react2.default.createElement(
-					'div',
-					{ className: 'largeBox' },
+					"div",
+					{ className: "largeBox" },
 					_react2.default.createElement(
-						'div',
-						{ className: 'smallbox_left' },
+						"div",
+						{ className: "smallbox_left" },
 						_react2.default.createElement(
-							'div',
-							{ className: 'home_profile' },
+							"div",
+							{ className: "home_profile" },
 							_react2.default.createElement(
-								'div',
-								{ className: 'home_profileimage' },
-								_react2.default.createElement('input', { type: 'image', id: 'profile_image', src: ' ../../images/background.jpg', className: 'profile_image' }),
-								_react2.default.createElement('br', null)
+								"div",
+								{ className: "home_profileimage" },
+								_react2.default.createElement("input", { type: "image", id: "profile_image", src: " ../../images/background.jpg", className: "profile_image" }),
+								_react2.default.createElement("br", null)
 							),
 							_react2.default.createElement(
-								'div',
-								{ className: 'home_username' },
-								_react2.default.createElement('p', { id: 'username', className: 'username' })
+								"div",
+								{ className: "home_username" },
+								_react2.default.createElement("p", { id: "username", className: "username" })
 							)
 						),
 						_react2.default.createElement(
-							'div',
-							{ className: 'home_searchfriend' },
-							_react2.default.createElement('input', { type: 'search', id: 'searchfriend', placeholder: 'Search friends here...', autoComplete: 'off' })
+							"div",
+							{ className: "home_searchfriend" },
+							_react2.default.createElement("input", { type: "search", id: "searchfriend", placeholder: "Search friends here...", autoComplete: "off" })
 						),
-						_react2.default.createElement('hr', null),
+						_react2.default.createElement("hr", null),
 						_react2.default.createElement(
-							'div',
-							{ className: 'home_recentfriends' },
-							_react2.default.createElement('ul', { id: 'friends' })
+							"div",
+							{ className: "home_recentfriends" },
+							_react2.default.createElement("ul", { id: "friends" })
 						)
 					),
 					_react2.default.createElement(
-						'div',
-						{ className: 'smallbox_center' },
-						'Center box',
+						"div",
+						{ className: "smallbox_center" },
 						_react2.default.createElement(
-							'div',
-							{ className: 'home_chatbox' },
+							"div",
+							{ className: "home_chatbox" },
 							_react2.default.createElement(
-								'div',
-								{ className: 'home_messages' },
-								_react2.default.createElement('ul', { id: 'messages' })
+								"div",
+								{ className: "home_receiver" },
+								" ",
+								_react2.default.createElement(
+									"p",
+									{ id: "receivername" },
+									" Please Select a friend to Chat "
+								)
 							),
 							_react2.default.createElement(
-								'div',
-								{ className: 'home_messagesfixed' },
+								"div",
+								{ className: "home_messages" },
+								_react2.default.createElement("ul", { id: "messages" })
+							),
+							_react2.default.createElement(
+								"div",
+								{ className: "home_messagesfixed" },
 								_react2.default.createElement(
-									'span',
+									"span",
 									null,
-									_react2.default.createElement('input', { id: 'message', placeholder: 'Enter text here...', autoComplete: 'off' })
+									_react2.default.createElement("input", { id: "message", placeholder: "Enter text here...", autoComplete: "off" })
 								),
 								_react2.default.createElement(
-									'span',
+									"span",
 									null,
 									_react2.default.createElement(
-										'button',
-										{ id: 'send', onClick: this.send },
-										'SEND'
+										"button",
+										{ id: "send", onClick: this.send },
+										"SEND"
 									)
 								)
 							)
@@ -27652,7 +27709,7 @@ exports = module.exports = __webpack_require__(86)(undefined);
 
 
 // module
-exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 495px;\r\n background-color: blue;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 450px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \t\r\n }\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 380px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }\r\n\r\n\r\n#friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#friends li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#friends li:nth-child(odd) { background: #eee; }\r\n", ""]);
+exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 510px;\r\n background-color: blue;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 465px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \t\r\n }\r\n \r\n\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 380px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }\r\n\r\n\r\n#friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#friends li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#friends li:nth-child(odd) { background: #eee; }\r\n", ""]);
 
 // exports
 
