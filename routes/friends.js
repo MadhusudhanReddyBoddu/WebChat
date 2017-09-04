@@ -83,7 +83,6 @@ router.get('/myFriends',urlencodedParser, function(req, res){
 	   var MongoClient = require('mongodb').MongoClient;
        var url = "mongodb://localhost:27017/WebChat";
 
-     //Comparing username and password.
 	   MongoClient.connect(url, function(err, db) {
            if (err) throw err;
 		   var userid = req.session.userid;

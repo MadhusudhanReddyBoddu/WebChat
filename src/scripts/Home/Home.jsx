@@ -19,7 +19,16 @@ constructor(props) {
   
   friendChat(friendId)
  {
+	    var myNode = document.getElementById("messages");
+		myNode.innerHTML = "";
         console.log("Clicked friend id: "+ friendId );
+		var elem = document.getElementsByClassName('home_chatbox');	 
+        elem[0].style.display = "block";
+		
+		var elem = document.getElementsByClassName('PleaseSelectChat');	 
+        elem[0].style.display = "none";
+		
+		
 		
 		//Setting receiver name
 		$("#receivername").text("To: " + friendId);
@@ -27,7 +36,58 @@ constructor(props) {
 		this.setState({ receiver: friendId});
 		console.log(this.state.receiver);
 		
+		
+		
 		//Setting Previous messages for the chat	
+		
+		$.ajax({
+		type: "GET",
+		url: "/chat/chatMessages",
+		data:'receiverId='+friendId,
+		success: function(messages){
+			
+			if (messages == "No messages")
+			{
+			 console.log("No messages:");
+			 document.getElementById("messages").innerHTML = "No previous chat history with this user";
+			}
+			
+			else
+			{
+			 console.log("Previous messages for friend: ");
+			for (var i = 0; i < messages.length; i++) 
+			  {
+			     console.log("Messages: "+ messages[i].message);
+				 var li=document.createElement("li");
+	 
+	             var elem = document.createTextNode("");
+                 li.appendChild(elem);
+				 if (messages[i].senderId == this.state.receiver)
+				 {
+				    li.innerHTML = '<b>' + messages[i].senderId + ': </b>' + messages[i].message;
+				 }
+				 else
+				 {
+					 li.innerHTML = '<b>' + "Me" + ': </b>' + messages[i].message;
+				 }
+				 
+	             
+                 document.getElementById("messages").appendChild(li);
+	
+	             //Moving scrollbar down to new message
+	             var elem = document.getElementsByClassName('home_messages')[0];
+                 elem.scrollTop = elem.scrollHeight;
+			  }
+			
+			}
+			
+			
+		}.bind(this)
+	 });
+	 
+		
+		
+		
 		
  }
  
@@ -58,6 +118,9 @@ componentDidMount() {
 	 
  $(document).ready(function(){
 	 
+   var elem = document.getElementsByClassName('home_chatbox');	 
+   elem[0].style.display = "none";
+   
    const self = this;
    //Fetching username.
    var allcookies = document.cookie;
@@ -205,7 +268,7 @@ send() {
        <div className="smallbox_center">
 	    
 	     <div className="home_chatbox">
-	        <div className="home_receiver"> <p id="receivername"> Please Select a friend to Chat </p>
+	        <div className="home_receiver"> <p id="receivername">  </p>
 			</div>
 	        <div className="home_messages">
 	            <ul id="messages"></ul>
@@ -216,6 +279,10 @@ send() {
             </div>
 	  
          </div>
+		 
+		 <div className="PleaseSelectChat">
+		   <p>Please Select a friend to Chat</p>
+		 </div>
 		 
 	   </div>
 	
