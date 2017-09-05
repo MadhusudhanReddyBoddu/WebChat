@@ -28,7 +28,8 @@ constructor(props) {
 		var elem = document.getElementsByClassName('PleaseSelectChat');	 
         elem[0].style.display = "none";
 		
-		
+		//Setting receiver name for respective sender at server.
+		this.state.socket.emit('setReceiver', {sender: this.state.userid, respectiveReceiver: friendId});
 		
 		//Setting receiver name
 		$("#receivername").text("To: " + friendId);

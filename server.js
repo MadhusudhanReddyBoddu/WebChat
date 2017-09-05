@@ -33,6 +33,7 @@ var store = new MongoDBStore(
 	
 //This object also common for every user. Only "socket." variables are unique for different session users. 	
 var activeUsers={};
+var respectiveOpenedReceiver ={};
 
   
   
@@ -98,10 +99,19 @@ io.on('connection', function(socket){
 	console.log("All Active users now are: ",Object.keys(activeUsers));
   });
   
+  //Setting receiver for respective senders.
+  socket.on('setReceiver', function(data){
+	  
+	console.log('Respective receiver for sender '+data.sender+' :'+data.respectiveReceiver);
+	respectiveOpenedReceiver[data.sender] = data.respectiveReceiver;
+  
+  });
+  
   socket.on('new message', function(data){
 	console.log('Server recieved new message: '+data.message);
 	
 	//Check whether the user was blocked by receiver before saving to database
+	
 	
 	//Savinng message to database collection.
 	 
@@ -116,6 +126,38 @@ io.on('connection', function(socket){
 			 
             });
         });
+		
+      //****Here if receiver  opened webchat and  opened sender ... then we directly send message
+          //if receiver opened webchat but not sender...then we have to set status variable and  call receivers one of the client functions to set notification on chat.
+          //if receiver not opened webchat then we needn't to call client function...just set status variable on database*****/
+	  
+	   //Checking whether user is online.
+	   if ( data.receiver in activeUsers)
+	   {
+		 // Check If receiver opens sender chat. if yes, then no need of nofification.. directly attach message to chat list.
+          if ( data.receiver in respectiveOpenedReceiver && respectiveOpenedReceiver[data.receiver] == socket.activeUserID)
+		  {
+			  console.log(respectiveOpenedReceiver[data.receiver]);
+			  console.log("***************Receiver online and opened sender chat***********"); 
+		      activeUsers[data.receiver].emit('new message',{msg: data.message, sender:socket.activeUserID});
+			  
+		  }
+		  else
+		  {
+			  
+			  console.log(respectiveOpenedReceiver[data.receiver]);
+			  console.log(socket.activeUserID);
+			  console.log("***************Receiver online but not opened sender chat***********");
+		  }
+	   }
+	   else
+	   {
+		   //Set status code 1 for the message. Which actually sets notification for that sender and receiver chat...for receiver "when receiver logs in".
+		   console.log("**********Receiver is not online********");
+		
+	   }
+	  
+    
 		
 	//******Here we are creating document for each message..but it's not a good paractice. So try to follow one of the following
 			 //Create meessages object for each senderId-receiverId pair and then add messages to each pair.

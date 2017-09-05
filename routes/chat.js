@@ -14,7 +14,7 @@ router.get('/chatMessages',urlencodedParser, function(req, res){
 	 var receiverid = req.query.receiverId;
 	 var senderid = req.session.userid;
 	 
-	 console.log("Called Chat Messages for a friend: "+ receiverid);
+	 console.log("Called Chat Messages for the friend: "+ receiverid);
 	 
 	 
 	 
