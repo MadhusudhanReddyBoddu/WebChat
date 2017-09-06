@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 class Friends extends React.Component {
 
   // constructor() {

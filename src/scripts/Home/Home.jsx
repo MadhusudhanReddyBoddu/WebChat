@@ -1,5 +1,5 @@
 import React from 'react'
-import notify from '../../images/newmessage.jpg';
+import notify from '../../images/notify.ico';
 
 class Home extends React.Component {
 
@@ -130,12 +130,17 @@ componentDidMount() {
 	 
 	 //When user receives a message from other but he doesn't open sender chat, then we add notification symbol to chat.  
 	 this.state.socket.on('notify receiver', function(data){
-		 
 		 var s = data.sender;
          var k = "*[id='"+ s + "']";
 		// $("<span>New</span>").insertAfter(k);
-		 $( k ).append( "<img src='../../images/newmessage.jpg' width='30' height='30'></img>" );
 		 console.log("reciver notified for chat: "+ data.sender);
+		 console.log("******************"+ $(k).children().length);
+		 
+		 //To notify only once
+		 if($(k).children().length == 0)
+		{ 
+	       $( k ).append( "<img src='../../images/notify.ico' width='30' height='30'></img>" );
+		}
 		 
 	
 	 });

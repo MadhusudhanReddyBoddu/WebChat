@@ -26,6 +26,7 @@
     "react-router": "^4.1.2",
     "react-router-dom": "^4.1.2",
     "socket.io": "^2.0.3",
+    "static-loader": "^0.1.8",
     "url-loader": "^0.5.9"
   },
   "devDependencies": {

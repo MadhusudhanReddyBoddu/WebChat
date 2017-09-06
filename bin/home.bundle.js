@@ -27109,9 +27109,9 @@ var _react = __webpack_require__(16);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _newmessage = __webpack_require__(247);
+var _notify = __webpack_require__(247);
 
-var _newmessage2 = _interopRequireDefault(_newmessage);
+var _notify2 = _interopRequireDefault(_notify);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27229,12 +27229,16 @@ var Home = function (_React$Component) {
 
 			//When user receives a message from other but he doesn't open sender chat, then we add notification symbol to chat.  
 			this.state.socket.on('notify receiver', function (data) {
-
 				var s = data.sender;
 				var k = "*[id='" + s + "']";
 				// $("<span>New</span>").insertAfter(k);
-				$(k).append("<img src='../../images/newmessage.jpg' width='30' height='30'></img>");
 				console.log("reciver notified for chat: " + data.sender);
+				console.log("******************" + $(k).children().length);
+
+				//To notify only once
+				if ($(k).children().length == 0) {
+					$(k).append("<img src='../../images/notify.ico' width='30' height='30'></img>");
+				}
 			});
 
 			$(document).ready(function () {
@@ -27435,7 +27439,7 @@ exports.default = Home;
 /* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/newmessage.jpg";
+module.exports = __webpack_require__.p + "images/notify.ico";
 
 /***/ }),
 /* 248 */
