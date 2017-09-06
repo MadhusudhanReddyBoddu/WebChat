@@ -1,7 +1,8 @@
 import React from 'react'
+import notify from '../../images/newmessage.jpg';
 
 class Home extends React.Component {
-	
+
 	
 constructor(props) {
     super(props);
@@ -19,6 +20,15 @@ constructor(props) {
   
   friendChat(friendId)
  {
+	    var k = "*[id='"+ friendId + "']";;
+	    //k.removeChild("<strong>"); 
+		if($(k).children().length > 0)
+		{ 
+	       var l = k +" img";
+	       $(l).remove();
+		   console.log("******************"+ $(k).children().length);
+		}
+		
 	    var myNode = document.getElementById("messages");
 		myNode.innerHTML = "";
         console.log("Clicked friend id: "+ friendId );
@@ -99,6 +109,7 @@ constructor(props) {
 componentDidMount() {
      console.log('Component DID MOUNT!');
 	 
+	 //When user recives new message (both others and his own). others are exicuted  only if user have senders chat open 
 	 this.state.socket.on('new message', function(data){
      var li=document.createElement("li");
 	 //var br=document.createElement("br");
@@ -115,6 +126,21 @@ componentDidMount() {
 	 var elem = document.getElementsByClassName('home_messages')[0];
      elem.scrollTop = elem.scrollHeight;
      });
+	 
+	 
+	 //When user receives a message from other but he doesn't open sender chat, then we add notification symbol to chat.  
+	 this.state.socket.on('notify receiver', function(data){
+		 
+		 var s = data.sender;
+         var k = "*[id='"+ s + "']";
+		// $("<span>New</span>").insertAfter(k);
+		 $( k ).append( "<img src='../../images/newmessage.jpg' width='30' height='30'></img>" );
+		 console.log("reciver notified for chat: "+ data.sender);
+		 
+	
+	 });
+	 
+	 
 	 
 	 
  $(document).ready(function(){

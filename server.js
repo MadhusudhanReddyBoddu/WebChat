@@ -131,12 +131,14 @@ io.on('connection', function(socket){
           //if receiver opened webchat but not sender...then we have to set status variable and  call receivers one of the client functions to set notification on chat.
           //if receiver not opened webchat then we needn't to call client function...just set status variable on database*****/
 	  
+	  
 	   //Checking whether user is online.
 	   if ( data.receiver in activeUsers)
 	   {
 		 // Check If receiver opens sender chat. if yes, then no need of nofification.. directly attach message to chat list.
           if ( data.receiver in respectiveOpenedReceiver && respectiveOpenedReceiver[data.receiver] == socket.activeUserID)
 		  {
+			  //Online and opened sender chat
 			  console.log(respectiveOpenedReceiver[data.receiver]);
 			  console.log("***************Receiver online and opened sender chat***********"); 
 		      activeUsers[data.receiver].emit('new message',{msg: data.message, sender:socket.activeUserID});
@@ -144,9 +146,10 @@ io.on('connection', function(socket){
 		  }
 		  else
 		  {
+			  //Online but not opened sender chat
 			  
-			  console.log(respectiveOpenedReceiver[data.receiver]);
-			  console.log(socket.activeUserID);
+			   //Now add notificaton tag to respective chat for receiver.
+              activeUsers[data.receiver].emit('notify receiver',{sender:socket.activeUserID}); 			   
 			  console.log("***************Receiver online but not opened sender chat***********");
 		  }
 	   }

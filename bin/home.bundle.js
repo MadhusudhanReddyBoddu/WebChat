@@ -24177,8 +24177,8 @@ var _Main2 = _interopRequireDefault(_Main);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(251);
-__webpack_require__(253);
+__webpack_require__(252);
+__webpack_require__(254);
 
 (0, _reactDom.render)(_react2.default.createElement(
   _reactRouterDom.BrowserRouter,
@@ -27033,19 +27033,19 @@ var _Home = __webpack_require__(246);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _Profile = __webpack_require__(247);
+var _Profile = __webpack_require__(248);
 
 var _Profile2 = _interopRequireDefault(_Profile);
 
-var _Friends = __webpack_require__(248);
+var _Friends = __webpack_require__(249);
 
 var _Friends2 = _interopRequireDefault(_Friends);
 
-var _Settings = __webpack_require__(249);
+var _Settings = __webpack_require__(250);
 
 var _Settings2 = _interopRequireDefault(_Settings);
 
-var _Help = __webpack_require__(250);
+var _Help = __webpack_require__(251);
 
 var _Help2 = _interopRequireDefault(_Help);
 
@@ -27109,6 +27109,10 @@ var _react = __webpack_require__(16);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _newmessage = __webpack_require__(247);
+
+var _newmessage2 = _interopRequireDefault(_newmessage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27138,8 +27142,16 @@ var Home = function (_React$Component) {
 	}
 
 	_createClass(Home, [{
-		key: "friendChat",
+		key: 'friendChat',
 		value: function friendChat(friendId) {
+			var k = "*[id='" + friendId + "']";;
+			//k.removeChild("<strong>"); 
+			if ($(k).children().length > 0) {
+				var l = k + " img";
+				$(l).remove();
+				console.log("******************" + $(k).children().length);
+			}
+
 			var myNode = document.getElementById("messages");
 			myNode.innerHTML = "";
 			console.log("Clicked friend id: " + friendId);
@@ -27194,10 +27206,11 @@ var Home = function (_React$Component) {
 			});
 		}
 	}, {
-		key: "componentDidMount",
+		key: 'componentDidMount',
 		value: function componentDidMount() {
 			console.log('Component DID MOUNT!');
 
+			//When user recives new message (both others and his own). others are exicuted  only if user have senders chat open 
 			this.state.socket.on('new message', function (data) {
 				var li = document.createElement("li");
 				//var br=document.createElement("br");
@@ -27212,6 +27225,16 @@ var Home = function (_React$Component) {
 				//Moving scrollbar down to new message
 				var elem = document.getElementsByClassName('home_messages')[0];
 				elem.scrollTop = elem.scrollHeight;
+			});
+
+			//When user receives a message from other but he doesn't open sender chat, then we add notification symbol to chat.  
+			this.state.socket.on('notify receiver', function (data) {
+
+				var s = data.sender;
+				var k = "*[id='" + s + "']";
+				// $("<span>New</span>").insertAfter(k);
+				$(k).append("<img src='../../images/newmessage.jpg' width='30' height='30'></img>");
+				console.log("reciver notified for chat: " + data.sender);
 			});
 
 			$(document).ready(function () {
@@ -27297,7 +27320,7 @@ var Home = function (_React$Component) {
 			}.bind(this));
 		}
 	}, {
-		key: "send",
+		key: 'send',
 		value: function send() {
 			console.log("Send called " + $('#message').val());
 			var newMessage = $('#message').val();
@@ -27310,91 +27333,91 @@ var Home = function (_React$Component) {
 			document.getElementById("message").value = "";
 		}
 	}, {
-		key: "render",
+		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
-				"div",
+				'div',
 				null,
 				_react2.default.createElement(
-					"div",
-					{ className: "largeBox" },
+					'div',
+					{ className: 'largeBox' },
 					_react2.default.createElement(
-						"div",
-						{ className: "smallbox_left" },
+						'div',
+						{ className: 'smallbox_left' },
 						_react2.default.createElement(
-							"div",
-							{ className: "home_profile" },
+							'div',
+							{ className: 'home_profile' },
 							_react2.default.createElement(
-								"div",
-								{ className: "home_profileimage" },
-								_react2.default.createElement("input", { type: "image", id: "profile_image", src: " ../../images/background.jpg", className: "profile_image" }),
-								_react2.default.createElement("br", null)
+								'div',
+								{ className: 'home_profileimage' },
+								_react2.default.createElement('input', { type: 'image', id: 'profile_image', src: ' ../../images/background.jpg', className: 'profile_image' }),
+								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
-								"div",
-								{ className: "home_username" },
-								_react2.default.createElement("p", { id: "username", className: "username" })
+								'div',
+								{ className: 'home_username' },
+								_react2.default.createElement('p', { id: 'username', className: 'username' })
 							)
 						),
 						_react2.default.createElement(
-							"div",
-							{ className: "home_searchfriend" },
-							_react2.default.createElement("input", { type: "search", id: "searchfriend", placeholder: "Search friends here...", autoComplete: "off" })
+							'div',
+							{ className: 'home_searchfriend' },
+							_react2.default.createElement('input', { type: 'search', id: 'searchfriend', placeholder: 'Search friends here...', autoComplete: 'off' })
 						),
-						_react2.default.createElement("hr", null),
+						_react2.default.createElement('hr', null),
 						_react2.default.createElement(
-							"div",
-							{ className: "home_recentfriends" },
-							_react2.default.createElement("ul", { id: "friends" })
+							'div',
+							{ className: 'home_recentfriends' },
+							_react2.default.createElement('ul', { id: 'friends' })
 						)
 					),
 					_react2.default.createElement(
-						"div",
-						{ className: "smallbox_center" },
+						'div',
+						{ className: 'smallbox_center' },
 						_react2.default.createElement(
-							"div",
-							{ className: "home_chatbox" },
+							'div',
+							{ className: 'home_chatbox' },
 							_react2.default.createElement(
-								"div",
-								{ className: "home_receiver" },
-								" ",
+								'div',
+								{ className: 'home_receiver' },
+								' ',
 								_react2.default.createElement(
-									"p",
-									{ id: "receivername" },
-									"  "
+									'p',
+									{ id: 'receivername' },
+									'  '
 								)
 							),
 							_react2.default.createElement(
-								"div",
-								{ className: "home_messages" },
-								_react2.default.createElement("ul", { id: "messages" })
+								'div',
+								{ className: 'home_messages' },
+								_react2.default.createElement('ul', { id: 'messages' })
 							),
 							_react2.default.createElement(
-								"div",
-								{ className: "home_messagesfixed" },
+								'div',
+								{ className: 'home_messagesfixed' },
 								_react2.default.createElement(
-									"span",
+									'span',
 									null,
-									_react2.default.createElement("input", { id: "message", placeholder: "Enter text here...", autoComplete: "off" })
+									_react2.default.createElement('input', { id: 'message', placeholder: 'Enter text here...', autoComplete: 'off' })
 								),
 								_react2.default.createElement(
-									"span",
+									'span',
 									null,
 									_react2.default.createElement(
-										"button",
-										{ id: "send", onClick: this.send },
-										"SEND"
+										'button',
+										{ id: 'send', onClick: this.send },
+										'SEND'
 									)
 								)
 							)
 						),
 						_react2.default.createElement(
-							"div",
-							{ className: "PleaseSelectChat" },
+							'div',
+							{ className: 'PleaseSelectChat' },
 							_react2.default.createElement(
-								"p",
+								'p',
 								null,
-								"Please Select a friend to Chat"
+								'Please Select a friend to Chat'
 							)
 						)
 					)
@@ -27410,6 +27433,12 @@ exports.default = Home;
 
 /***/ }),
 /* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/newmessage.jpg";
+
+/***/ }),
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27467,7 +27496,7 @@ var Profile = function (_React$Component) {
 exports.default = Profile;
 
 /***/ }),
-/* 248 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27572,7 +27601,7 @@ var Friends = function (_React$Component) {
 exports.default = Friends;
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27626,7 +27655,7 @@ var Settings = function (_React$Component) {
 exports.default = Settings;
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27680,13 +27709,13 @@ var Help = function (_React$Component) {
 exports.default = Help;
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(252);
+var content = __webpack_require__(253);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -27711,7 +27740,7 @@ if(false) {
 }
 
 /***/ }),
-/* 252 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(86)(undefined);
@@ -27725,13 +27754,13 @@ exports.push([module.i, "div.header_header\r\n{\r\n width: 1310px;\r\n height: 4
 
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(254);
+var content = __webpack_require__(255);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -27756,7 +27785,7 @@ if(false) {
 }
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(86)(undefined);
