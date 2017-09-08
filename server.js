@@ -4,7 +4,7 @@ var io = require('socket.io')(http);
 var path = require('path');
 var DIST_DIR = path.join(__dirname, "bin");
 var assert = require('assert');
-
+var message_Id ="";
 
 
 var cookieParser = require('cookie-parser');
@@ -113,19 +113,6 @@ io.on('connection', function(socket){
 	//Check whether the user was blocked by receiver before saving to database
 	
 	
-	//Savinng message to database collection.
-	 
-	   MongoClient.connect(url, function(err, db) {
-           if (err) throw err;
-           var myobj = { senderId: socket.activeUserID, receiverId: data.receiver, message: data.message, status: 1, visibleTo: 2, time: Date.now() };
-           db.collection("Messages").insertOne(myobj, function(err, res) {
-             if (err) throw err;
-			 
-             db.close();
-			 console.log("New message saved into database");
-			 
-            });
-        });
 		
       //****Here if receiver  opened webchat and  opened sender ... then we directly send message
           //if receiver opened webchat but not sender...then we have to set status variable and  call receivers one of the client functions to set notification on chat.
@@ -143,20 +130,62 @@ io.on('connection', function(socket){
 			  console.log("***************Receiver online and opened sender chat***********"); 
 		      activeUsers[data.receiver].emit('new message',{msg: data.message, sender:socket.activeUserID});
 			  
+			  //Savinng message to database collection.
+	           MongoClient.connect(url, function(err, db) {
+                  if (err) throw err;
+                  var myobj = { senderId: socket.activeUserID, receiverId: data.receiver, message: data.message, status: 2, visibleTo: 2, time: Date.now() };
+                  db.collection("Messages").insertOne(myobj, function(err, res) {
+                  if (err) throw err;
+			      console.log("Inserted message object id: "+ res.insertedId);
+                  db.close();
+			      console.log("New message saved into database");
+			 
+                     });
+                 });
+			  
 		  }
 		  else
 		  {
 			  //Online but not opened sender chat
 			  
 			   //Now add notificaton tag to respective chat for receiver.
-              activeUsers[data.receiver].emit('notify receiver',{sender:socket.activeUserID}); 			   
+              activeUsers[data.receiver].emit('notify receiver',{sender:socket.activeUserID}); 	
+               //Set status of the message to 1
+			  
 			  console.log("***************Receiver online but not opened sender chat***********");
+			  
+			  //Savinng message to database collection.
+	           MongoClient.connect(url, function(err, db) {
+                  if (err) throw err;
+                  var myobj = { senderId: socket.activeUserID, receiverId: data.receiver, message: data.message, status: 1, visibleTo: 2, time: Date.now() };
+                  db.collection("Messages").insertOne(myobj, function(err, res) {
+                  if (err) throw err;
+			      console.log("Inserted message object id: "+ res.insertedId);
+                  db.close();
+			      console.log("New message saved into database");
+			 
+                     });
+                 });
+			  
 		  }
 	   }
 	   else
 	   {
 		   //Set status code 1 for the message. Which actually sets notification for that sender and receiver chat...for receiver "when receiver logs in".
 		   console.log("**********Receiver is not online********");
+		   
+		   //Savinng message to database collection.
+	           MongoClient.connect(url, function(err, db) {
+                  if (err) throw err;
+                  var myobj = { senderId: socket.activeUserID, receiverId: data.receiver, message: data.message, status: 1, visibleTo: 2, time: Date.now() };
+                  db.collection("Messages").insertOne(myobj, function(err, res) {
+                  if (err) throw err;
+			      console.log("Inserted message object id: "+ res.insertedId);
+                  db.close();
+			      console.log("New message saved into database");
+			 
+                     });
+                 });
 		
 	   }
 	  

@@ -17,13 +17,30 @@ router.get('/chatMessages',urlencodedParser, function(req, res){
 	 console.log("Called Chat Messages for the friend: "+ receiverid);
 	 
 	 
+	 //To make chat free of notification by setting "status = 2" for that sender and receiver chat.
+	 MongoClient.connect(url, function(err, db) {
+                   if (err) throw err;
+                   var myquery = { senderId: receiverid,receiverId: senderid };
+				   //Here we can also set read time for the message.
+				   
+				   
+                   db.collection("Messages").updateMany(myquery, {$set: { status: 2 }}, function(err, res) {
+                    if (err) throw err;
+                    console.log("Notification status removed for the chat: " + receiverid + " -> "+senderid);
+                    db.close();
+                   });
+                });
 	 
+	 
+	 //To send chat 
 	 MongoClient.connect(url, function(err, db) {
            if (err) throw err;
 		   
 		   //Selecting messages where sender is senderid and receiver is receiverid (or) sender is receiverid and receiver is senderid in the order of time.
            //var query = "{$or:[{senderId:senderid,receiverId:receiverid},{senderId:receiverid,receiverId:senderid}]}";
 		   //console.log("user id in myfriends: "+userid);
+		   
+		   
            db.collection("Messages").find({$or:[{senderId:senderid,receiverId:receiverid},{senderId:receiverid,receiverId:senderid}]}).toArray(function(err, result) {
               if (err) throw err;
               db.close();

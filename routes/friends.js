@@ -4,6 +4,10 @@ var path = require("path");
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false }); 
 
+//Connection string to database
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/WebChat";
+
 //Sends all users
 router.get('/',function(req, res){
 
@@ -17,8 +21,6 @@ router.get('/',function(req, res){
         // var regex = new RegExp(req.body.term);
 
         console.log("keyword is:" + keyword);
-		    var MongoClient = require('mongodb').MongoClient;
-        var url = "mongodb://localhost:27017/WebChat";
 
      //Comparing username and password.
 	   MongoClient.connect(url, function(err, db) {
@@ -77,11 +79,6 @@ router.get('/myFriends',urlencodedParser, function(req, res){
 	  
 	  
 	 console.log("Myfriends Called");
-	   
-	   
-	 //Connection string to datanbase
-	   var MongoClient = require('mongodb').MongoClient;
-       var url = "mongodb://localhost:27017/WebChat";
 
 	   MongoClient.connect(url, function(err, db) {
            if (err) throw err;
@@ -97,9 +94,56 @@ router.get('/myFriends',urlencodedParser, function(req, res){
 				  console.log("Friends exist");
 				  //Storing all friends
 				  var friends= result[0].friends;
-				   //res.send(friends);
-				   res.send(friends);
-				  
+				  var friends_dictionary = {};
+				  //For checking notification for the chat
+					  friends.forEach(function (friend) {
+						  
+				       console.log("Friend :"+friend);
+					   
+					 
+					   //Checking any sender friend have status = 1 for the user receiver 
+					   MongoClient.connect(url, function(err, db) {
+						   
+                           if (err) throw err;
+						   //console.log("length for "+ friends[i] +": ");
+                           var query = { senderId: friend, receiverId: userid, status: 1 };
+                           db.collection("Messages").find(query).toArray(function(err, result) {
+                               if (err) throw err;
+                               //console.log(result.length);
+                               db.close();
+			                  if (result.length != 0)
+			                   {
+								   //Notification
+                                   	console.log("Notification for friend: "+ friend);
+                                    									
+							       friends_dictionary[friend] = 1; 
+								   console.log ("*********************"+ friends_dictionary[friend])
+					           }
+						      else
+						       {
+								   //No notification
+								   console.log("No Notification for friend: "+ friend);
+							      friends_dictionary[friend] = 0; 
+								  console.log ("*********************"+ friends_dictionary[friend])
+						       }
+							   
+							   console.log(Object.keys(friends_dictionary));
+						
+					       });
+					    });
+                       
+                     });
+				   //res.send(friends_dictionary);
+				   
+				   setTimeout(function(){ 
+				      console.log("Waited for a second"); 
+				      console.log("Before send keys****************"+ Object.keys(friends_dictionary));
+				      for(i in friends_dictionary) 
+				      {
+                        console.log (i, friends_dictionary[i]);
+                      }
+				       res.send(friends_dictionary);
+				   }, 1000);
 			  }
 			  else
 			  {  

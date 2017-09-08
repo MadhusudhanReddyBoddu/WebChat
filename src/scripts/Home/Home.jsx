@@ -191,16 +191,20 @@ componentDidMount() {
 	 $.ajax({
 		type: "GET",
 		url: "/friends/myFriends",
-		success: function(data){
+		success: function(dictionary){
 			
-			if (data == "No friends")
+			if (dictionary == "No friends")
 			{
 				console.log("No friends exist");
 				document.getElementById('friends').innerHTML = "Please add friends";
 			}
 			else
 			{
-			console.log("Friends: "+data);
+			console.log("Friends*************: "+dictionary);
+			
+			//Extracting friends names from dictionary
+			var data = Object.keys(dictionary);
+			console.log("Names*************: "+data);
 			//Displaying friends in div
 			for (var i = 0; i < data.length; i++) 
 			  {
@@ -216,6 +220,25 @@ componentDidMount() {
 				 console.log(this.state.receiver);
 				 li.addEventListener("click", function() { self.friendChat(this.id); }, false);
                  document.getElementById("friends").appendChild(li);
+				 
+				 //Setting notification for the chat
+				 if (dictionary[data[i]] == 1)
+				 {
+					 
+					  var s = data[i];
+                      var k = "*[id='"+ s + "']";
+		              console.log("reciver notified for chat: "+ data[i]);
+		              console.log("******************"+ $(k).children().length);
+		 
+		               //To notify only once
+		               if($(k).children().length == 0)
+		                { 
+	                       $( k ).append( "<img src='../../images/notify.ico' width='30' height='30'></img>" );
+		                }
+		 
+					 
+				 }
+				 
 			  }
 			}
 			
