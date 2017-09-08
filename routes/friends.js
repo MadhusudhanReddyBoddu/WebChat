@@ -95,8 +95,9 @@ router.get('/myFriends',urlencodedParser, function(req, res){
 				  //Storing all friends
 				  var friends= result[0].friends;
 				  var friends_dictionary = {};
+				  
 				  //For checking notification for the chat
-					  friends.forEach(function (friend) {
+					friends.forEach(function (friend) {
 						  
 				       console.log("Friend :"+friend);
 					   
@@ -157,6 +158,22 @@ router.get('/myFriends',urlencodedParser, function(req, res){
 	
 	 	
 });
+
+
+
+
+//Sends people who are not friends but still sent message to the user. 
+router.get('/unknownFriends',urlencodedParser, function(req, res){
+	  
+	  
+	 console.log("Unknown friends Called");
+	 res.send("Unknown Friends");
+	 	
+});
+
+
+
+
 
 //export this router to use in our server.js
 module.exports = router;

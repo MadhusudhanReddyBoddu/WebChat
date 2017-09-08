@@ -27227,6 +27227,13 @@ var Home = function (_React$Component) {
 				elem.scrollTop = elem.scrollHeight;
 			});
 
+			//When user sends a message to a user, who is not having the user in his friends list.  
+			this.state.socket.on('notFriends', function (data) {
+
+				//Setting the message in chat box
+				document.getElementById("messages").innerHTML = "You are not added as a friend for the " + data.receiver + ". Please Send chat request";
+			});
+
 			//When user receives a message from other but he doesn't open sender chat, then we add notification symbol to chat.  
 			this.state.socket.on('notify receiver', function (data) {
 				var s = data.sender;
