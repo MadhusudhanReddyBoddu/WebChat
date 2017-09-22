@@ -304,7 +304,7 @@ send() {
    
    
   <div>
-	  
+	<div className="container-fluid">
     <div className="largeBox">
 	
        <div className="smallbox_left">
@@ -354,7 +354,7 @@ send() {
 	
 	</div>
 	
-	
+   </div>
   </div>
   
   

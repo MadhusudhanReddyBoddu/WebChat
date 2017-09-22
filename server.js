@@ -118,7 +118,7 @@ io.on('connection', function(socket){
            var query = { email: data.receiver };
            db.collection("Friends").find(query).toArray(function(err, result) {
               if (err) throw err;
-              console.log(result);
+              console.log("*********************"+result);
               db.close();
 			  if (result.length != 0)
 			  {
@@ -130,7 +130,7 @@ io.on('connection', function(socket){
 				  if (f == -1)
 				  {
 					  //Not Friends.
-					  console.log("NotFriend");
+					  console.log(socket.activeUserID+" is NotFriend");
 					  socket.emit('notFriends',{receiver: data.receiver}); 
 				  }
 				  

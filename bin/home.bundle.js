@@ -26911,6 +26911,8 @@ var _reactRouterDom = __webpack_require__(194);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -26936,71 +26938,126 @@ var Header = function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'header_header' },
+          { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'header_headerText' },
+            { className: 'col-sm-12' },
             _react2.default.createElement(
-              'font',
-              { size: '6' },
-              'Web Chat'
+              'div',
+              { className: 'header_header' },
+              _react2.default.createElement(
+                'font',
+                { size: '6' },
+                'Web Chat'
+              )
             )
           )
         ),
         _react2.default.createElement(
-          'div',
-          { className: 'header_list' },
+          'nav',
+          { className: 'navbar navbar-inverse' },
           _react2.default.createElement(
-            'ul',
-            null,
+            'div',
+            { className: 'container-fluid' },
             _react2.default.createElement(
-              'li',
-              null,
+              'div',
+              { className: 'navbar-header' },
               _react2.default.createElement(
-                _reactRouterDom.NavLink,
-                { to: '/home', activeStyle: { color: 'red' }, className: 'navLink' },
-                'Home'
+                'button',
+                { type: 'button', className: 'navbar-toggle', 'data-toggle': 'collapse', 'data-target': '#myNavbar' },
+                _react2.default.createElement('span', { className: 'icon-bar' }),
+                _react2.default.createElement('span', { className: 'icon-bar' }),
+                _react2.default.createElement('span', { className: 'icon-bar' }),
+                _react2.default.createElement('span', { className: 'icon-bar' })
               )
             ),
             _react2.default.createElement(
-              'li',
-              null,
+              'div',
+              { className: 'row' },
               _react2.default.createElement(
-                _reactRouterDom.NavLink,
-                { to: '/profile', activeStyle: { color: 'red' }, className: 'navLink' },
-                'Profile'
-              )
-            ),
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement(
-                _reactRouterDom.NavLink,
-                { to: '/friends', activeStyle: { color: 'red' }, className: 'navLink' },
-                'Friends'
-              )
-            ),
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement(
-                _reactRouterDom.NavLink,
-                { to: '/settings', activeStyle: { color: 'red' }, className: 'navLink' },
-                'Settings'
-              )
-            ),
-            _react2.default.createElement(
-              'li',
-              null,
-              _react2.default.createElement(
-                _reactRouterDom.NavLink,
-                { to: '/help', activeStyle: { color: 'red' }, className: 'navLink' },
-                'Help'
+                'div',
+                { className: 'collapse navbar-collapse', id: 'myNavbar' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'header_list' },
+                  _react2.default.createElement(
+                    'div',
+                    _defineProperty({ className: 'row' }, 'className', 'headerlinks'),
+                    _react2.default.createElement(
+                      'ul',
+                      { className: 'nav navbar-nav', style: { width: '100%' } },
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-3 col-sm-4' },
+                        _react2.default.createElement(
+                          'li',
+                          { className: 'navLinker' },
+                          _react2.default.createElement(
+                            _reactRouterDom.NavLink,
+                            { to: '/home', activeStyle: { color: 'red' }, className: 'navLink' },
+                            'Home'
+                          )
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-2 col-sm-4' },
+                        _react2.default.createElement(
+                          'li',
+                          { className: 'navLinker' },
+                          _react2.default.createElement(
+                            _reactRouterDom.NavLink,
+                            { to: '/profile', activeStyle: { color: 'red' }, className: 'navLink' },
+                            'Profile'
+                          )
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-2 col-sm-4' },
+                        _react2.default.createElement(
+                          'li',
+                          { className: 'navLinker' },
+                          _react2.default.createElement(
+                            _reactRouterDom.NavLink,
+                            { to: '/friends', activeStyle: { color: 'red' }, className: 'navLink' },
+                            'Friends'
+                          )
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-2 col-sm-6' },
+                        _react2.default.createElement(
+                          'li',
+                          { className: 'navLinker' },
+                          _react2.default.createElement(
+                            _reactRouterDom.NavLink,
+                            { to: '/settings', activeStyle: { color: 'red' }, className: 'navLink' },
+                            'Settings'
+                          )
+                        )
+                      ),
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-3 col-sm-6' },
+                        _react2.default.createElement(
+                          'li',
+                          { className: 'navLinker' },
+                          _react2.default.createElement(
+                            _reactRouterDom.NavLink,
+                            { to: '/help', activeStyle: { color: 'red' }, className: 'navLink' },
+                            'Help'
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
               )
             )
           )
-        ),
-        _react2.default.createElement('hr', null)
+        )
       );
     }
   }]);
@@ -27369,84 +27426,88 @@ var Home = function (_React$Component) {
 				null,
 				_react2.default.createElement(
 					'div',
-					{ className: 'largeBox' },
+					{ className: 'container-fluid' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'smallbox_left' },
+						{ className: 'largeBox' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'home_profile' },
+							{ className: 'smallbox_left' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'home_profileimage' },
-								_react2.default.createElement('input', { type: 'image', id: 'profile_image', src: ' ../../images/background.jpg', className: 'profile_image' }),
-								_react2.default.createElement('br', null)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'home_username' },
-								_react2.default.createElement('p', { id: 'username', className: 'username' })
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'home_searchfriend' },
-							_react2.default.createElement('input', { type: 'search', id: 'searchfriend', placeholder: 'Search friends here...', autoComplete: 'off' })
-						),
-						_react2.default.createElement('hr', null),
-						_react2.default.createElement(
-							'div',
-							{ className: 'home_recentfriends' },
-							_react2.default.createElement('ul', { id: 'friends' })
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'smallbox_center' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'home_chatbox' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'home_receiver' },
-								' ',
+								{ className: 'home_profile' },
 								_react2.default.createElement(
-									'p',
-									{ id: 'receivername' },
-									'  '
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'home_messages' },
-								_react2.default.createElement('ul', { id: 'messages' })
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'home_messagesfixed' },
-								_react2.default.createElement(
-									'span',
-									null,
-									_react2.default.createElement('input', { id: 'message', placeholder: 'Enter text here...', autoComplete: 'off' })
+									'div',
+									{ className: 'home_profileimage' },
+									_react2.default.createElement('input', { type: 'image', id: 'profile_image', src: ' ../../images/background.jpg', className: 'profile_image' }),
+									_react2.default.createElement('br', null)
 								),
 								_react2.default.createElement(
-									'span',
-									null,
-									_react2.default.createElement(
-										'button',
-										{ id: 'send', onClick: this.send },
-										'SEND'
-									)
+									'div',
+									{ className: 'home_username' },
+									_react2.default.createElement('p', { id: 'username', className: 'username' })
 								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'home_searchfriend' },
+								_react2.default.createElement('input', { type: 'search', id: 'searchfriend', placeholder: 'Search friends here...', autoComplete: 'off' })
+							),
+							_react2.default.createElement('hr', null),
+							_react2.default.createElement(
+								'div',
+								{ className: 'home_recentfriends' },
+								_react2.default.createElement('ul', { id: 'friends' })
 							)
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'PleaseSelectChat' },
+							{ className: 'smallbox_center' },
 							_react2.default.createElement(
-								'p',
-								null,
-								'Please Select a friend to Chat'
+								'div',
+								{ className: 'home_chatbox' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'home_receiver' },
+									' ',
+									_react2.default.createElement(
+										'p',
+										{ id: 'receivername' },
+										'  '
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'home_messages' },
+									_react2.default.createElement('ul', { id: 'messages' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'home_messagesfixed' },
+									_react2.default.createElement(
+										'span',
+										null,
+										_react2.default.createElement('input', { id: 'message', placeholder: 'Enter text here...', autoComplete: 'off' })
+									),
+									_react2.default.createElement(
+										'span',
+										null,
+										_react2.default.createElement(
+											'button',
+											{ id: 'send', onClick: this.send },
+											'SEND'
+										)
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'PleaseSelectChat' },
+								_react2.default.createElement(
+									'p',
+									null,
+									'Please Select a friend to Chat'
+								)
 							)
 						)
 					)
@@ -27954,7 +28015,7 @@ exports = module.exports = __webpack_require__(85)(undefined);
 
 
 // module
-exports.push([module.i, "div.header_header\r\n{\r\n width: 1310px;\r\n height: 40px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n margin-top:0px;\r\n padding-bottom: 20px;\r\n}\r\n\r\n\r\ndiv.header_headerText\r\n{\r\n  width: 500px;\r\n height: 40px;\r\n //background-color: green;\r\n margin-left:390px;\r\n padding-top: 15px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\ndiv.header_list ul {\r\n    list-style-type: none;\r\n    margin: 0;\r\n    padding-left: 45px;\r\n    overflow: hidden;\r\n    background-color:#e0dcc7;\r\n}\r\n\r\ndiv.header_list li {\r\n    float: left;\r\n}\r\n\r\nli .navLink {\r\n    display: block;\r\n    padding-left: 100px;\r\n\tpadding-right:100px;\r\n\tpadding-bottom:10px;\r\n\tpadding-top:15px;\r\n\tdisplay: block;\r\n    color: black;\r\n    text-align: center;\r\n    text-decoration: none;\r\n\r\n}\r\nli .navLink:hover {\r\n    background-color: green;\r\n}", ""]);
+exports.push([module.i, "body\r\n{\r\n    font-size: 16px;\r\n    font-family: \"Times New Roman\", Times, serif;\r\n\tline-height: normal;\r\n}\r\n\r\np\r\n{\r\n\tmargin-bottom: 0cm;\r\n}\r\n\r\n\r\n\r\ndiv.header_header\r\n{\r\n //width: 1310px;\r\n height: 60px;\r\n background-color: #e8b445;\r\n margin-left:10px;\r\n margin-right:10px;\r\n padding-top: 0px;\r\n margin-top:0px;\r\n padding-bottom: 20px;\r\n text-align: center;\r\n border: 3px solid green;\r\n}\r\n\r\n\r\ndiv.header_headerText\r\n{\r\n //width: 500px;\r\n height: 40px;\r\n //background-color: green;\r\n //margin-left:390px;\r\n padding-top: 15px;\r\n float : left;\r\n text-align: center;\r\n}\r\n\r\ndiv.header_list ul {\r\n    background-color:#e0dcc7;\r\n}\r\n\r\nli .navLink \r\n{\r\n    display: block;\r\n    //padding-left: 100px;\r\n\t//padding-right:100px;\r\n\tpadding-bottom:10px;\r\n\tpadding-top:15px;\r\n\tdisplay: block;\r\n    color: black;\r\n    text-align: center;\r\n    text-decoration: none;\r\n\r\n}\r\n\r\n.navLink:hover {\r\n    background-color: #a1db92;\r\n}", ""]);
 
 // exports
 
@@ -27999,7 +28060,7 @@ exports = module.exports = __webpack_require__(85)(undefined);
 
 
 // module
-exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 510px;\r\n background-color: #b3db8c;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 490px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \t\r\n }\r\n \r\n\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 375px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }\r\n\r\n\r\n#friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#friends li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#friends li:nth-child(odd) { background: #eee; }\r\n", ""]);
+exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n box-sizing: content-box;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n box-sizing: content-box;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 510px;\r\n background-color: #b3db8c;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 490px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \r\n box-sizing: content-box; \r\n }\r\n \r\n\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 400px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n box-sizing: content-box;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\nbox-sizing: content-box;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }\r\n\r\n\r\n#friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#friends li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#friends li:nth-child(odd) { background: #eee; }\r\n", ""]);
 
 // exports
 
