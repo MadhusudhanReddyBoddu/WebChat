@@ -12,61 +12,55 @@ var url = "mongodb://localhost:27017/WebChat";
 router.get('/',function(req, res){
 
         var keyword=req.query.keyword;
-
-    
-        var like=".*" + keyword + ".*";
-
-        console.log(like);
+		
+		if (keyword == "")
+		{
+			console.log("nothing entered");
+			res.send("Empty");
+		}
+		
+		else
+		{
+			
+		  var like=".*" + keyword + ".*";
+		    //like = "Abhilashreddy396@gmail.com";
         
-        // var regex = new RegExp(req.body.term);
+		  var query = {};
+          query["email"] = { "$regex": like, "$options": "i" };
+		
+          console.log(query);
+        
+          // var regex = new RegExp(req.body.term);
 
-        console.log("keyword is:" + keyword);
+            console.log("keyword is:" + keyword);
 
-     //Comparing username and password.
-	   MongoClient.connect(url, function(err, db) {
+          //Comparing username and password.
+	       MongoClient.connect(url, function(err, db) {
            if (err) throw err;
            // var query = ({},{firstname:1,email:1,_id:0});
            // var query={email:"ricky@gmail.com"};
-           db.collection("Profile").find({"firstname":new RegExp(like)},{firstname:1,email:1,_id:0}).toArray(function(err, result) {
+           // db.collection("Profile").find({"email":new RegExp(like)},{firstname:1,email:1,_id:0}).toArray(function(err, result) {
+			db.collection("Profile").find(query,{firstname:1,email:1,_id:0}).toArray(function(err, result) {
               if (err) throw err;
               console.log(result);
 
-              //displaying just firstname
+              //displaying just email
               result.forEach(
                   function(doc) {
-                      console.log(doc.firstname);
+                      console.log(doc.email);
                   });
 
               // console.log(req);
               db.close();
               res.send(result);
-
-// cursor.forEach(
-//         function(doc) {
-//             console.log(doc.firstname);
-//         }
-
-	
-	// 
-	 // //setting cookie at client side
-  //     res.clearCookie("user_id");
-	 //  res.clearCookie("user_name");
-	  
-	 //  res.cookie('user_id', req.session.userid);
-	 //  res.cookie('user_name', req.session.username);
-	  
-	  
-  //    // res.status(200).send(req.session);
-	  
-	 //  res.sendFile(path.join(SRC_DIR,"home.html"));
-	
-  //     console.log("Cookie userid at client set to :"+ req.session.userid);
-	 //  console.log("Cookie username at client set to :"+ req.session.username);
 	
 	
+              });
+			
+           });
+	    }
+		  
 });
-       });
-	});
 
 
 

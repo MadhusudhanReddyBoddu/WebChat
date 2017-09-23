@@ -60,6 +60,8 @@ componentDidMount() {
  
    $(document).ready(function(){
     const self = this;
+	
+//Searching new friends	
   $("#searchnewfriends").keyup(function(){
     $.ajax({
     type: "GET",
@@ -72,20 +74,11 @@ componentDidMount() {
       console.log(data);
       var myNode = document.getElementById("suggestion-box");
       myNode.innerHTML = '';
-
-    //   var html = "<table border='1|1'>";
-    //     for (var i = 0; i < data.length; i++) {
-    //     html+="<tr>";
-    //     html+="<td>"+data[i].email+"</td>";
-    //     html+="<td><button id="+data[i].email+" onclick="+self+".send >"+"Add"+"</button></td>";
-
-       
-
-    //     html+="</tr>";
-
-    // }
-    // html+="</table>";
-
+	  
+	  if(data == "Empty")
+	  {
+		 return; 
+	  }
 
       //Displaying friends in div
       for (var i = 0; i < data.length; i++) 
@@ -126,7 +119,7 @@ componentDidMount() {
   });
 
 
-//displaying friends
+//Displaying friends
 $.ajax({
     type: "GET",
     url: "/friends/myFriends",
@@ -134,47 +127,35 @@ $.ajax({
       
       if (data == "No friends")
       {
-        console.log("No friends exist");
+        console.log("**************No friends exist");
         document.getElementById('friends').innerHTML = "Please add friends";
       }
       else
       {
-      console.log("Friends: "+data);
+      //Extracting friends names from dictionary
+	  var ids = Object.keys(data);
+	  console.log("Names$$$$$$$: "+ids);
+	  
       //Displaying friends in div
-      for (var i = 0; i < data.length; i++) 
+      for (var i = 0; i < ids.length; i++) 
         {
-           console.log("Friend: "+ data[i]);
+           console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Friend******************: "+ ids[i]);
            var li=document.createElement("li");
                //var br=document.createElement("br");
-                 li.appendChild(document.createTextNode(data[i]));
-           li.setAttribute("id",data[i]);
-         
-         //Adding on click event for each friend
-               // li.setAttribute("onclick","friendChat()");
-        // li.addEventListener("click", function() { friendChat(this.id); }, false);
-         // console.log(this.state.receiver);
-         // li.addEventListener("click", function() { self.friendChat(this.id); }, false);
-                 document.getElementById("friends").appendChild(li);
+           li.appendChild(document.createTextNode(ids[i]));
+           li.setAttribute("id",ids[i]);
+           document.getElementById("friends").appendChild(li);
+		   
+		   console.log("*******************Friend appended*************************************************: ");
         }
       }
-      
-      
+       
     }.bind(this)
    });
 
-
-
-
-
-
-
-
-
-
-
-}.bind(this));
+  }.bind(this));
   
-   }
+ }
   
   
  render(){
@@ -183,18 +164,15 @@ $.ajax({
    
    
   <div className="main">
-    <h2>Welcome to WebChat Friends page!</h2>
     <div className="rightbar">
-        <h3>Search friends to add</h3>
-        //<div className="imagearea">
-         // <input type="image" id="f_image" src = " ../../images/friend.jpg" className="friends_image" /><br/>
-        //</div>
+	  Search to add new friends
         <div className="searchgrid">
           <input type="search" id="searchnewfriends"/>
           <div id="suggestion-box"></div>
         </div>
     </div>
     <div className="home_recentfriends" id="friendlistall">
+	   Friends
        <ul id="friends" className="friendli"></ul>
     </div>
   </div>

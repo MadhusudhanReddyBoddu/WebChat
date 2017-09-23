@@ -1,57 +1,50 @@
 
 
 .main{
-  background-color: #d9dbd5;
+  background-color: #cfecf9;
 }
 
-h2{
-	background-color: orange;
-}
-.friends_image{
-  width:800px;
-  height: 800px;
-}
 
 .rightbar{
-  float:right;
+  float:left;
   width:1659px;
   background-color: #fff;
   margin-right: 50px;
 }
-.imagearea{
-  width:900px;
-  float:left;
-}
+
 .searchgrid{
   width:500px;
   float:left;
 }
-#friendlistall{
-  margin-left: 50px;
-  width:500px;
-  height:1000px;
-}
-/*.searchgrid{
-float:right;
-}*/
- input[type="search"],#suggestion-box{
+
+#suggestion-box{
   padding: 10px;
   border: solid 1px #dcdcdc;
   transition: box-shadow 0.3s, border 0.3s;
   /*margin-left: 1200px;*/
 }
- input[type="search"]:focus,
+
  input[type="search"].focus {
   border: solid 1px #707070;
   box-shadow: 0 0 5px 1px #969696;
 }
 
-.friendsli{
+#friendlistall{
+  margin-left: 50px;
+  width:500px;
+  height:1000px;
   background-color: yellow;
 }
 
+.friendsli{
+  background-color: red;
+}
+
 .friendli li{
+	
   font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+   background-color: green;
+   
 }
  
 .friendli,#suggestion-box li {

@@ -27337,8 +27337,8 @@ var Home = function (_React$Component) {
 				$("#username").text("Welcome " + username + "!!");
 
 				this.state.socket.emit('new user', { username: this.state.username, userid: this.state.userid });
-				//Loading all friends when user gets his home page
 
+				//Loading all friends when user gets his home page  
 				$.ajax({
 					type: "GET",
 					url: "/friends/myFriends",
@@ -27674,6 +27674,8 @@ var Friends = function (_React$Component) {
 
       $(document).ready(function () {
         var self = this;
+
+        //Searching new friends	
         $("#searchnewfriends").keyup(function () {
           $.ajax({
             type: "GET",
@@ -27687,18 +27689,9 @@ var Friends = function (_React$Component) {
               var myNode = document.getElementById("suggestion-box");
               myNode.innerHTML = '';
 
-              //   var html = "<table border='1|1'>";
-              //     for (var i = 0; i < data.length; i++) {
-              //     html+="<tr>";
-              //     html+="<td>"+data[i].email+"</td>";
-              //     html+="<td><button id="+data[i].email+" onclick="+self+".send >"+"Add"+"</button></td>";
-
-
-              //     html+="</tr>";
-
-              // }
-              // html+="</table>";
-
+              if (data == "Empty") {
+                return;
+              }
 
               //Displaying friends in div
               for (var i = 0; i < data.length; i++) {
@@ -27735,31 +27728,30 @@ var Friends = function (_React$Component) {
           });
         });
 
-        //displaying friends
+        //Displaying friends
         $.ajax({
           type: "GET",
           url: "/friends/myFriends",
           success: function (data) {
 
             if (data == "No friends") {
-              console.log("No friends exist");
+              console.log("**************No friends exist");
               document.getElementById('friends').innerHTML = "Please add friends";
             } else {
-              console.log("Friends: " + data);
+              //Extracting friends names from dictionary
+              var ids = Object.keys(data);
+              console.log("Names$$$$$$$: " + ids);
+
               //Displaying friends in div
-              for (var i = 0; i < data.length; i++) {
-                console.log("Friend: " + data[i]);
+              for (var i = 0; i < ids.length; i++) {
+                console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Friend******************: " + ids[i]);
                 var li = document.createElement("li");
                 //var br=document.createElement("br");
-                li.appendChild(document.createTextNode(data[i]));
-                li.setAttribute("id", data[i]);
-
-                //Adding on click event for each friend
-                // li.setAttribute("onclick","friendChat()");
-                // li.addEventListener("click", function() { friendChat(this.id); }, false);
-                // console.log(this.state.receiver);
-                // li.addEventListener("click", function() { self.friendChat(this.id); }, false);
+                li.appendChild(document.createTextNode(ids[i]));
+                li.setAttribute("id", ids[i]);
                 document.getElementById("friends").appendChild(li);
+
+                console.log("*******************Friend appended*************************************************: ");
               }
             }
           }.bind(this)
@@ -27774,27 +27766,9 @@ var Friends = function (_React$Component) {
         'div',
         { className: 'main' },
         _react2.default.createElement(
-          'h2',
-          null,
-          'Welcome to WebChat Friends page!'
-        ),
-        _react2.default.createElement(
           'div',
           { className: 'rightbar' },
-          _react2.default.createElement(
-            'h3',
-            null,
-            'Search friends to add'
-          ),
-          '//',
-          _react2.default.createElement(
-            'div',
-            { className: 'imagearea' },
-            '// ',
-            _react2.default.createElement('input', { type: 'image', id: 'f_image', src: ' ../../images/friend.jpg', className: 'friends_image' }),
-            _react2.default.createElement('br', null),
-            '//'
-          ),
+          'Search to add new friends',
           _react2.default.createElement(
             'div',
             { className: 'searchgrid' },
@@ -27805,6 +27779,7 @@ var Friends = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'home_recentfriends', id: 'friendlistall' },
+          'Friends',
           _react2.default.createElement('ul', { id: 'friends', className: 'friendli' })
         )
       );
@@ -27862,7 +27837,7 @@ exports = module.exports = __webpack_require__(85)(undefined);
 
 
 // module
-exports.push([module.i, "\r\n\r\n.main{\r\n  background-color: #d9dbd5;\r\n}\r\n\r\nh2{\r\n\tbackground-color: orange;\r\n}\r\n.friends_image{\r\n  width:800px;\r\n  height: 800px;\r\n}\r\n\r\n.rightbar{\r\n  float:right;\r\n  width:1659px;\r\n  background-color: #fff;\r\n  margin-right: 50px;\r\n}\r\n.imagearea{\r\n  width:900px;\r\n  float:left;\r\n}\r\n.searchgrid{\r\n  width:500px;\r\n  float:left;\r\n}\r\n#friendlistall{\r\n  margin-left: 50px;\r\n  width:500px;\r\n  height:1000px;\r\n}\r\n/*.searchgrid{\r\nfloat:right;\r\n}*/\r\n input[type=\"search\"],#suggestion-box{\r\n  padding: 10px;\r\n  border: solid 1px #dcdcdc;\r\n  transition: box-shadow 0.3s, border 0.3s;\r\n  /*margin-left: 1200px;*/\r\n}\r\n input[type=\"search\"]:focus,\r\n input[type=\"search\"].focus {\r\n  border: solid 1px #707070;\r\n  box-shadow: 0 0 5px 1px #969696;\r\n}\r\n\r\n.friendsli{\r\n  background-color: yellow;\r\n}\r\n\r\n.friendli li{\r\n  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\r\n}\r\n \r\n.friendli,#suggestion-box li {\r\n  padding: 10px;\r\n  overflow: auto;\r\n}\r\n \r\n.friendli li:hover {\r\n  background: #eee;\r\n  cursor: pointer;\r\n}\r\n.rightbar h3{\r\n  background-color: green;\r\n}\r\n\r\n#suggestion-box{\r\n  list-style: none;\r\n}\r\n#suggestion-box button{\r\n  margin-left: 10px;\r\n  background: #eee;\r\n  cursor: pointer;\r\n}", ""]);
+exports.push([module.i, "\r\n\r\n.main{\r\n  background-color: #cfecf9;\r\n}\r\n\r\n\r\n.rightbar{\r\n  float:left;\r\n  width:1659px;\r\n  background-color: #fff;\r\n  margin-right: 50px;\r\n}\r\n\r\n.searchgrid{\r\n  width:500px;\r\n  float:left;\r\n}\r\n\r\n#suggestion-box{\r\n  padding: 10px;\r\n  border: solid 1px #dcdcdc;\r\n  transition: box-shadow 0.3s, border 0.3s;\r\n  /*margin-left: 1200px;*/\r\n}\r\n\r\n input[type=\"search\"].focus {\r\n  border: solid 1px #707070;\r\n  box-shadow: 0 0 5px 1px #969696;\r\n}\r\n\r\n#friendlistall{\r\n  margin-left: 50px;\r\n  width:500px;\r\n  height:1000px;\r\n  background-color: yellow;\r\n}\r\n\r\n.friendsli{\r\n  background-color: red;\r\n}\r\n\r\n.friendli li{\r\n\t\r\n  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\r\n   background-color: green;\r\n   \r\n}\r\n \r\n.friendli,#suggestion-box li {\r\n  padding: 10px;\r\n  overflow: auto;\r\n}\r\n \r\n.friendli li:hover {\r\n  background: #eee;\r\n  cursor: pointer;\r\n}\r\n.rightbar h3{\r\n  background-color: green;\r\n}\r\n\r\n#suggestion-box{\r\n  list-style: none;\r\n}\r\n#suggestion-box button{\r\n  margin-left: 10px;\r\n  background: #eee;\r\n  cursor: pointer;\r\n}", ""]);
 
 // exports
 
@@ -28060,7 +28035,7 @@ exports = module.exports = __webpack_require__(85)(undefined);
 
 
 // module
-exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n box-sizing: content-box;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n box-sizing: content-box;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 510px;\r\n background-color: #b3db8c;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 490px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \r\n box-sizing: content-box; \r\n }\r\n \r\n\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 400px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n box-sizing: content-box;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\nbox-sizing: content-box;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }\r\n\r\n\r\n#friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#friends li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#friends li:nth-child(odd) { background: #eee; }\r\n", ""]);
+exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n box-sizing: content-box;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n box-sizing: content-box;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 510px;\r\n background-color: #b3db8c;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 490px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \r\n box-sizing: content-box; \r\n }\r\n \r\n\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 400px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n margin-top:15px;\r\n box-sizing: content-box;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\nbox-sizing: content-box;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }\r\n\r\n\r\n#friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#friends li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#friends li:nth-child(odd) { background: #eee; }\r\n", ""]);
 
 // exports
 

@@ -197,8 +197,9 @@ componentDidMount() {
    $("#username").text("Welcome " + username+"!!");
    
    this.state.socket.emit('new user',{username: this.state.username, userid: this.state.userid});
-   //Loading all friends when user gets his home page
-     
+   
+   
+   //Loading all friends when user gets his home page  
 	 $.ajax({
 		type: "GET",
 		url: "/friends/myFriends",

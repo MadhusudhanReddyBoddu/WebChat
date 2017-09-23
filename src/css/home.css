@@ -139,6 +139,7 @@
  border-bottom:5px;
  float : left; 
  overflow-y:auto;
+ margin-top:15px;
  box-sizing: content-box;
  }
  
