@@ -27608,6 +27608,8 @@ var _friend2 = _interopRequireDefault(_friend);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -27676,7 +27678,7 @@ var Friends = function (_React$Component) {
         var self = this;
 
         //Searching new friends	
-        $("#searchnewfriends").keyup(function () {
+        $("#friends_searchnewfriends").keyup(function () {
           $.ajax({
             type: "GET",
             url: "/friends",
@@ -27686,7 +27688,7 @@ var Friends = function (_React$Component) {
             // },
             success: function (data) {
               console.log(data);
-              var myNode = document.getElementById("suggestion-box");
+              var myNode = document.getElementById("friends_newFriendSuggestion-box");
               myNode.innerHTML = '';
 
               if (data == "Empty") {
@@ -27715,12 +27717,12 @@ var Friends = function (_React$Component) {
                 button.addEventListener("click", function () {
                   self.send(this.id);
                 }, false);
-                document.getElementById("suggestion-box").appendChild(li);
+                document.getElementById("friends_newFriendSuggestion-box").appendChild(li);
               }
 
-              $("#suggestion-box").show();
+              $("#friends_newFriendSuggestion-box").show();
               // $("#suggestion-box").html(html);
-              $("#btn1").click(function () {
+              $("#friends_btn1").click(function () {
                 console.log("clicked");
               });
             }.bind(this)
@@ -27736,7 +27738,7 @@ var Friends = function (_React$Component) {
 
             if (data == "No friends") {
               console.log("**************No friends exist");
-              document.getElementById('friends').innerHTML = "Please add friends";
+              document.getElementById('friends_friends').innerHTML = "Please add friends";
             } else {
               //Extracting friends names from dictionary
               var ids = Object.keys(data);
@@ -27749,7 +27751,7 @@ var Friends = function (_React$Component) {
                 //var br=document.createElement("br");
                 li.appendChild(document.createTextNode(ids[i]));
                 li.setAttribute("id", ids[i]);
-                document.getElementById("friends").appendChild(li);
+                document.getElementById("friends_friends").appendChild(li);
 
                 console.log("*******************Friend appended*************************************************: ");
               }
@@ -27764,23 +27766,71 @@ var Friends = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'main' },
+        _defineProperty({ className: 'friends_main' }, 'className', 'container'),
         _react2.default.createElement(
           'div',
-          { className: 'rightbar' },
-          'Search to add new friends',
+          { className: 'friends_header' },
           _react2.default.createElement(
             'div',
-            { className: 'searchgrid' },
-            _react2.default.createElement('input', { type: 'search', id: 'searchnewfriends' }),
-            _react2.default.createElement('div', { id: 'suggestion-box' })
+            null,
+            _react2.default.createElement(
+              'button',
+              { type: 'button', className: 'btn btn-info btn-lg', 'data-toggle': 'modal', 'data-target': '#myModal' },
+              '+ Add new friend'
+            )
           )
         ),
         _react2.default.createElement(
           'div',
-          { className: 'home_recentfriends', id: 'friendlistall' },
+          { className: 'modal fade', id: 'myModal', role: 'dialog' },
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-dialog' },
+            _react2.default.createElement(
+              'div',
+              { className: 'modal-content' },
+              _react2.default.createElement(
+                'div',
+                { className: 'modal-header' },
+                _react2.default.createElement(
+                  'button',
+                  { type: 'button', className: 'close', 'data-dismiss': 'modal' },
+                  '\xD7'
+                ),
+                _react2.default.createElement(
+                  'h4',
+                  { className: 'modal-title' },
+                  'Friends'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'modal-body' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'friends_searchModel' },
+                  'Search new friends  ',
+                  _react2.default.createElement('input', { type: 'search', placeholder: 'Enter emailid...', autoComplete: 'off', id: 'friends_searchnewfriends' }),
+                  _react2.default.createElement('div', { id: 'friends_newFriendSuggestion-box' })
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'modal-footer' },
+                _react2.default.createElement(
+                  'button',
+                  { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+                  'Close'
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'friends_allFriends', id: 'friends_friendlistall' },
           'Friends',
-          _react2.default.createElement('ul', { id: 'friends', className: 'friendli' })
+          _react2.default.createElement('ul', { id: 'friends_friends', className: 'friens_friendli' })
         )
       );
     }
@@ -27837,7 +27887,7 @@ exports = module.exports = __webpack_require__(85)(undefined);
 
 
 // module
-exports.push([module.i, "\r\n\r\n.main{\r\n  background-color: #cfecf9;\r\n}\r\n\r\n\r\n.rightbar{\r\n  float:left;\r\n  width:1659px;\r\n  background-color: #fff;\r\n  margin-right: 50px;\r\n}\r\n\r\n.searchgrid{\r\n  width:500px;\r\n  float:left;\r\n}\r\n\r\n#suggestion-box{\r\n  padding: 10px;\r\n  border: solid 1px #dcdcdc;\r\n  transition: box-shadow 0.3s, border 0.3s;\r\n  /*margin-left: 1200px;*/\r\n}\r\n\r\n input[type=\"search\"].focus {\r\n  border: solid 1px #707070;\r\n  box-shadow: 0 0 5px 1px #969696;\r\n}\r\n\r\n#friendlistall{\r\n  margin-left: 50px;\r\n  width:500px;\r\n  height:1000px;\r\n  background-color: yellow;\r\n}\r\n\r\n.friendsli{\r\n  background-color: red;\r\n}\r\n\r\n.friendli li{\r\n\t\r\n  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;\r\n   background-color: green;\r\n   \r\n}\r\n \r\n.friendli,#suggestion-box li {\r\n  padding: 10px;\r\n  overflow: auto;\r\n}\r\n \r\n.friendli li:hover {\r\n  background: #eee;\r\n  cursor: pointer;\r\n}\r\n.rightbar h3{\r\n  background-color: green;\r\n}\r\n\r\n#suggestion-box{\r\n  list-style: none;\r\n}\r\n#suggestion-box button{\r\n  margin-left: 10px;\r\n  background: #eee;\r\n  cursor: pointer;\r\n}", ""]);
+exports.push([module.i, "\r\n.friends_main{\r\n  background-color: #cfecf9;\r\n}\r\n\r\n.friends_header{\r\n  float:left;\r\n  background-color: #f4c842;\r\n  border-bottom: 20px;\r\n}\r\n\r\ninput[type=search]::-webkit-search-cancel-button {\r\n    -webkit-appearance: searchfield-cancel-button;\r\n}\r\n\r\n.friends_searchModel #friends_searchnewfriends\r\n{\r\n width: 290px; \r\n height: 30px;\r\n box-sizing: content-box;\r\n}\r\n\r\n#friends_newFriendSuggestion-box{\r\n  list-style: none;\r\n}\r\n\r\n.friends_friendli,#friends_newFriendSuggestion-box li {\r\n  padding: 10px;\r\n  overflow: auto;\r\n}\r\n \r\n \r\n.friends_allFriends{\r\n  width:500px;\r\n  background-color: yellow;\r\n  box-sizing: content-box;\r\n  margin-top: 50px;\r\n}\r\n\r\n.friends_friendli li:hover {\r\n  background: #eee;\r\n  cursor: pointer;\r\n}", ""]);
 
 // exports
 
@@ -28035,7 +28085,7 @@ exports = module.exports = __webpack_require__(85)(undefined);
 
 
 // module
-exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n box-sizing: content-box;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n box-sizing: content-box;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 510px;\r\n background-color: #b3db8c;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 490px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \r\n box-sizing: content-box; \r\n }\r\n \r\n\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 400px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n margin-top:15px;\r\n box-sizing: content-box;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\nbox-sizing: content-box;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }\r\n\r\n\r\n#friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#friends li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#friends li:nth-child(odd) { background: #eee; }\r\n", ""]);
+exports.push([module.i, ".largeBox\r\n{\r\n width: 1275px;\r\n height: 520px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n /*position:relative;*/\r\n}\r\n.smallbox_left\r\n{\r\n  width: 300px;\r\n height: 500px;\r\n background-color: green;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : left;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profile\r\n{\r\n width: 250px;\r\n height: 50px;\r\n background-color: yellow;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_profileimage\r\n{\r\n width: 50px;\r\n height: 50px;\r\n padding: 5px;\r\n margin: 5px; \r\n position: relative;\r\n float:left;\r\n //background:#c6c3a7;\r\n box-sizing: content-box;\r\n}\r\n#profile_image\r\n{\r\n\twidth:50px;\r\n\theight:50px;\r\n\tdisplay: block;\r\n    margin: 0 auto;\r\n\tposition: absolute;\r\n}\r\n.home_username\r\n{\r\n width: 120px;\r\n height: 40px;\r\n //background-color: red;\r\n padding-top: 5px;\r\n padding-left: 20px;\r\n padding-right: 40px;\r\n padding-bottom: 20px;\t\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n.home_searchfriend\r\n{\r\n width: 290px;\r\n height: 40px;\r\n background-color: purple;\r\n padding-top:2px;\r\n box-sizing: content-box;\r\n\t\r\n}\r\n.home_searchfriend #searchfriend\r\n{\r\n border: 0;\r\n width: 290px; \r\n height: 30px;\r\n box-sizing: content-box;\r\n}\r\n\r\ninput[type=search]::-webkit-search-cancel-button {\r\n    -webkit-appearance: searchfield-cancel-button;\r\n}\r\n\r\n.home_recentfriends\r\n{\r\n width: 300px;\r\n height: 350px;\r\n background-color: #61f4de;\r\n padding-top: 5px;\r\n padding-left: 5px;\r\n padding-right: 5x;\r\n padding-bottom: 5px;\r\n box-sizing: content-box;\r\n}\r\n\r\n.smallbox_center\r\n{\r\n  width: 850px;\r\n height: 510px;\r\n background-color: #b3db8c;\r\n margin-left:20px;\r\n padding-top: 5px;\r\n padding-left: 30px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n float : right;\r\n box-sizing: content-box;\r\n}\r\n\r\n\r\n div .home_chatbox\r\n { \r\n width: 700px;\r\n height: 490px;\r\n background-color: red;\r\n margin-left:20px;\r\n padding-top: 20px;\r\n padding-left: 50px;\r\n padding-right: 20px;\r\n padding-bottom: 20px;\r\n position:relative; \r\n box-sizing: content-box; \r\n }\r\n \r\n\r\n \r\n div.home_messages\r\n {\r\n width: 650px;\r\n height: 400px;\r\n background-color: #F7D983;\r\n padding-top: 20px;\r\n padding-left: 20px;\r\n padding-right: 20px;\r\n padding-bottom: 5px;\r\n border-bottom:5px;\r\n float : left; \r\n overflow-y:auto;\r\n margin-top:15px;\r\n box-sizing: content-box;\r\n }\r\n \r\n \r\n div .home_messagesfixed\r\n{\r\n background: green;\r\n bottom: 0;\r\n position:absolute;\r\n padding-top: 10px;\r\n padding-left: 5px;\r\n padding-right: 5px;\r\n padding-bottom: 5px;\r\n width: 700px;\r\n height:40px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed input\r\n {\r\n border: 0;\r\n padding: 5px; \r\n width: 620px; \r\n height: 25px;\r\n box-sizing: content-box;\r\n }\r\n \r\n div .home_messagesfixed button { \r\nbackground: rgb(130, 224, 255); \r\nborder: none;\r\npadding: 10px;\r\nfloat: right;\r\nbox-sizing: content-box;\r\n }\r\n \r\n #messages { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#messages li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#messages li:nth-child(odd) { background: #eee; }\r\n\r\n\r\n#friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n#friends li {\r\n\tpadding: 5px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n#friends li:nth-child(odd) { background: #eee; }\r\n", ""]);
 
 // exports
 

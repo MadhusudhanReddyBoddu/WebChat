@@ -62,7 +62,7 @@ componentDidMount() {
     const self = this;
 	
 //Searching new friends	
-  $("#searchnewfriends").keyup(function(){
+  $("#friends_searchnewfriends").keyup(function(){
     $.ajax({
     type: "GET",
     url: "/friends",
@@ -72,7 +72,7 @@ componentDidMount() {
     // },
     success: function(data){
       console.log(data);
-      var myNode = document.getElementById("suggestion-box");
+      var myNode = document.getElementById("friends_newFriendSuggestion-box");
       myNode.innerHTML = '';
 	  
 	  if(data == "Empty")
@@ -103,14 +103,14 @@ componentDidMount() {
         // li.addEventListener("click", function() { friendChat(this.id); }, false);
          // console.log(this.state.receiver);
          button.addEventListener("click", function() { self.send(this.id); }, false);
-                 document.getElementById("suggestion-box").appendChild(li);
+                 document.getElementById("friends_newFriendSuggestion-box").appendChild(li);
         }
       
 
 
-      $("#suggestion-box").show();
+      $("#friends_newFriendSuggestion-box").show();
       // $("#suggestion-box").html(html);
-      $("#btn1").click(function(){
+      $("#friends_btn1").click(function(){
         console.log("clicked");
       });
     }.bind(this)
@@ -128,7 +128,7 @@ $.ajax({
       if (data == "No friends")
       {
         console.log("**************No friends exist");
-        document.getElementById('friends').innerHTML = "Please add friends";
+        document.getElementById('friends_friends').innerHTML = "Please add friends";
       }
       else
       {
@@ -144,7 +144,7 @@ $.ajax({
                //var br=document.createElement("br");
            li.appendChild(document.createTextNode(ids[i]));
            li.setAttribute("id",ids[i]);
-           document.getElementById("friends").appendChild(li);
+           document.getElementById("friends_friends").appendChild(li);
 		   
 		   console.log("*******************Friend appended*************************************************: ");
         }
@@ -163,18 +163,48 @@ $.ajax({
    return (
    
    
-  <div className="main">
-    <div className="rightbar">
-	  Search to add new friends
-        <div className="searchgrid">
-          <input type="search" id="searchnewfriends"/>
-          <div id="suggestion-box"></div>
-        </div>
-    </div>
-    <div className="home_recentfriends" id="friendlistall">
+  <div className="friends_main" className="container">
+  
+  
+         <div className="friends_header">
+             <div>
+		         <button type="button" className="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+ Add new friend</button>
+		      </div>
+	     </div>
+		
+           <div className="modal fade" id="myModal" role="dialog">
+              <div className="modal-dialog">
+    
+                 <div className="modal-content">
+				 
+                      <div className="modal-header">
+                         <button type="button" className="close" data-dismiss="modal">&times;</button>
+                         <h4 className="modal-title">Friends</h4>
+                      </div>
+					  
+                      <div className="modal-body">
+                         <div className="friends_searchModel">
+		                   Search new friends  <input type="search" placeholder="Enter emailid..." autoComplete="off" id="friends_searchnewfriends"/>
+                           <div id="friends_newFriendSuggestion-box"></div>
+                          </div>
+						  
+                      </div>
+					
+					  <div className="modal-footer">
+                           <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+					
+                 </div>
+      
+               </div>
+           </div>
+	
+    <div className="friends_allFriends" id="friends_friendlistall">
 	   Friends
-       <ul id="friends" className="friendli"></ul>
+       <ul id="friends_friends" className="friens_friendli"></ul>
     </div>
+	
+	
   </div>
 
  
