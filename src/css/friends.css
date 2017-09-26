@@ -4,20 +4,19 @@
 }
 
 .friends_header{
-  float:left;
-  background-color: #f4c842;
-  border-bottom: 20px;
+  background-color:#ede7e3;
+}
+
+.friends_headerrow
+{
+margin: auto;
+display: flex;
+justify-content: center;
+align-items: center; 
 }
 
 input[type=search]::-webkit-search-cancel-button {
     -webkit-appearance: searchfield-cancel-button;
-}
-
-.friends_searchModel #friends_searchnewfriends
-{
- width: 290px; 
- height: 30px;
- box-sizing: content-box;
 }
 
 #friends_newFriendSuggestion-box{
@@ -29,15 +28,33 @@ input[type=search]::-webkit-search-cancel-button {
   overflow: auto;
 }
  
- 
+.friends_allFriendsBox
+{
+  border-style: groove;
+  
+}
 .friends_allFriends{
-  width:500px;
-  background-color: yellow;
-  box-sizing: content-box;
-  margin-top: 50px;
+  max-height: 300px;	
+  background: #ffffff;
+  margin-top: 20px;
+  overflow-y:auto;
+  
 }
 
-.friends_friendli li:hover {
-  background: #eee;
+#friends_friends { 
+list-style-type: none; margin: 0; padding: 0;
+ }
+ 
+#friends_friends li {
+	padding: 10px 10px;
+	word-wrap: break-word;
+	}
+	
+#friends_friends li:nth-child(odd) { 
+background: #d4d8d4;
+ }
+ 
+#friends_friends li:hover {
+  background: #a0e8a0;
   cursor: pointer;
 }

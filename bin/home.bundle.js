@@ -27675,7 +27675,17 @@ var Friends = function (_React$Component) {
       console.log('Component DID MOUNT!');
 
       $(document).ready(function () {
+
         var self = this;
+
+        //When user clicks clear button for a search newfriends.
+        $('#friends_searchnewfriends').on('search', function () {
+          // search logic here
+          // this function will be executed on click of X (clear button)
+          console.log("Clear clicked");
+          var myNode = document.getElementById("friends_newFriendSuggestion-box");
+          myNode.innerHTML = '';
+        });
 
         //Searching new friends	
         $("#friends_searchnewfriends").keyup(function () {
@@ -27700,9 +27710,9 @@ var Friends = function (_React$Component) {
                 // console.log("Friend: "+ data[i]);
                 var li = document.createElement("li");
                 //var br=document.createElement("br");
-                li.appendChild(document.createTextNode(data[i].email));
+                li.appendChild(document.createTextNode(data[i].email + "   "));
                 var button = document.createElement("button");
-                button.innerHTML = "add";
+                button.innerHTML = "addFriend";
                 button.setAttribute("id", data[i].email);
                 li.appendChild(button);
 
@@ -27761,6 +27771,11 @@ var Friends = function (_React$Component) {
       }.bind(this));
     }
   }, {
+    key: 'onClearing',
+    value: function onClearing() {
+      window.alert("The current value of the search field is\n" + cleared);
+    }
+  }, {
     key: 'render',
     value: function render() {
 
@@ -27772,17 +27787,40 @@ var Friends = function (_React$Component) {
           { className: 'friends_header' },
           _react2.default.createElement(
             'div',
-            null,
+            _defineProperty({ className: 'friends_headerrow' }, 'className', 'row'),
             _react2.default.createElement(
-              'button',
-              { type: 'button', className: 'btn btn-info btn-lg', 'data-toggle': 'modal', 'data-target': '#myModal' },
-              '+ Add new friend'
+              'div',
+              { className: 'col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-sm-push-6 col-xs-12', style: { marginTop: "25px" } },
+              _react2.default.createElement(
+                'button',
+                { type: 'button', className: 'btn btn-success btn-md', 'data-toggle': 'modal', 'data-target': '#searchNewFriendsModal' },
+                '+ Add new friend'
+              ),
+              _react2.default.createElement(
+                'button',
+                { type: 'button', className: 'btn btn-info btn-md', 'data-toggle': 'modal', 'data-target': '#sentRequestsModal', style: { marginLeft: "10px" } },
+                'Sent requests'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-6 col-sm-6 col-sm-pull-5 col-xs-12', style: { marginTop: "10px" } },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'label',
+                  { 'for': 'usr' },
+                  'Search in friendslist:'
+                ),
+                _react2.default.createElement('input', { type: 'search', placeholder: 'Enter emailid...', autoComplete: 'off', className: 'form-control', id: 'usr' })
+              )
             )
           )
         ),
         _react2.default.createElement(
           'div',
-          { className: 'modal fade', id: 'myModal', role: 'dialog' },
+          { className: 'modal fade', id: 'searchNewFriendsModal', role: 'dialog' },
           _react2.default.createElement(
             'div',
             { className: 'modal-dialog' },
@@ -27828,9 +27866,31 @@ var Friends = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'friends_allFriends', id: 'friends_friendlistall' },
-          'Friends',
-          _react2.default.createElement('ul', { id: 'friends_friends', className: 'friens_friendli' })
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            _defineProperty({ className: 'col-sm-12' }, 'className', 'friends_allFriendsBox'),
+            'Friends',
+            _react2.default.createElement(
+              'div',
+              { className: 'friends_allFriends', id: 'friends_friendlistall' },
+              _react2.default.createElement('ul', { id: 'friends_friends', className: 'friens_friendli' })
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'friends_friendRequestBox' },
+          _react2.default.createElement(
+            'button',
+            { type: 'button', className: 'btn btn-info', 'data-toggle': 'collapse', 'data-target': '#friendRequests' },
+            'See All Friend-requests'
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'friendRequests', className: 'collapse' },
+            'Friend request sent to you will be displayed here.'
+          )
         )
       );
     }
@@ -27887,7 +27947,7 @@ exports = module.exports = __webpack_require__(85)(undefined);
 
 
 // module
-exports.push([module.i, "\r\n.friends_main{\r\n  background-color: #cfecf9;\r\n}\r\n\r\n.friends_header{\r\n  float:left;\r\n  background-color: #f4c842;\r\n  border-bottom: 20px;\r\n}\r\n\r\ninput[type=search]::-webkit-search-cancel-button {\r\n    -webkit-appearance: searchfield-cancel-button;\r\n}\r\n\r\n.friends_searchModel #friends_searchnewfriends\r\n{\r\n width: 290px; \r\n height: 30px;\r\n box-sizing: content-box;\r\n}\r\n\r\n#friends_newFriendSuggestion-box{\r\n  list-style: none;\r\n}\r\n\r\n.friends_friendli,#friends_newFriendSuggestion-box li {\r\n  padding: 10px;\r\n  overflow: auto;\r\n}\r\n \r\n \r\n.friends_allFriends{\r\n  width:500px;\r\n  background-color: yellow;\r\n  box-sizing: content-box;\r\n  margin-top: 50px;\r\n}\r\n\r\n.friends_friendli li:hover {\r\n  background: #eee;\r\n  cursor: pointer;\r\n}", ""]);
+exports.push([module.i, "\r\n.friends_main{\r\n  background-color: #cfecf9;\r\n}\r\n\r\n.friends_header{\r\n  background-color:#ede7e3;\r\n}\r\n\r\n.friends_headerrow\r\n{\r\nmargin: auto;\r\ndisplay: flex;\r\njustify-content: center;\r\nalign-items: center; \r\n}\r\n\r\ninput[type=search]::-webkit-search-cancel-button {\r\n    -webkit-appearance: searchfield-cancel-button;\r\n}\r\n\r\n#friends_newFriendSuggestion-box{\r\n  list-style: none;\r\n}\r\n\r\n.friends_friendli,#friends_newFriendSuggestion-box li {\r\n  padding: 10px;\r\n  overflow: auto;\r\n}\r\n \r\n.friends_allFriendsBox\r\n{\r\n  border-style: groove;\r\n  \r\n}\r\n.friends_allFriends{\r\n  max-height: 300px;\t\r\n  background: #ffffff;\r\n  margin-top: 20px;\r\n  overflow-y:auto;\r\n  \r\n}\r\n\r\n#friends_friends { \r\nlist-style-type: none; margin: 0; padding: 0;\r\n }\r\n \r\n#friends_friends li {\r\n\tpadding: 10px 10px;\r\n\tword-wrap: break-word;\r\n\t}\r\n\t\r\n#friends_friends li:nth-child(odd) { \r\nbackground: #d4d8d4;\r\n }\r\n \r\n#friends_friends li:hover {\r\n  background: #a0e8a0;\r\n  cursor: pointer;\r\n}", ""]);
 
 // exports
 

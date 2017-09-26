@@ -23,8 +23,6 @@ constructor(props) {
   }
 
 
-
-
   send(id) {
   console.log("clicked on id"+id);
 
@@ -59,7 +57,18 @@ componentDidMount() {
    
  
    $(document).ready(function(){
+	   
     const self = this;
+	
+	
+//When user clicks clear button for a search newfriends.
+$('#friends_searchnewfriends').on('search', function () {
+ // search logic here
+ // this function will be executed on click of X (clear button)
+ console.log("Clear clicked");
+ var myNode = document.getElementById("friends_newFriendSuggestion-box");
+ myNode.innerHTML = '';
+ });
 	
 //Searching new friends	
   $("#friends_searchnewfriends").keyup(function(){
@@ -86,9 +95,9 @@ componentDidMount() {
            // console.log("Friend: "+ data[i]);
            var li=document.createElement("li");
                //var br=document.createElement("br");
-                 li.appendChild(document.createTextNode(data[i].email));
+                 li.appendChild(document.createTextNode(data[i].email + "   "));
                 var button = document.createElement("button");
-                button.innerHTML = "add";
+                button.innerHTML = "addFriend";
                 button.setAttribute("id",data[i].email);
                 li.appendChild(button);
 
@@ -158,21 +167,44 @@ $.ajax({
  }
   
   
+  onClearing () 
+  {
+            window.alert ("The current value of the search field is\n"+ cleared);
+        
+  }
+  
  render(){
 
    return (
    
    
   <div className="friends_main" className="container">
-  
-  
-         <div className="friends_header">
-             <div>
-		         <button type="button" className="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+ Add new friend</button>
-		      </div>
-	     </div>
+           <div className="friends_header">
+            <div className="friends_headerrow" className="row">
+			
+			
+			    <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-sm-push-6 col-xs-12" style={{marginTop: "25px"}}>
+				 
+				       <button type="button" className="btn btn-success btn-md" data-toggle="modal" data-target="#searchNewFriendsModal">+ Add new friend</button>
+				       <button type="button" className="btn btn-info btn-md" data-toggle="modal" data-target="#sentRequestsModal" style={{marginLeft: "10px"}}>Sent requests</button>
+		               
+				  
+				 </div>
+			
+                 <div className="col-md-6 col-sm-6 col-sm-pull-5 col-xs-12" style={{marginTop: "10px"}}>
+				 
+				   <div className="form-group">
+                     <label for="usr">Search in friendslist:</label>
+                     <input type="search" placeholder="Enter emailid..." autoComplete="off" className="form-control" id="usr" />
+                   </div>
+				   
+				 </div>
+				 
+				 
+		    </div>
+		   </div>
 		
-           <div className="modal fade" id="myModal" role="dialog">
+           <div className="modal fade" id="searchNewFriendsModal" role="dialog">
               <div className="modal-dialog">
     
                  <div className="modal-content">
@@ -184,7 +216,7 @@ $.ajax({
 					  
                       <div className="modal-body">
                          <div className="friends_searchModel">
-		                   Search new friends  <input type="search" placeholder="Enter emailid..." autoComplete="off" id="friends_searchnewfriends"/>
+		                   Search new friends  <input type="search" placeholder="Enter emailid..." autoComplete="off" id="friends_searchnewfriends" />
                            <div id="friends_newFriendSuggestion-box"></div>
                           </div>
 						  
@@ -198,11 +230,22 @@ $.ajax({
       
                </div>
            </div>
-	
-    <div className="friends_allFriends" id="friends_friendlistall">
-	   Friends
+		  
+	<div className="row">
+	 <div className="col-sm-12" className="friends_allFriendsBox">
+	  Friends
+      <div className="friends_allFriends" id="friends_friendlistall">
        <ul id="friends_friends" className="friens_friendli"></ul>
-    </div>
+      </div>
+	 </div>
+	</div>
+	
+	<div className="friends_friendRequestBox">
+	   <button type="button" className="btn btn-info" data-toggle="collapse" data-target="#friendRequests">See All Friend-requests</button>
+       <div id="friendRequests" className="collapse">
+         Friend request sent to you will be displayed here.
+       </div>
+	 </div>
 	
 	
   </div>
