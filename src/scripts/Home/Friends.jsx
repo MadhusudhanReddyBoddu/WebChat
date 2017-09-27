@@ -4,10 +4,6 @@ import friendimage from '../../images/friend.jpg';
 require("!style-loader!css-loader!./../../css/friends.css");
 
 
-// var divstyle={
-// color:red;
-// }
-
 class Friends extends React.Component {
 constructor(props) {
     super(props);
@@ -17,40 +13,84 @@ constructor(props) {
   // this.state = {userid: ""};
   //   this.state = {messages: [],socket: io.connect('http://localhost:8080')};
   // this.friendChat = this.friendChat.bind(this);
-  this.send = this.send.bind(this);
+  this.sendFriendRequest = this.sendFriendRequest.bind(this);
+  this.cancelSentFriendRequest = this.cancelSentFriendRequest.bind(this);
   //this.friendChat=this.friendChat.bind(this);
   
   }
 
 
-  send(id) {
+  
+  //Adding friend-request when user clicks on add friend button for new friend.
+  sendFriendRequest(id) {
   console.log("clicked on id"+id);
-
-
-
-  //adding friend to friends collection
+   //window.alert("hhhhhh");
   $.ajax({
     type: "POST",
-    url: "/friends/addFriend",
+    url: "/friendrequests/addNewFriendRequest",
     data:'id='+id,
-    // beforeSend: function(){
-    //   $("#searchnewfriends").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
-    // },
     success: function(data){
       console.log(data);
+	  if (data == "success")
+	  {  
+         document.getElementById("friendRequestsentSuccess").style.display = "block"; 
+         setTimeout(function() 
+         { 
+              document.getElementById("friendRequestsentSuccess").style.display = "none"; 
+         }, 5000);
 
- //  var newMessage = $('#message').val();
- //  console.log("Receiver set to: "+this.state.receiver);
- 
- //  //This calls socket.on('new message') function of server side. Here it's user defined function.
- // // this.state.socket.emit('new message', this.state.username +": "+ message);
- //    this.state.socket.emit('new message', {message: newMessage, receiver: this.state.receiver});
+		 
+	  }
+	  else
+	  {
+		  window.alert("Something went wrong");
+	  }
   
- //  document.getElementById("message").value="";
-  
+     },
+    error:   function(jqXHR, textStatus, errorThrown) {
+        alert("Error, status = " + textStatus + ", " +"error thrown: " + errorThrown);
+     }
+  });
  }
-});
-}
+ 
+ 
+ //Cancelling FriendRequest When user clicks on CancelFriend request button inside sentReuests.
+  cancelSentFriendRequest(id) 
+ {
+  console.log("clicked on id"+id);
+   //window.alert("hhhhhh");
+  $.ajax({
+    type: "POST",
+    url: "/friendrequests/cancelSentFriendRequest",
+    data:'id='+id,
+    success: function(data){
+      console.log(data);
+	  if (data == "success")
+	  {  
+         //Hiding the button in findfriend modal for the user. Because, due to this delete action.. button content may vary.
+        // document.getElementById(id).style.display = "none";
+		 
+         document.getElementById("cancelSentFriendRequestSuccess").style.display = "block"; 
+         setTimeout(function() 
+         { 
+              document.getElementById("cancelSentFriendRequestSuccess").style.display = "none"; 
+         }, 5000);
+
+		 
+	  }
+	  else
+	  {
+		  window.alert("Something went wrong");
+	  }
+  
+     },
+    error:   function(jqXHR, textStatus, errorThrown) {
+        alert("Error, status = " + textStatus + ", " +"error thrown: " + errorThrown);
+     }
+  });
+ }
+ 
+ 
 
 componentDidMount() {
      console.log('Component DID MOUNT!')
@@ -60,13 +100,15 @@ componentDidMount() {
 	   
     const self = this;
 	
+	document.getElementById("friendRequestsentSuccess").style.display = "none";
+    document.getElementById("cancelSentFriendRequestSuccess").style.display = "none";
 	
 //When user clicks clear button for a search newfriends.
 $('#friends_searchnewfriends').on('search', function () {
  // search logic here
  // this function will be executed on click of X (clear button)
  console.log("Clear clicked");
- var myNode = document.getElementById("friends_newFriendSuggestion-box");
+ var myNode = document.getElementById("friends_newFriendSuggestion-boxlist");
  myNode.innerHTML = '';
  });
 	
@@ -81,7 +123,7 @@ $('#friends_searchnewfriends').on('search', function () {
     // },
     success: function(data){
       console.log(data);
-      var myNode = document.getElementById("friends_newFriendSuggestion-box");
+      var myNode = document.getElementById("friends_newFriendSuggestion-boxlist");
       myNode.innerHTML = '';
 	  
 	  if(data == "Empty")
@@ -99,35 +141,69 @@ $('#friends_searchnewfriends').on('search', function () {
                 var button = document.createElement("button");
                 button.innerHTML = "addFriend";
                 button.setAttribute("id",data[i].email);
+				button.setAttribute("class","btn btn-success");
                 li.appendChild(button);
 
-
-
-           //       li.appendChild(document.createElement("button"));
-           //       button.innerHTML = "add";
-           // li.setAttribute("id",data[i]);
-         
-         //Adding on click event for each friend
-               // li.setAttribute("onclick","friendChat()");
-        // li.addEventListener("click", function() { friendChat(this.id); }, false);
-         // console.log(this.state.receiver);
-         button.addEventListener("click", function() { self.send(this.id); }, false);
-                 document.getElementById("friends_newFriendSuggestion-box").appendChild(li);
+                button.addEventListener("click", function() { self.sendFriendRequest(this.id); }, false);
+                document.getElementById("friends_newFriendSuggestion-boxlist").appendChild(li);
         }
-      
-
-
-      $("#friends_newFriendSuggestion-box").show();
-      // $("#suggestion-box").html(html);
-      $("#friends_btn1").click(function(){
-        console.log("clicked");
-      });
     }.bind(this)
 
     });
   });
 
 
+  
+  
+ //Showing Sent Friend-requests, when user clicks on sent-requests button	
+  $("#sentRequestsButton").click(function(){
+    $.ajax({
+    type: "GET",
+    url: "/friendrequests/friendRequestsSent",
+    data:'keyword='+$(this).val(),
+    // beforeSend: function(){
+    //   $("#searchnewfriends").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+    // },
+    success: function(data){
+      console.log(data);
+      var myNode = document.getElementById("friends_friendRequestsSentBoxlist");
+      myNode.innerHTML = '';
+	  myNode.setAttribute("class","alert alert-info");
+	  
+	  if(data == "No sent-friendRequests")
+	  {
+		  myNode.innerHTML = 'Sorry! You have no sent friend-requests';
+		  
+	  }
+      else
+	  {
+      //Displaying friends in div
+      for (var i = 0; i < data.length; i++) 
+        {
+           console.log("Friend requse sent to: "+ data[i]);
+           var li=document.createElement("li");
+               //var br=document.createElement("br");
+                li.appendChild(document.createTextNode(data[i] + "   "));
+                var button = document.createElement("button");
+                button.innerHTML = "Cancel Friend-request";
+                button.setAttribute("id",data[i]);
+				button.setAttribute("class","btn btn-danger");
+                li.appendChild(button);
+
+                button.addEventListener("click", function() { self.cancelSentFriendRequest(this.id); }, false);
+                document.getElementById("friends_friendRequestsSentBoxlist").appendChild(li);
+        }
+	  }
+      
+     }.bind(this)
+
+    });
+  });
+  
+  
+  
+  
+  
 //Displaying friends
 $.ajax({
     type: "GET",
@@ -166,13 +242,6 @@ $.ajax({
   
  }
   
-  
-  onClearing () 
-  {
-            window.alert ("The current value of the search field is\n"+ cleared);
-        
-  }
-  
  render(){
 
    return (
@@ -186,7 +255,7 @@ $.ajax({
 			    <div className="col-md-4 col-md-offset-2 col-sm-5 col-sm-offset-1 col-sm-push-6 col-xs-12" style={{marginTop: "25px"}}>
 				 
 				       <button type="button" className="btn btn-success btn-md" data-toggle="modal" data-target="#searchNewFriendsModal">+ Add new friend</button>
-				       <button type="button" className="btn btn-info btn-md" data-toggle="modal" data-target="#sentRequestsModal" style={{marginLeft: "10px"}}>Sent requests</button>
+				       <button type="button" id="sentRequestsButton" className="btn btn-info btn-md" data-toggle="modal" data-target="#sentRequestsModal" style={{marginLeft: "10px"}}>Sent requests</button>
 		               
 				  
 				 </div>
@@ -217,12 +286,52 @@ $.ajax({
                       <div className="modal-body">
                          <div className="friends_searchModel">
 		                   Search new friends  <input type="search" placeholder="Enter emailid..." autoComplete="off" id="friends_searchnewfriends" />
-                           <div id="friends_newFriendSuggestion-box"></div>
+                           <div id="friends_newFriendSuggestion-box" className="friends_newFriendSuggestion-box">
+						     <ul id="friends_newFriendSuggestion-boxlist" className="friends_newFriendSuggestion-boxlist"></ul>
+						   </div>
                           </div>
 						  
                       </div>
 					
 					  <div className="modal-footer">
+					       <div className="alert alert-success" id="friendRequestsentSuccess">
+                                  <strong>Success!</strong>Friend-request sent Successfully
+                           </div>
+                           <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+					
+                 </div>
+      
+               </div>
+			   
+			   
+           </div>
+		   
+		   
+		    <div className="modal fade" id="sentRequestsModal" role="dialog">
+              <div className="modal-dialog">
+    
+                 <div className="modal-content">
+				 
+                      <div className="modal-header">
+                         <button type="button" className="close" data-dismiss="modal">&times;</button>
+                         <h4 className="modal-title">Sent Friend-requests</h4>
+                      </div>
+					  
+                      <div className="modal-body">
+					  
+                         <div className="friends_friendRequstsSentModal">
+                           <div id="friends_friendRequestsSentBox" className="friends_friendRequestsSentBox">
+						    <ul id="friends_friendRequestsSentBoxlist" className="friends_friendRequestsSentBoxlist"></ul>
+						   </div>
+                         </div>
+						  
+                      </div>
+					
+					  <div className="modal-footer">
+					       <div className="alert alert-success" id="cancelSentFriendRequestSuccess">
+                                  <strong>Success!</strong>Friend-request Cancelled Successfully
+                           </div>
                            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
                       </div>
 					
@@ -233,9 +342,9 @@ $.ajax({
 		  
 	<div className="row">
 	 <div className="col-sm-12" className="friends_allFriendsBox">
-	  Friends
+	  <h3 style={{color: "#4b5bea"}}>Friends</h3>
       <div className="friends_allFriends" id="friends_friendlistall">
-       <ul id="friends_friends" className="friens_friendli"></ul>
+       <ul id="friends_friends" className="friends_friendli"></ul>
       </div>
 	 </div>
 	</div>

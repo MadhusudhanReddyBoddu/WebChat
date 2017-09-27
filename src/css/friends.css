@@ -23,7 +23,11 @@ input[type=search]::-webkit-search-cancel-button {
   list-style: none;
 }
 
-.friends_friendli,#friends_newFriendSuggestion-box li {
+#friends_friendRequestsSentBox{
+  list-style: none;
+}
+
+.friends_friendli,#friends_newFriendSuggestion-box li,#friends_friendRequestsSentBox li {
   padding: 10px;
   overflow: auto;
 }
@@ -37,6 +41,12 @@ input[type=search]::-webkit-search-cancel-button {
   max-height: 300px;	
   background: #ffffff;
   margin-top: 20px;
+  overflow-y:auto;
+  
+}
+.friends_newFriendSuggestion-box,.friends_friendRequestsSentBox
+{
+  max-height: 200px;	
   overflow-y:auto;
   
 }

@@ -49,6 +49,7 @@ var registration = require('./routes/registration.js');
 var home = require('./routes/home.js');
 var friends = require('./routes/friends.js');
 var chat = require('./routes/chat.js'); 
+var friendRequests = require('./routes/friendrequests.js'); 
 
 
 
@@ -268,6 +269,7 @@ app.use('/registration', registration);
 app.use('/home', home);
 app.use('/friends', friends); 
 app.use('/chat', chat); 
+app.use('/friendrequests', friendRequests); 
 
 //Now we are using the routes present in external js files
 

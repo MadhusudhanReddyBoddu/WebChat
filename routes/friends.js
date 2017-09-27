@@ -153,56 +153,6 @@ router.get('/myFriends',urlencodedParser, function(req, res){
 	 	
 });
 
-//adding friend to friends collection
-
-
-router.post('/addFriend',urlencodedParser, function(req, res){
-	  
-	  
-	 console.log(req.body.id);
-
-	 var friendid=req.body.id;
-	   
-	   
-	 //Connection string to datanbase
-	   var MongoClient = require('mongodb').MongoClient;
-       var url = "mongodb://localhost:27017/WebChat";
-
-     //updating friends in friends collections
-	   MongoClient.connect(url, function(err, db) {
-           if (err) throw err;
-		   var userid = req.session.userid;
-		   console.log("usernameeeeeeeeeeeeeeeeeeeeeeeeeee")
-		   console.log(userid);
-           // var query = { email: userid};
-		   //console.log("user id in myfriends: "+userid);
-           db.collection("Friends").update({email:userid},{$push:{friends:friendid}});
-              db.close();
-			  // if (result.length != 0)
-			  // {
-				 //  console.log("Friends exist");
-				 //  //Storing all friends
-				 //  var friends= result[0].friends;
-				 //   //res.send(friends);
-				 //   res.send(friends);
-				 //   console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-				 //   console.log(req.session.userid);
-				  
-			  // }
-			  // else
-			  // {  
-				 //  res.send("No friends");
-				  
-			  // }
-			  
-			  
-
-        });
-	
-	 	
-});
-
-
 
 
 
