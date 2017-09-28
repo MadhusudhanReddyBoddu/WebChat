@@ -210,9 +210,18 @@ $('#friends_searchnewfriends').on('search', function () {
       console.log(data);
       var myNode = document.getElementById("friends_newFriendSuggestion-boxlist");
       myNode.innerHTML = '';
+	  myNode.setAttribute("class","alert alert-info");
 	  
 	  if(data == "Empty")
-	  {
+	  { 
+		 return; 
+	  }
+	  
+	  if(data.length == 0)
+	  {  
+        myNode.setAttribute("class","alert alert-warning");
+		myNode.innerHTML = 'Sorry! We have no serach results for "'+ document.getElementById("friends_searchnewfriends").value+'"'; 
+		
 		 return; 
 	  }
 
@@ -232,6 +241,98 @@ $('#friends_searchnewfriends').on('search', function () {
                 button.addEventListener("click", function() { self.sendFriendRequest(this.id); }, false);
                 document.getElementById("friends_newFriendSuggestion-boxlist").appendChild(li);
         }
+    }.bind(this)
+
+    });
+  });
+  
+  
+  
+  
+  //Searching inside existing friends	
+  $("#friends_searchWithinFriends").keyup(function(){
+	console.log("Friends search within existinging friends started");
+    $.ajax({
+    type: "GET",
+    url: "/friends/searchWithinFriends",
+    data:'keyword='+$(this).val(),
+    // beforeSend: function(){
+    //   $("#searchnewfriends").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
+    // },
+    success: function(data){
+		
+	 var myNode = document.getElementById('friends_friends');
+         myNode.innerHTML = '';
+		
+	   if (data == "Empty")
+      {
+        
+		//Use ajax call to display all existing friends again.
+		console.log("Calling Ajax again to default ffriends");
+		
+		    //Displaying friends
+                $.ajax({
+                       type: "GET",
+                       url: "/friends/myFriends",
+                       success: function(data){
+      
+                        if (data == "No friends")
+                           {
+                              console.log("**************No friends exist");
+		                          var myNode = document.getElementById('friends_friendlistall');
+                                  myNode.innerHTML = '';
+	                              myNode.setAttribute("class","alert alert-info");
+                                  myNode.innerHTML = "You have no friends!!. Please add new friends";
+                            }
+                        else
+                            {
+                                 //Extracting friends names from dictionary
+	                             var ids = Object.keys(data);
+	                             console.log("Names$$$$$$$: "+ids);
+	  
+                                 //Displaying friends in div
+                                 for (var i = 0; i < ids.length; i++) 
+                                   {
+                                     console.log("Friend: "+ ids[i]);
+                                      var li=document.createElement("li");
+                                      //var br=document.createElement("br");
+                                      li.appendChild(document.createTextNode(ids[i]));
+                                      li.setAttribute("id",ids[i]);
+                                      document.getElementById("friends_friends").appendChild(li);
+		   
+		                              console.log("*******************Friend appended*************************************************: ");
+                                    }
+                              }
+       
+                        }.bind(this)
+                      });
+		
+      }	
+	  
+      else if (data.length == 0)
+      {
+        console.log("**************No friends exist");
+	        myNode.setAttribute("class","alert alert-info");
+            myNode.innerHTML = " No friends Found!!.";
+      }
+      else
+      {
+	  console.log("Search result Names for Within Friends: "+ data);
+	  
+      //Displaying friends in div
+      for (var i = 0; i < data.length; i++) 
+        {
+           console.log("Friend&&&&&&&: "+ data[i]);
+           var li=document.createElement("li");
+               //var br=document.createElement("br");
+           li.appendChild(document.createTextNode(data[i]));
+           li.setAttribute("id",data[i]);
+           document.getElementById("friends_friends").appendChild(li);
+		   
+		   console.log("*******************Friend appended*************************************************: ");
+        }
+      }
+       
     }.bind(this)
 
     });
@@ -408,8 +509,8 @@ $.ajax({
                  <div className="col-md-6 col-sm-6 col-sm-pull-5 col-xs-12" style={{marginTop: "10px"}}>
 				 
 				   <div className="form-group">
-                     <label for="usr">Search in friendslist:</label>
-                     <input type="search" placeholder="Enter emailid..." autoComplete="off" className="form-control" id="usr" />
+                     <label>Search in friendslist:</label>
+                     <input type="search" placeholder="Enter emailid..." autoComplete="off" id="friends_searchWithinFriends" className="friends_searchWithinFriends" className="form-control"  />
                    </div>
 				   
 				 </div>

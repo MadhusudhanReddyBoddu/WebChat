@@ -8,7 +8,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/WebChat";
 
-//Sends all users
+//Sends all users based on key input.
 router.get('/',function(req, res){
 
         var keyword=req.query.keyword;
@@ -62,6 +62,49 @@ router.get('/',function(req, res){
 		  
 });
 
+
+
+//Search Within friends based on key input.
+router.get('/searchWithinFriends',function(req, res){
+
+        var keyword=req.query.keyword;
+		
+		if (keyword == "")
+		{
+			console.log("nothing entered");
+			res.send("Empty");
+		}
+		
+		else
+		{
+			
+		  var like=".*" + keyword + ".*";
+		  var existingFriends = "";
+		    //like = "Abhilashreddy396@gmail.com";
+
+            console.log("keyword is:" + keyword);
+
+	       var userid = req.session.userid;
+           var query = { email: userid};
+		   MongoClient.connect(url, function(err, db) {
+			if (err) throw err;  
+            db.collection("Friends").find(query).toArray(function(err, result) {
+			   if (err) throw err;
+			   console.log("Existing friends: "+result[0].friends);
+			   
+			   //Now we have to check result values with "like" pattern. Only those, which match will be sent.
+			   
+			   res.send(result[0].friends);
+			   
+		   });
+		 
+		  });
+		  
+		}
+		   
+		  
+			
+ });
 
 
 
