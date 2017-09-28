@@ -52,13 +52,27 @@ input[type=search]::-webkit-search-cancel-button {
 }
 
 #friends_friends { 
-list-style-type: none; margin: 0; padding: 0;
+    list-style-type: none; margin: 0; padding: 0;
  }
  
 #friends_friends li {
 	padding: 10px 10px;
 	word-wrap: break-word;
-	}
+}
+
+#friends_friendRequestsReceivedBoxlist
+{
+    list-style-type: none; margin: 0; padding: 0;
+}
+	
+#friends_friendRequestsReceivedBoxlist li{
+    padding: 10px 10px;
+	word-wrap: break-word;
+	
+}
+
+
+
 	
 #friends_friends li:nth-child(odd) { 
 background: #d4d8d4;

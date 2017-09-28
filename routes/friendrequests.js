@@ -68,7 +68,7 @@ router.get('/friendRequestsSent',urlencodedParser, function(req, res){
 				  //Storing all friends
 				  var friendRequestsSent= result[0].friendRequestsSent;
 				  
-				  // Checking "When user has "received friend requests" but not "sent friend requests" ".
+				  // Checking "Whether user has "received friend requests" but not "sent friend requests" ".
 				  if(friendRequestsSent.length != 0)
 				  {
 				   res.send(friendRequestsSent);
@@ -117,6 +117,122 @@ router.post('/cancelSentFriendRequest',urlencodedParser, function(req, res){
 		   
 		   
            db.close();
+		   res.send("success");
+			  
+
+        });
+	
+	 	
+});
+
+
+//Returns Received Friend-requests for a user
+router.get('/friendRequestsReceived',urlencodedParser, function(req, res){
+	  
+	  
+	 console.log("FriendRequests Sent Called");
+
+	   MongoClient.connect(url, function(err, db) {
+		   
+           if (err) throw err;
+		   var userid = req.session.userid;
+           var query = { email: userid};
+		   //console.log("user id in myfriends: "+userid);
+		   
+           db.collection("Friendrequests").find(query).toArray(function(err, result) {
+              if (err) throw err;
+              console.log("**************"+ result);
+              db.close();
+			  
+			  
+			  //Since we are going to delete the documents with no friend requests sent and received, there the document should present.
+			    //Same in friends collection also.
+			  if (result.length != 0)
+			  {
+				  console.log("Friends exist");
+				  //Storing all friends
+				  var friendRequestsReceived= result[0].friendRequestsReceived;
+				  
+				  // Checking "Whether user has "sent friend requests" but not "received friend requests" ".
+				  if(friendRequestsReceived.length != 0)
+				  {
+				   res.send(friendRequestsReceived);
+				  }
+				  
+				  else
+				  {
+					  res.send("No received-friendRequests");
+				  }
+				  
+			  }
+				
+			  else
+			  {  
+				  res.send("No received-friendRequests");
+				  
+			  }
+			  
+			  
+            });
+        });
+	
+	 	
+});
+
+
+//Accepting friend-request received. Deleting requst from both users collections and then  Adding friend to both users friend-requests collections.
+router.post('/acceptReceivedFriendRequest',urlencodedParser, function(req, res){
+	  
+	  
+	 console.log(req.body.id);
+
+	 var friendid=req.body.id;
+	 var userid = req.session.userid;
+
+     //updating friends in friends collections
+	   MongoClient.connect(url, function(err, db) {
+		   
+           if (err) throw err;
+		   console.log("Friend requst-cancel sent to: "+ friendid +" from: "+userid)
+		   
+		   //Deleting from friendrequest collection of both users
+           db.collection("Friendrequests").update({email:userid},{$pull:{friendRequestsReceived:friendid}});
+		   db.collection("Friendrequests").update({email:friendid},{$pull:{friendRequestsSent:userid}});
+		   
+		   //Adding into both users friends list
+		   // upsert: true creates new document, if not exist.
+           db.collection("Friends").update({email:userid},{$push:{friends:friendid}},{ upsert : true });
+		   db.collection("Friends").update({email:friendid},{$push:{friends:userid}},{ upsert : true });
+           db.close();
+		   res.send("success");
+			  
+
+        });
+	
+	 	
+});
+
+
+
+//Deleting friend-request received. Deleting requst from both users collections.
+router.post('/deleteReceivedFriendRequest',urlencodedParser, function(req, res){
+	  
+	  
+	 console.log(req.body.id);
+
+	 var friendid=req.body.id;
+	 var userid = req.session.userid;
+
+     //updating friends in friends collections
+	   MongoClient.connect(url, function(err, db) {
+		   
+           if (err) throw err;
+		   console.log("Friend requst-cancel sent to: "+ friendid +" from: "+userid)
+		   
+		   //Deleting from friendrequest collection of both users
+           db.collection("Friendrequests").update({email:userid},{$pull:{friendRequestsReceived:friendid}});
+		   db.collection("Friendrequests").update({email:friendid},{$pull:{friendRequestsSent:userid}});
+		   
 		   res.send("success");
 			  
 

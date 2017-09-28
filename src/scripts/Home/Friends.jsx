@@ -15,6 +15,8 @@ constructor(props) {
   // this.friendChat = this.friendChat.bind(this);
   this.sendFriendRequest = this.sendFriendRequest.bind(this);
   this.cancelSentFriendRequest = this.cancelSentFriendRequest.bind(this);
+  this.acceptReceivedFriendRequest = this.acceptReceivedFriendRequest.bind(this);
+  this.deleteReceivedFriendRequest = this.deleteReceivedFriendRequest.bind(this);
   //this.friendChat=this.friendChat.bind(this);
   
   }
@@ -74,7 +76,7 @@ constructor(props) {
          setTimeout(function() 
          { 
               document.getElementById("cancelSentFriendRequestSuccess").style.display = "none"; 
-         }, 5000);
+         }, 3000);
 
 		 
 	  }
@@ -91,9 +93,90 @@ constructor(props) {
  }
  
  
+ 
+ //Accepting received friend request.
+  acceptReceivedFriendRequest(id) 
+ {
+  console.log("clicked on id"+id);
+   //window.alert("hhhhhh");
+  $.ajax({
+    type: "POST",
+    url: "/friendrequests/acceptReceivedFriendRequest",
+    data:'id='+id,
+    success: function(data){
+      console.log(data);
+	  if (data == "success")
+	  {  
+         //Hiding the button in findfriend modal for the user. Because, due to this delete action.. button content may vary.
+        // document.getElementById(id).style.display = "none";
+		 console.log("Friend request accepted for : "+ id);
+         document.getElementById("acceptReceivedFriendRequestSuccess").style.display = "block"; 
+         setTimeout(function() 
+         { 
+              document.getElementById("acceptReceivedFriendRequestSuccess").style.display = "none"; 
+         }, 3000);
 
+		 
+	  }
+	  else
+	  {
+		  window.alert("Something went wrong");
+	  }
+  
+     },
+    error:   function(jqXHR, textStatus, errorThrown) {
+        alert("Error, status = " + textStatus + ", " +"error thrown: " + errorThrown);
+     }
+  });
+ }
+ 
+ 
+ //Deleting received Friend-Request When user clicks on Delete button in friend-requests.
+  deleteReceivedFriendRequest(id) 
+ {
+  console.log("clicked on id"+id);
+   //window.alert("hhhhhh");
+  $.ajax({
+    type: "POST",
+    url: "/friendrequests/deleteReceivedFriendRequest",
+    data:'id='+id,
+    success: function(data){
+      console.log(data);
+	  if (data == "success")
+	  {  
+         //Hiding the button in findfriend modal for the user. Because, due to this delete action.. button content may vary.
+        // document.getElementById(id).style.display = "none";
+		 
+         document.getElementById("deleteReceivedFriendRequestSuccess").style.display = "block"; 
+         setTimeout(function() 
+         { 
+              document.getElementById("deleteReceivedFriendRequestSuccess").style.display = "none"; 
+         }, 3000);
+
+		 
+	  }
+	  else
+	  {
+		  window.alert("Something went wrong");
+	  }
+  
+     },
+    error:   function(jqXHR, textStatus, errorThrown) {
+        alert("Error, status = " + textStatus + ", " +"error thrown: " + errorThrown);
+     }
+  });
+ }
+ 
+ 
+ 
+
+ 
 componentDidMount() {
-     console.log('Component DID MOUNT!')
+	
+	
+	
+	
+   console.log('Component DID MOUNT!')
    
  
    $(document).ready(function(){
@@ -102,6 +185,8 @@ componentDidMount() {
 	
 	document.getElementById("friendRequestsentSuccess").style.display = "none";
     document.getElementById("cancelSentFriendRequestSuccess").style.display = "none";
+	document.getElementById("acceptReceivedFriendRequestSuccess").style.display = "none";
+	document.getElementById("deleteReceivedFriendRequestSuccess").style.display = "none";
 	
 //When user clicks clear button for a search newfriends.
 $('#friends_searchnewfriends').on('search', function () {
@@ -180,7 +265,7 @@ $('#friends_searchnewfriends').on('search', function () {
       //Displaying friends in div
       for (var i = 0; i < data.length; i++) 
         {
-           console.log("Friend requse sent to: "+ data[i]);
+           console.log("Friend request sent to: "+ data[i]);
            var li=document.createElement("li");
                //var br=document.createElement("br");
                 li.appendChild(document.createTextNode(data[i] + "   "));
@@ -213,7 +298,10 @@ $.ajax({
       if (data == "No friends")
       {
         console.log("**************No friends exist");
-        document.getElementById('friends_friends').innerHTML = "Please add friends";
+		var myNode = document.getElementById('friends_friendlistall');
+            myNode.innerHTML = '';
+	        myNode.setAttribute("class","alert alert-info");
+            myNode.innerHTML = "You have no friends!!. Please add new friends";
       }
       else
       {
@@ -224,7 +312,7 @@ $.ajax({
       //Displaying friends in div
       for (var i = 0; i < ids.length; i++) 
         {
-           console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Friend******************: "+ ids[i]);
+           console.log("Friend: "+ ids[i]);
            var li=document.createElement("li");
                //var br=document.createElement("br");
            li.appendChild(document.createTextNode(ids[i]));
@@ -237,6 +325,63 @@ $.ajax({
        
     }.bind(this)
    });
+ 
+
+//Displaying friend-requests received.
+$.ajax({
+    type: "GET",
+    url: "/friendrequests/friendRequestsReceived",
+    success: function(data){
+      
+      console.log(data);
+      var myNode = document.getElementById("friends_friendRequestsReceivedBoxlist");
+      myNode.innerHTML = '';
+	  document.getElementById("friends_friendRequestsReceivedBox").setAttribute("class","alert alert-info");;
+	  
+	  if(data == "No received-friendRequests")
+	  {
+		  myNode.setAttribute("class","alert alert-info");
+		  myNode.innerHTML = 'Sorry! You have no Received friend-requests';
+		  
+	  }
+      else
+	  {
+      //Displaying friends in div
+      for (var i = 0; i < data.length; i++) 
+        {
+           console.log("Friend request Received from: "+ data[i]);
+           var li=document.createElement("li");
+                
+				li.setAttribute("class","col-md-6 col-sm-6 col-xs-12");
+                li.appendChild(document.createTextNode(data[i] + "   "));
+				
+				var buttonAccept = document.createElement("button");
+                buttonAccept.innerHTML = "Accept";
+                buttonAccept.setAttribute("id",data[i]);
+				buttonAccept.setAttribute("class","btn btn-success");
+                li.appendChild(buttonAccept);
+				
+                var buttonDelete = document.createElement("button");
+                buttonDelete.innerHTML = "Delete";
+                buttonDelete.setAttribute("id",data[i]);
+				buttonDelete.setAttribute("style", "margin-left:10px;");
+				buttonDelete.setAttribute("class","btn btn-danger");
+                li.appendChild(buttonDelete);
+				
+				
+                buttonAccept.addEventListener("click", function() { self.acceptReceivedFriendRequest(this.id); }, false);
+				buttonDelete.addEventListener("click", function() { self.deleteReceivedFriendRequest(this.id); }, false);
+				
+                document.getElementById("friends_friendRequestsReceivedBoxlist").appendChild(li);
+        }
+	  }
+      
+       
+    }.bind(this)
+   });
+   
+   
+   
 
   }.bind(this));
   
@@ -353,6 +498,30 @@ $.ajax({
 	   <button type="button" className="btn btn-info" data-toggle="collapse" data-target="#friendRequests">See All Friend-requests</button>
        <div id="friendRequests" className="collapse">
          Friend request sent to you will be displayed here.
+		 
+		 <div id="friends_friendRequestsReceivedBox" className="friends_friendRequestsReceivedBox">
+		 
+		     <div className="row">
+			  <ul id="friends_friendRequestsReceivedBoxlist" className="friends_friendRequestsReceivedBoxlist">
+			 
+			  
+			     <li className="col-md-6 col-sm-6 col-xs-12"> Anusha </li>
+			     <li className="col-md-6 col-sm-6 col-xs-12"> Abhilash </li>
+			     <li className="col-md-6 col-sm-6 col-xs-12"> Anusha </li>
+			     <li className="col-md-6 col-sm-6 col-xs-12"> Abhilash </li>
+			  
+			  
+			  </ul>
+			  <div className="alert alert-success" id="acceptReceivedFriendRequestSuccess">
+                    <strong>Success!</strong>Friend-request Accepted successfully!
+              </div>
+			  <div className="alert alert-success" id="deleteReceivedFriendRequestSuccess">
+                    <strong>Success!</strong>Friend-request deleted successfully!
+              </div>
+			 </div>
+			 
+		 </div>
+		 
        </div>
 	 </div>
 	
