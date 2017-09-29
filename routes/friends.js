@@ -78,7 +78,6 @@ router.get('/searchWithinFriends',function(req, res){
 		else
 		{
 			
-		  var like=".*" + keyword + ".*";
 		  var existingFriends = "";
 		    //like = "Abhilashreddy396@gmail.com";
 
@@ -90,11 +89,39 @@ router.get('/searchWithinFriends',function(req, res){
 			if (err) throw err;  
             db.collection("Friends").find(query).toArray(function(err, result) {
 			   if (err) throw err;
-			   console.log("Existing friends: "+result[0].friends);
+			   if(result.length != 0)
+			   {
+			      console.log("Existing friends: "+result[0].friends);
+			      existingFriends = result[0].friends;
 			   
-			   //Now we have to check result values with "like" pattern. Only those, which match will be sent.
+			      //Now we have to check result values with "like" pattern. Only those, which match will be sent.
+			      for (var i = 0; i < existingFriends.length; i++) 
+                  {
+                     var re = new RegExp(keyword, 'gi');
+                     var matched = existingFriends[i].match(re);
 			   
-			   res.send(result[0].friends);
+			         //console.log("length: "+ matched.length);
+			         if (matched!= null)
+			         {
+				       console.log("Matched with existing friend: "+existingFriends[i]);
+				   
+			         }
+			         else
+			         {
+				        console.log("Doesn't match with: "+existingFriends[i]);
+				        existingFriends.splice(i, 1);
+				        i = i-1;
+			          }
+			   
+			     
+			        }
+			        console.log("Sent: "+existingFriends);
+			        res.send(existingFriends);
+			   }
+			   else
+			   {
+				    res.send("Empty");
+			   }
 			   
 		   });
 		 
@@ -181,7 +208,7 @@ router.get('/myFriends',urlencodedParser, function(req, res){
                         console.log (i, friends_dictionary[i]);
                       }
 				       res.send(friends_dictionary);
-				   }, 1000);
+				   }, 100);
 			  }
 			  else
 			  {  

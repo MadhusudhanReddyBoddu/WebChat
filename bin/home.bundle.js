@@ -27776,6 +27776,8 @@ var Friends = function (_React$Component) {
         document.getElementById("cancelSentFriendRequestSuccess").style.display = "none";
         document.getElementById("acceptReceivedFriendRequestSuccess").style.display = "none";
         document.getElementById("deleteReceivedFriendRequestSuccess").style.display = "none";
+        document.getElementById("friends_noFriendsExist").style.display = "none";
+        document.getElementById("friends_noFriendsFound").style.display = "none";
 
         //When user clicks clear button for a search newfriends.
         $('#friends_searchnewfriends').on('search', function () {
@@ -27834,6 +27836,51 @@ var Friends = function (_React$Component) {
           });
         });
 
+        //When user clicks clear button for a search in existingfriends.
+        $('#friends_searchWithinFriends').on('search', function () {
+          // search logic here
+          // this function will be executed on click of X (clear button)
+          //Use ajax call to display all existing friends again.
+          console.log("Calling Ajax again to default friends for clear button");
+
+          var myNode = document.getElementById('friends_friends');
+          myNode.innerHTML = '';
+          document.getElementById("friends_noFriendsExist").style.display = "none";
+          document.getElementById("friends_noFriendsFound").style.display = "none";
+
+          //Displaying friends
+          $.ajax({
+            type: "GET",
+            url: "/friends/myFriends",
+            success: function (data) {
+
+              if (data == "No friends") {
+                console.log("**************No friends exist");
+                var myNode = document.getElementById('friends_friends');
+                myNode.innerHTML = '';
+                document.getElementById("friends_noFriendsFound").style.display = "none";
+                document.getElementById("friends_noFriendsExist").style.display = "block";
+              } else {
+                //Extracting friends names from dictionary
+                var ids = Object.keys(data);
+                console.log("Names$$$$$$$: " + ids);
+
+                //Displaying friends in div
+                for (var i = 0; i < ids.length; i++) {
+                  console.log("Friend: " + ids[i]);
+                  var li = document.createElement("li");
+                  //var br=document.createElement("br");
+                  li.appendChild(document.createTextNode(ids[i]));
+                  li.setAttribute("id", ids[i]);
+                  document.getElementById("friends_friends").appendChild(li);
+
+                  console.log("*******************Friend appended*************************************************: ");
+                }
+              }
+            }.bind(this)
+          });
+        });
+
         //Searching inside existing friends	
         $("#friends_searchWithinFriends").keyup(function () {
           console.log("Friends search within existinging friends started");
@@ -27848,11 +27895,13 @@ var Friends = function (_React$Component) {
 
               var myNode = document.getElementById('friends_friends');
               myNode.innerHTML = '';
+              document.getElementById("friends_noFriendsExist").style.display = "none";
+              document.getElementById("friends_noFriendsFound").style.display = "none";
 
               if (data == "Empty") {
 
                 //Use ajax call to display all existing friends again.
-                console.log("Calling Ajax again to default ffriends");
+                console.log("Calling Ajax again to default friends");
 
                 //Displaying friends
                 $.ajax({
@@ -27862,10 +27911,10 @@ var Friends = function (_React$Component) {
 
                     if (data == "No friends") {
                       console.log("**************No friends exist");
-                      var myNode = document.getElementById('friends_friendlistall');
+                      var myNode = document.getElementById('friends_friends');
                       myNode.innerHTML = '';
-                      myNode.setAttribute("class", "alert alert-info");
-                      myNode.innerHTML = "You have no friends!!. Please add new friends";
+                      document.getElementById("friends_noFriendsFound").style.display = "none";
+                      document.getElementById("friends_noFriendsExist").style.display = "block";
                     } else {
                       //Extracting friends names from dictionary
                       var ids = Object.keys(data);
@@ -27886,9 +27935,10 @@ var Friends = function (_React$Component) {
                   }.bind(this)
                 });
               } else if (data.length == 0) {
-                console.log("**************No friends exist");
-                myNode.setAttribute("class", "alert alert-info");
-                myNode.innerHTML = " No friends Found!!.";
+                var myNode = document.getElementById('friends_friends');
+                myNode.innerHTML = '';
+                document.getElementById("friends_noFriendsExist").style.display = "none";
+                document.getElementById("friends_noFriendsFound").style.display = "block";
               } else {
                 console.log("Search result Names for Within Friends: " + data);
 
@@ -27957,11 +28007,11 @@ var Friends = function (_React$Component) {
           success: function (data) {
 
             if (data == "No friends") {
-              console.log("**************No friends exist");
-              var myNode = document.getElementById('friends_friendlistall');
+              var myNode = document.getElementById('friends_friends');
               myNode.innerHTML = '';
-              myNode.setAttribute("class", "alert alert-info");
-              myNode.innerHTML = "You have no friends!!. Please add new friends";
+
+              document.getElementById("friends_noFriendsFound").style.display = "none";
+              document.getElementById("friends_noFriendsExist").style.display = "block";
             } else {
               //Extracting friends names from dictionary
               var ids = Object.keys(data);
@@ -28207,7 +28257,27 @@ var Friends = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'friends_allFriends', id: 'friends_friendlistall' },
-              _react2.default.createElement('ul', { id: 'friends_friends', className: 'friends_friendli' })
+              _react2.default.createElement('ul', { id: 'friends_friends', className: 'friends_friendli' }),
+              _react2.default.createElement(
+                'div',
+                { className: 'alert alert-warning', id: 'friends_noFriendsExist' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Hey!'
+                ),
+                'You have No friends! Please add new-friends.'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'alert alert-warning', id: 'friends_noFriendsFound' },
+                _react2.default.createElement(
+                  'strong',
+                  null,
+                  'Sorry!'
+                ),
+                'No friends found.'
+              )
             )
           )
         ),

@@ -69,14 +69,17 @@ router.get('/friendRequestsSent',urlencodedParser, function(req, res){
 				  var friendRequestsSent= result[0].friendRequestsSent;
 				  
 				  // Checking "Whether user has "received friend requests" but not "sent friend requests" ".
-				  if(friendRequestsSent.length != 0)
+				     //Undefined , before user's first time friend-request Sent (then there only received friend-request field exist).
+					 
+				  console.log("Friend-Requests Sent are: "+ friendRequestsSent);
+				  if(friendRequestsSent == undefined || friendRequestsSent.length == 0)
 				  {
-				   res.send(friendRequestsSent);
+				   res.send("No sent-friendRequests");
 				  }
 				  
 				  else
 				  {
-					  res.send("No sent-friendRequests");
+					  res.send(friendRequestsSent);
 				  }
 				  
 			  }
@@ -130,7 +133,7 @@ router.post('/cancelSentFriendRequest',urlencodedParser, function(req, res){
 router.get('/friendRequestsReceived',urlencodedParser, function(req, res){
 	  
 	  
-	 console.log("FriendRequests Sent Called");
+	 console.log("FriendRequests Received Called");
 
 	   MongoClient.connect(url, function(err, db) {
 		   
@@ -152,16 +155,17 @@ router.get('/friendRequestsReceived',urlencodedParser, function(req, res){
 				  console.log("Friends exist");
 				  //Storing all friends
 				  var friendRequestsReceived= result[0].friendRequestsReceived;
+				  console.log("Friend-Requests Received are: "+ friendRequestsReceived);
 				  
 				  // Checking "Whether user has "sent friend requests" but not "received friend requests" ".
-				  if(friendRequestsReceived.length != 0)
+				  if(friendRequestsReceived == undefined || friendRequestsReceived.length == 0)
 				  {
-				   res.send(friendRequestsReceived);
+				   res.send("No received-friendRequests");
 				  }
 				  
 				  else
 				  {
-					  res.send("No received-friendRequests");
+					  res.send(friendRequestsReceived);
 				  }
 				  
 			  }

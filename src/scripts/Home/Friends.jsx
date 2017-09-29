@@ -187,6 +187,8 @@ componentDidMount() {
     document.getElementById("cancelSentFriendRequestSuccess").style.display = "none";
 	document.getElementById("acceptReceivedFriendRequestSuccess").style.display = "none";
 	document.getElementById("deleteReceivedFriendRequestSuccess").style.display = "none";
+	document.getElementById("friends_noFriendsExist").style.display = "none";
+	document.getElementById("friends_noFriendsFound").style.display = "none";
 	
 //When user clicks clear button for a search newfriends.
 $('#friends_searchnewfriends').on('search', function () {
@@ -249,6 +251,60 @@ $('#friends_searchnewfriends').on('search', function () {
   
   
   
+  
+  
+ //When user clicks clear button for a search in existingfriends.
+$('#friends_searchWithinFriends').on('search', function () {
+ // search logic here
+ // this function will be executed on click of X (clear button)
+    //Use ajax call to display all existing friends again.
+		console.log("Calling Ajax again to default friends for clear button");
+		
+		 var myNode = document.getElementById('friends_friends');
+         myNode.innerHTML = '';
+		 document.getElementById("friends_noFriendsExist").style.display = "none";
+	     document.getElementById("friends_noFriendsFound").style.display = "none";
+		
+		 //Displaying friends
+         $.ajax({
+             type: "GET",
+             url: "/friends/myFriends",
+             success: function(data){
+      
+             if (data == "No friends")
+            {
+              console.log("**************No friends exist");
+		      var myNode = document.getElementById('friends_friends');
+				  myNode.innerHTML = '';
+				  document.getElementById("friends_noFriendsFound").style.display = "none";
+				  document.getElementById("friends_noFriendsExist").style.display = "block";
+			}
+		else
+			{
+				 //Extracting friends names from dictionary
+				 var ids = Object.keys(data);
+				 console.log("Names$$$$$$$: "+ids);
+
+				 //Displaying friends in div
+				 for (var i = 0; i < ids.length; i++) 
+				   {
+					 console.log("Friend: "+ ids[i]);
+					  var li=document.createElement("li");
+					  //var br=document.createElement("br");
+					  li.appendChild(document.createTextNode(ids[i]));
+					  li.setAttribute("id",ids[i]);
+					  document.getElementById("friends_friends").appendChild(li);
+
+					  console.log("*******************Friend appended*************************************************: ");
+					}
+			  }
+
+		}.bind(this)
+	  });
+		
+ });
+  
+  
   //Searching inside existing friends	
   $("#friends_searchWithinFriends").keyup(function(){
 	console.log("Friends search within existinging friends started");
@@ -260,15 +316,17 @@ $('#friends_searchnewfriends').on('search', function () {
     //   $("#searchnewfriends").css("background","#FFF url(LoaderIcon.gif) no-repeat 165px");
     // },
     success: function(data){
-		
+     
 	 var myNode = document.getElementById('friends_friends');
          myNode.innerHTML = '';
+		 document.getElementById("friends_noFriendsExist").style.display = "none";
+	     document.getElementById("friends_noFriendsFound").style.display = "none";
 		
 	   if (data == "Empty")
       {
         
 		//Use ajax call to display all existing friends again.
-		console.log("Calling Ajax again to default ffriends");
+		console.log("Calling Ajax again to default friends");
 		
 		    //Displaying friends
                 $.ajax({
@@ -279,10 +337,10 @@ $('#friends_searchnewfriends').on('search', function () {
                         if (data == "No friends")
                            {
                               console.log("**************No friends exist");
-		                          var myNode = document.getElementById('friends_friendlistall');
+		                          var myNode = document.getElementById('friends_friends');
                                   myNode.innerHTML = '';
-	                              myNode.setAttribute("class","alert alert-info");
-                                  myNode.innerHTML = "You have no friends!!. Please add new friends";
+	                              document.getElementById("friends_noFriendsFound").style.display = "none";
+	                              document.getElementById("friends_noFriendsExist").style.display = "block";
                             }
                         else
                             {
@@ -311,9 +369,10 @@ $('#friends_searchnewfriends').on('search', function () {
 	  
       else if (data.length == 0)
       {
-        console.log("**************No friends exist");
-	        myNode.setAttribute("class","alert alert-info");
-            myNode.innerHTML = " No friends Found!!.";
+        var myNode = document.getElementById('friends_friends');
+        myNode.innerHTML = '';
+		document.getElementById("friends_noFriendsExist").style.display = "none";
+	    document.getElementById("friends_noFriendsFound").style.display = "block";
       }
       else
       {
@@ -398,11 +457,11 @@ $.ajax({
       
       if (data == "No friends")
       {
-        console.log("**************No friends exist");
-		var myNode = document.getElementById('friends_friendlistall');
+		var myNode = document.getElementById('friends_friends');
             myNode.innerHTML = '';
-	        myNode.setAttribute("class","alert alert-info");
-            myNode.innerHTML = "You have no friends!!. Please add new friends";
+			
+	        document.getElementById("friends_noFriendsFound").style.display = "none";
+			document.getElementById("friends_noFriendsExist").style.display = "block";
       }
       else
       {
@@ -590,7 +649,16 @@ $.ajax({
 	 <div className="col-sm-12" className="friends_allFriendsBox">
 	  <h3 style={{color: "#4b5bea"}}>Friends</h3>
       <div className="friends_allFriends" id="friends_friendlistall">
-       <ul id="friends_friends" className="friends_friendli"></ul>
+	  
+       <ul id="friends_friends" className="friends_friendli">
+	   </ul>
+	   <div className="alert alert-warning" id="friends_noFriendsExist">
+              <strong>Hey!</strong>You have No friends! Please add new-friends.
+         </div>
+		 <div className="alert alert-warning" id="friends_noFriendsFound">
+              <strong>Sorry!</strong>No friends found.
+         </div>
+	     
       </div>
 	 </div>
 	</div>
